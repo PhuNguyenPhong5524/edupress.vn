@@ -1,0 +1,100 @@
+import { Link } from "react-router";
+import BagShoppingIcon from "../../../../components/icons/BagShoppingIcon"
+import ClockIcon from "../../../../components/icons/ClockIcon";
+import GraduationIcon from "../../../../components/icons/GraduationIcon"
+const BoxCourse = ({item}) => {
+    return (
+        <div 
+            className="
+                flex flex-col justify-start group relative rounded-[10px]
+                w-full h-auto border-[2px] border-[#EAEAEA]
+                transform transition-transform duration-300 ease-in-out
+                hover:shadow-2xl overflow-hidden 
+            "
+        >
+            {/* <!-- Image --> */}
+                <div className="relative overflow-hidden ">
+                    <img 
+                        src={item.image_url}
+                        alt={item.course_name}
+                        className="
+                            w-full h-[180px] object-cover transform transition-transform duration-300 
+                            ease-in-out rounded-t-[10px] group-hover:scale-110
+                        " 
+                    />
+                    <span 
+                        className="
+                            text-[12px] font-semibold text-[#ffffff] px-[10px] rounded-[8px] py-[5px] absolute top-4 left-4
+                            bg-[#FF782D] z-[30]
+                        "
+                    >
+                        Khóa học mới
+                    </span>
+                    <div 
+                        className="
+                            absolute w-full h-full top-0 left-0 z-[10] opacity-0 transform transition-opacity 
+                            duration-300 ease-in-out group-hover:bg-black/50 group-hover:opacity-100
+                        "
+                    >
+                        <Link 
+                            to={`/`}
+                            className="
+                                absolute top-[85%] right-1/2 translate-x-1/2 w-[50px] h-[50px] bg-[#FF782D]/70 opacity-0 rounded-full flex 
+                                justify-center items-center text-[#ffffff] transform transition-transform duration-400 ease-in-out 
+                                group-hover:opacity-100 group-hover:translate-y-[-150%] z-[30] cursor-pointer hover:scale-110 hover:bg-[#FF782D]
+                                group-hover:
+                            ">
+                            <BagShoppingIcon size={26}/>
+                        </Link>
+                    </div>
+                </div>
+            {/* <!-- Content --> */}
+                <div className="px-[15px] pt-[10px] flex flex-col gap-[10px]">
+                    {/* Author */}
+                        <p className="text-[14px] font-medium text-gray-400">
+                            <span className="">{item.author}</span>
+                        </p>
+                    {/* Title */}
+                        <h4 className="text-[18px] leading-[24px] font-semibold text-[#000000] group-hover:text-[#FF782D] line-clamp-2">
+                        <Link 
+                            to={`detail/${item._id}`}
+                            className="" 
+                        >
+                            {item.course_title}
+                        </Link>
+                        </h4>
+                    {/* Info */}
+                        <div className="flex items-center gap-[30px]">
+                            <div className="flex  items-center ">
+                                <ClockIcon size={22} className="text-[#FF782D] mr-[5px]" />
+                                <p className="text-[16px] font-regular text-[#555555]">{item.duration}</p>
+                            </div>
+                            <div className="flex items-center relative">
+                                <div className="overflow-hidden">
+                                    <GraduationIcon size={22} className="text-[#FF782D] mr-[5px]" />
+                                </div>
+                                <p className="text-[16px] font-regular text-[#555555]">{item.students}</p>
+                            </div>
+                        </div>
+                    {/* Line */}
+                        <hr className=" border-[1px] border-[#EAEAEA] w-full" />
+                    {/*  */}
+                        <div className="flex items-center justify-between mb-[15px]">
+                            <div className="text-[18px]">
+                                <span className="text-[#FF782D] font-semibold">
+                                    { item.price === 0 
+                                        ? <span className="text-green-400 font-semibold">Free</span>
+                                        : `${Number(item.price).toLocaleString('vi-VN')} VND`
+                                    }
+                                </span>
+                            </div>
+                            <div className="text-[16px] text-black/40 font-regular">
+                                <Link to={`detail/${item._id}`} className="btnCourseDetail text-[#000000] hover:text-[#FF782D] hover:underline cursor-pointer">Chi tiết</Link>
+                            </div>
+                        </div>
+                </div>
+        </div> 
+    )
+}
+
+export default BoxCourse;
