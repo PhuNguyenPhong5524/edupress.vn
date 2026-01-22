@@ -5,8 +5,7 @@ import BoxShowTabsCourse from "./BoxShowTabsCourse/BoxShowTabsCourse";
 import BoxCourseInfoCard from "./BoxShowInfo/BoxCourseInfoCard";
 import useFetchData from "../../../api/useFetchData";
 import { useParams } from "react-router";
-import StickyObserver from "./StickyObserver";
-
+import { useStickyObserver } from "../../../hooks/UseStickyObserver";
 const StickyCard = memo(({ show, showList }) => {
   if (!show) return null;
   return (
@@ -27,11 +26,11 @@ const DetailPage = () => {
         return course?.find(item => String(item._id) === String(_id));
     }, [course, _id]);
 
+    {/* Scroll observer */}
+    useStickyObserver(setShowStickyCard);
 
   return (
    <div className="mt-[80px]">
-     {/* Scroll observer */}
-        <StickyObserver onChange={setShowStickyCard} />
       {/* <!-- Breadcrumb --> */}
         <Breadcrumb nameCate="Chi tiết khách hàng" showList={showList} />
             {/* Box Show Info */}

@@ -3,9 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import ChevronLeftIcon from "../../../components/icons/ChevronLeftIcon";
-import ChevronRightIcon from "../../../components/icons/ChevronRightIcon";
-import BoxCourse from "./BoxCourse/BoxCourse";
+import ChevronLeftIcon from "./icons/ChevronLeftIcon";
+import ChevronRightIcon from "./icons/ChevronRightIcon";
+import BoxCourse from "../pages/customer/Home/BoxCourse/BoxCourse";
 import { useState } from "react";
 
 

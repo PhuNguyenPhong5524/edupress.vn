@@ -1,6 +1,6 @@
 
 
-import Banner from '../../customer/Home/Banner';
+import Banner from './BoxBanner/Banner';
 import BoxShowCategory from '../../customer/Home/BoxShowCategory/BoxShowCategory';
 import useFetchData from '../../../api/useFetchData'
 import BoxShowFeaturedCourse from './BoxShowfeaturedCourse/BoxShowFeaturedCourse';

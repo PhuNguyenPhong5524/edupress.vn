@@ -1,6 +1,6 @@
 import TitleHome from "../../../../components/title/TitleHome";
 import ButtonViewAll from "../../../../components/buttons/ButtonViewAll";
-import SwiperShowCourse from "../SwiperShowCourse";
+import SwiperShowCourse from "../../../../components/SwiperShowCourse";
 
 const BoxShowFeaturedCourse = ({courses, loading}) => {
   return (
