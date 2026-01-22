@@ -36,10 +36,10 @@ const BoxCourseInfoCard = ({showList}) => {
                         <div className="mb-2">
                             { 
                                 showList.price === 0 
-                                ? <span class="text-green-400 font-semibold text-[20px]">Free</span>
+                                ? <span className="text-green-400 font-semibold text-[20px]">Free</span>
                                 : <div className="text-[30px] text-red-600 font-bold py-[10px]">
                                     {Number(showList.price).toLocaleString('vi-VN')} 
-                                    <span class="text-[20px] underline align-super">đ</span>
+                                    <span className="text-[20px] underline align-super">đ</span>
                                 </div>
                             }
                         </div>
