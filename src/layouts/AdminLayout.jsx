@@ -32,7 +32,7 @@ const AdminLayout = () => {
               icon: <UserOutlined />,
               label: 'Quản lý nhân viên',
               onClick: () => {
-                nav('/employee');
+                nav('employee');
               }
             },
             {
@@ -40,7 +40,7 @@ const AdminLayout = () => {
               icon: <VideoCameraOutlined />,
               label: 'Quản lý sản phẩm',
               onClick: () => {
-                nav('/products');
+                nav('products');
               }
             },
             {

@@ -1,15 +1,17 @@
 
 'use client';
 
-import BagShoppingIcon from "./icons/BagShoppingIcon";
-import BellIcon from "./icons/BellIcon";
-import ChevronDown from "./icons/ChevronDown";
-import SearchIcon from "./icons/SearchIcon";
-import UserIcon from "./icons/UserIcon";
-import BarsIcon from "./icons/BarsIcon";
-import useFetchData from "../api/useFetchData";
+import BagShoppingIcon from "../icons/BagShoppingIcon";
+import BellIcon from "../icons/BellIcon";
+import ChevronDown from "../icons/ChevronDown";
+import UserIcon from "../icons/UserIcon";
+import useFetchData from "../../api/useFetchData";
 import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
+import MenuMoblie from "./MenuMoblie";
+import SearchModal from "./SearchDropdown";
+
+
 
 const Header = () => {
 
@@ -50,20 +52,14 @@ const Header = () => {
             <div className="bg-[#ffffff] flex items-center shadow-md ">
                 <div 
                     className="
-                        lg:max-w-[1080px] mx-auto flex items-center justify-between w-full h-full 
+                        lg:max-w-[1080px] mx-auto flex items-center justify-between  w-full h-full 
                         px-[15px] lg:px-0
                     "
                 >   
                     {/* Button Mobile */}
-                        <button 
-                            className="
-                                lg:hidden  hover:text-[#FF782D]
-                            "
-                        >
-                            <BarsIcon size={24} />
-                        </button>
-                    {/* div */}
-                        <div className="w-[50px] md:w-[180px] bg-[#ffffff] lg:hidden"></div>
+                        <div className=" lg:hidden">
+                            <MenuMoblie />
+                        </div>
                     {/* <!-- Logo --> */}
                         <Link to="/" className="md:leading-[20px] w-full flex md:w-auto md:flex-col justify-center items-center">
                             <div className="flex items-center gap-1 ">
@@ -157,9 +153,7 @@ const Header = () => {
                     {/* <!-- Cart & Account --> */}
                         <div className="flex items-center gap-[25px]">
                             <ul className="flex items-center overflow-visible leading-[30px]">
-                                <li className="text-[#000000] text-[18px] px-[5px] py-[15px] md:py-[20px] md:px-[15px] hover:text-[#FF782D] hover:bg-[#F5F5F5] cursor-pointer">
-                                    <SearchIcon size={24}/>  
-                                </li>
+                                <SearchModal  />
                                 <li 
                                     className="
                                         text-[#000000] text-[18px] px-[5px] py-[15px] md:py-[20px] md:px-[15px] hover:text-[#FF782D] 
@@ -259,14 +253,14 @@ const Header = () => {
                                     {/* <!-- Submenu User --> */}
                                         <div 
                                             className="
-                                                absolute h-[5px] right-0 top-[100%] w-[200px] opacity-0
+                                                absolute h-[5px] right-0 top-[100%] translate-y-[6px] w-[200px] opacity-0
                                                 group-hover:opacity-100 z-[49] shadow-xl
                                             "
                                         >
                                         </div>
                                         <ul
                                             id="userMenu"
-                                            className="absolute right-0 top-[100%] translate-y-[5px] w-[250px] bg-[#ffffff] shadow-md rounded-md
+                                            className="absolute right-0 top-[100%] translate-y-[8px] w-[250px] bg-[#ffffff] shadow-md rounded-md
                                                     opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto overflow-hidden
                                                     transition-all duration-300 z-50 scale-0 group-hover:scale-100 boder border-[2px] border-[#EAEAEA]
                                                 "
