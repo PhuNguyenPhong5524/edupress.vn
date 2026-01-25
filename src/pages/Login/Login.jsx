@@ -14,31 +14,29 @@ export default function Login() {
   const nav = useNavigate();
   
   const onFinish = (values) => {
-  setLoading(true);
-  setMessage({ type: "", content: "" });
+    setLoading(true);
+    setMessage({ type: "", content: "" });
 
-  const checkUserLogin = users.find(
-    (u) =>
-      u.email === values.email &&
-      String(u.password) === String(values.password)
-  );
+    const checkUserLogin = users.find(
+      (u) =>
+        u.email === values.email &&
+        String(u.password) === String(values.password)
+    );
 
-  if (!checkUserLogin) {
-    setTimeout(() => {
-      setMessage({
-        type: "error",
-        content: "Email hoặc mật khẩu không đúng!",
-      });
-      setLoading(false);
-    }, 600);
+    if (!checkUserLogin) {
+      setTimeout(() => {
+        setMessage({
+          type: "error",
+          content: "Email hoặc mật khẩu không đúng!",
+        });
+        setLoading(false);
+      }, 600);
 
-    return;
-  }
-
-  nav(checkUserLogin.role === "admin" ? "/admin" : "/");
+      return;
+    }
+    localStorage.setItem("user", JSON.stringify(checkUserLogin)); 
+    nav(checkUserLogin.role === "admin" ? "/admin" : "/");
 };
-
-
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
