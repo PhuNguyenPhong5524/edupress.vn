@@ -12,21 +12,21 @@ const mockProducts = [
     title: "ReactJS từ cơ bản đến nâng cao",
     author: "Nguyễn Văn A",
     price: "499.000đ",
-    image: "https://via.placeholder.com/80",
+    image: "/",
   },
   {
     id: 2,
     title: "NodeJS & Express thực chiến",
     author: "Trần Thị B",
     price: "399.000đ",
-    image: "https://via.placeholder.com/80",
+    image: "/",
   },
   {
     id: 3,
     title: "UI/UX cho người mới bắt đầu",
     author: "Lê Văn C",
     price: "299.000đ",
-    image: "https://via.placeholder.com/80",
+    image: "/",
   },
 ];
 
