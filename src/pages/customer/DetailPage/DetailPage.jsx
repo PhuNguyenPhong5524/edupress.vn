@@ -5,7 +5,7 @@ import BoxShowTabsCourse from "./BoxShowTabsCourse/BoxShowTabsCourse";
 import BoxCourseInfoCard from "./BoxShowInfo/BoxCourseInfoCard";
 import useFetchData from "../../../api/useFetchData";
 import { useParams } from "react-router";
-import { useStickyObserver } from "../../../hooks/UseStickyObserver";
+import { useStickyObserver } from "../../../hooks/useStickyObserver";
 const StickyCard = memo(({ show, showList }) => {
   if (!show) return null;
   return (
