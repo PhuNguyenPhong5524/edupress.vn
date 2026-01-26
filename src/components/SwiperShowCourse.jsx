@@ -9,27 +9,27 @@ import BoxCourse from "../components/BoxCourse";
 import { useState } from "react";
 
 
-const SwiperShowCourse = ({ courses, loading }) => {
+const SwiperShowCourse = ({ courses, loading, btnsw }) => {
   const [slidesView, setSlidesView] = useState(4);
   return (
         <div className="relative">
             {/* Custom arrows */}
             <button 
-                className="
-                    cour-prev absolute left-[-5px] lg:-left-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0]
+                className={`
+                    ${btnsw}-prev absolute left-[-5px] lg:-left-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0]
                     w-10 h-10 bg-white rounded-full shadow hidden md:flex items-center justify-center 
                     hover:bg-[#FF782D] hover:text-white hover:opacity-60 transition cursor-pointer
-                "
+                `}
             >
                 <ChevronLeftIcon size={20} />
             </button>
 
             <button 
-                className="
-                cour-next absolute right-[-5px] lg:-right-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0] 
+                className={`
+                ${btnsw}-next absolute right-[-5px] lg:-right-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0] 
                 w-10 h-10 bg-white rounded-full shadow hidden md:flex items-center justify-center
                 hover:bg-[#FF782D] hover:text-white hover:opacity-60 transition cursor-pointer
-                "
+                `}
             >
                 <ChevronRightIcon size={20} />
             </button>
@@ -37,8 +37,8 @@ const SwiperShowCourse = ({ courses, loading }) => {
             <Swiper
                 modules={[Navigation]}
                 navigation={{
-                prevEl: ".cour-prev",
-                nextEl: ".cour-next",
+                prevEl: `.${btnsw}-prev`,
+                nextEl: `.${btnsw}-next`,
                 }}
                 spaceBetween={12}
                 onBreakpoint={(swiper, bp) =>

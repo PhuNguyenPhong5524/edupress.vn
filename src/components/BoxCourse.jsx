@@ -4,13 +4,12 @@ import ClockIcon from "../components/icons/ClockIcon";
 import GraduationIcon from "../components/icons/GraduationIcon"
 const BoxCourse = ({item}) => {
 
-const isNewCourse = (createdAt, students) => {
-    if (!createdAt) return false;
+    const isNewCourse = (createdAt, students) => {
+        if (!createdAt) return false;
 
-    const diffDays =
-        (Date.now() - new Date(createdAt)) / (1000 * 60 * 60 * 24);
+        const diffDays = (Date.now() - new Date(createdAt)) / (1000 * 60 * 60 * 24);
 
-    return diffDays <= 30 && Number(students || 0) < 50;
+        return diffDays <= 30 && Number(students || 0) < 50;
     };
 
     let showBadge = null;
