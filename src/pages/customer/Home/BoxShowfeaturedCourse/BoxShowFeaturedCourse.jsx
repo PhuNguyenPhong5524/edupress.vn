@@ -3,6 +3,7 @@ import ButtonViewAll from "../../../../components/buttons/ButtonViewAll";
 import SwiperShowCourse from "../../../../components/SwiperShowCourse";
 
 const BoxShowFeaturedCourse = ({courses, loading}) => {
+    // const showCourseFeature = courses.filter(item => item.featured === true);
   return (
     <div>
         <div className="py-[30px] flex justify-between items-center">

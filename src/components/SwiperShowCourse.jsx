@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import ChevronLeftIcon from "./icons/ChevronLeftIcon";
 import ChevronRightIcon from "./icons/ChevronRightIcon";
-import BoxCourse from "../pages/customer/Home/BoxCourse/BoxCourse";
+import BoxCourse from "../components/BoxCourse";
 import { useState } from "react";
 
 
@@ -17,7 +17,7 @@ const SwiperShowCourse = ({ courses, loading }) => {
             <button 
                 className="
                     cour-prev absolute left-[-5px] lg:-left-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0]
-                    w-10 h-10 bg-white rounded-full shadow flex items-center justify-center 
+                    w-10 h-10 bg-white rounded-full shadow hidden md:flex items-center justify-center 
                     hover:bg-[#FF782D] hover:text-white hover:opacity-60 transition cursor-pointer
                 "
             >
@@ -27,7 +27,7 @@ const SwiperShowCourse = ({ courses, loading }) => {
             <button 
                 className="
                 cour-next absolute right-[-5px] lg:-right-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0] 
-                w-10 h-10 bg-white rounded-full shadow flex items-center justify-center
+                w-10 h-10 bg-white rounded-full shadow hidden md:flex items-center justify-center
                 hover:bg-[#FF782D] hover:text-white hover:opacity-60 transition cursor-pointer
                 "
             >

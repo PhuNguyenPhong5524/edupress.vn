@@ -6,6 +6,9 @@ import BoxCourseInfoCard from "./BoxShowInfo/BoxCourseInfoCard";
 import useFetchData from "../../../api/useFetchData";
 import { useParams } from "react-router";
 import { useStickyObserver } from "../../../hooks/useStickyObserver";
+
+
+// Sticky Card
 const StickyCard = memo(({ show, showList }) => {
   if (!show) return null;
   return (
