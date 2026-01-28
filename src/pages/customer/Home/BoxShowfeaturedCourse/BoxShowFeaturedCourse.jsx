@@ -10,7 +10,7 @@ const BoxShowFeaturedCourse = ({courses, loading}) => {
             {/* <!-- Title --> */}
                 <TitleHome  
                     title={"Khóa học nổi bật"} 
-                    description={"Khám phá các khóa học được chọn lọc dành riêng cho bạn"} 
+                    description={"Khám phá các khóa học nổi bật"} 
                 />
             {/* <!-- Button --> */}
                 <ButtonViewAll nameLink={"/course"} />
