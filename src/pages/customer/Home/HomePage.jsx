@@ -5,7 +5,8 @@ import BoxShowCategory from '../../customer/Home/BoxShowCategory/BoxShowCategory
 import useFetchData from '../../../api/useFetchData'
 import BoxShowFeaturedCourse from './BoxShowfeaturedCourse/BoxShowFeaturedCourse';
 import BoxShowNewCourse from './BoxShowNewCour/BoxShowNewCourse';
-
+import BoxBannerSmall from '../../../components/BoxBannerSmall';
+import BoxOverviewInstructor from './BoxOverviewInstructor/BoxOverviewInstructor'
 
 
 const HomePage = () => {
@@ -24,6 +25,17 @@ const HomePage = () => {
                         <BoxShowFeaturedCourse courses={courses} loading={loadingCourse} />
                     {/* <!-- Section khóa học mới--> */}
                         <BoxShowNewCourse courses={courses} loading={loadingCourse} />
+                    {/* <!-- Box Banner Quảng bá khóa học--> */}
+                        <BoxBannerSmall 
+                            titleSmall={'KHÁM PHÁ KIẾN THỨC MỖI NGÀY'}
+                            title={'Nâng cấp kỹ năng – Sẵn sàng cho sự nghiệp'}
+                            content={'Khóa học thực hành về lập trình, thiết kế và kỹ năng số. Học mọi lúc, mọi nơi cùng chuyên gia trong ngành.'}
+                            color1={'#B5FFE7'} 
+                            color2={'#FDC1C1'}
+                            img={'/images/banner-ptweb.png'}
+                        />
+                    {/* <!-- Box Overview Instructions --> */}
+                        <BoxOverviewInstructor />
                 </div>
         </div>
     )

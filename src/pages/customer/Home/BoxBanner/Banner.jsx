@@ -1,7 +1,13 @@
 
+import ButtonView from "../../../../components/buttons/ButtonViewCourse";
+
 const Banner = () => {
     return (
-        <div className="bgr-banner flex justify-center items-center overflow-hidden">
+        <div 
+            className="
+                bg-gradient-to-r from-[#FFF5BE] to-[#D0F7EA] flex justify-center items-center overflow-hidden
+            "
+        >
             {/* <!-- Banner Background --> */}
                 <div className=" w-full h-[540px] lg:h-[700px] relative group">
                     {/* <!-- Image Banner --> */}
@@ -29,22 +35,27 @@ const Banner = () => {
                         "
                     >
                         {/* <!-- Content --> */}
-                            <div className="absolute px-[15px] lg:px-0 lg:left-0 flex flex-col justify-center gap-[40px] lg:gap-[24px] z-[60] w-[40%]">
-                                <h1 className="text-[18px] font-bold lg:text-[48px] lg:font-semibold w-[500px]">Học nhanh <br /> Làm chủ kỹ năng!</h1>
-                                <p className="text-[14px] lg:text-[18px] font-regular">
-                                    Xây dựng sự nghiệp vững chắc với các khóa học thực tiễn được biên soạn bởi chuyên gia hàng đầu trong từng lĩnh vực.
+                            <div
+                                className="
+                                    absolute top-1/2 transform -translate-y-1/3 lg:left-0 lg:top-1/2 lg:-translate-x-0 lg:-translate-y-1/2
+                                    w-[92%] sm:w-[80%] md:w-[50%] lg:w-[40%] flex flex-col gap-[16px] lg:gap-[24px]
+                                    px-[16px] py-[24px] md:px-[24px] md:py-[30px] lg:p-0 bg-[#fff5becc] md:bg-[#ffffffcc] lg:bg-transparent
+                                    rounded-[12px] md:rounded-[16px] lg:rounded-none
+                                    backdrop-blur-sm z-[60]
+                                "
+                            >
+                                <h1 className="text-[22px] md:text-[28px] lg:text-[48px] font-bold lg:font-semibold leading-tight">
+                                    Học nhanh <br /> Làm chủ kỹ năng!
+                                </h1>
+
+                                <p className="text-[14px] md:text-[16px] lg:text-[18px] text-[#444]">
+                                    Xây dựng sự nghiệp vững chắc với các khóa học thực tiễn
+                                    được biên soạn bởi chuyên gia hàng đầu trong từng lĩnh vực.
                                 </p>
-                                <button 
-                                    className="
-                                        bg-[#FF782D] rounded-[24px] w-[200px] h-[48px] transform transition-transform duration-300 ease-in-out
-                                        hover:opacity-80 hover:shadow-md hover:scale-110 animate-pulse
-                                    "
-                                >
-                                    <a className="text-[18px] font-medium text-white" href="#">
-                                        Xem tất cả khóa học
-                                    </a>
-                                </button>
-                                
+
+                                <div className="animate-pulse"> 
+                                    <ButtonView nameLink="/course" title="Xem khóa học" />
+                                </div>
                             </div>
                         {/* <!-- Image Banner --> */}
                             <div 
