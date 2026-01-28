@@ -8,6 +8,7 @@ import HomePage from './pages/customer/Home/HomePage.jsx'
 import CustomerLayout from './layouts/CustomerLayout.jsx'
 import DetailPage from './pages/customer/DetailPage/DetailPage.jsx'
 import ManagementUsers from './pages/admin/ManagementUsers/ManagementUsers.jsx'
+import Register from './pages/Register/Register.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='products' element={<div>Products</div>} />
         </Route>
         <Route path='login' element={<Login />} />
+        <Route path='register' element={<Register />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

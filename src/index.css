@@ -8,3 +8,42 @@
 .bgr_login{
     background: linear-gradient(to right,#FEB6B6,#B7E1FF);
 }
+
+/* Button login and register */
+
+.custom-btn{
+    width: 100%;
+    background-color: #FF782D;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: semibold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+.custom-btn:hover{
+    color: #ffffff !important;
+    border:  none !important;
+    opacity: 0.6 !important;
+    background-color: #FF782D !important;
+}
+
+.custom-input{
+    border: outline !important;
+    border: 1px solid #cbcbcb !important;
+    border-radius: 8px !important;
+    height: 40px !important;
+    font-size: 12px !important;
+    font-weight: semibold !important;
+    color: #9f9f9f !important;
+        
+}
+
+
+.custom-form-item {
+  margin-bottom: 12px !important;
+}
