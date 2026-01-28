@@ -7,6 +7,7 @@ import BoxShowFeaturedCourse from './BoxShowfeaturedCourse/BoxShowFeaturedCourse
 import BoxShowNewCourse from './BoxShowNewCour/BoxShowNewCourse';
 import BoxBannerSmall from '../../../components/BoxBannerSmall';
 import BoxOverviewInstructor from './BoxOverviewInstructor/BoxOverviewInstructor'
+import BoxShowCourseCategory from './BoxShowCourseCategory/BoxShowCourseCategory';
 
 
 const HomePage = () => {
@@ -22,9 +23,17 @@ const HomePage = () => {
                     {/* <!-- Section danh mục--> */}
                         <BoxShowCategory  categories={categories} loading={loading} />
                     {/* <!-- Section sản phẩm nổi bật--> */}
-                        <BoxShowFeaturedCourse courses={courses} loading={loadingCourse} />
+                        <BoxShowFeaturedCourse 
+                            courses={courses} 
+                            loading={loadingCourse} 
+                            btnsw={'feature'}
+                        />
                     {/* <!-- Section khóa học mới--> */}
-                        <BoxShowNewCourse courses={courses} loading={loadingCourse} />
+                        <BoxShowNewCourse 
+                            courses={courses} 
+                            loading={loadingCourse} 
+                            btnsw={'newCour'}
+                        />
                     {/* <!-- Box Banner Quảng bá khóa học--> */}
                         <BoxBannerSmall 
                             titleSmall={'KHÁM PHÁ KIẾN THỨC MỖI NGÀY'}
@@ -36,6 +45,22 @@ const HomePage = () => {
                         />
                     {/* <!-- Box Overview Instructions --> */}
                         <BoxOverviewInstructor />
+                    {/* <!-- Section Khóa học--> */}
+                        <BoxShowCourseCategory
+                            courses={courses}
+                            loading={loadingCourse}
+                            category={1}
+                            categories={categories}
+                            btnsw={''}
+                        />
+                    {/* <!-- Section Khóa học--> */}
+                        <BoxShowCourseCategory
+                            courses={courses}
+                            loading={loadingCourse}
+                            category={2}
+                            categories={categories}
+                            btnsw={''}
+                        />
                 </div>
         </div>
     )

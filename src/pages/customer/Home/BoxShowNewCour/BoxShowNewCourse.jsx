@@ -5,14 +5,21 @@ import TitleHome from "../../../../components/title/TitleHome";
 import ButtonViewAll from "../../../../components/buttons/ButtonViewAll";
 import SwiperShowCourse from "../../../../components/SwiperShowCourse";
 
-const BoxShowNewCourse = ({courses, loading}) => {
+const BoxShowNewCourse = ({courses, loading, btnsw}) => {
     
     const isNewCourse = (createdAt) => {
-        const diffDays = (Date.now() - new Date(createdAt)) / (1000 * 60 * 60 * 24);
-        return diffDays <= 30 ;
-    };
+        if (!createdAt) return false;
 
-    const showCourseFeature = courses?.filter(item => isNewCourse(item.created_at));
+        const diffDays =
+            (Date.now() - new Date(createdAt)) / (1000 * 60 * 60 * 24);
+
+        return diffDays <= 30;
+        };
+
+        const newCourses = courses?.filter(item =>
+        isNewCourse(item.created_at)
+    );
+
 
   return (
     <div>
@@ -26,7 +33,7 @@ const BoxShowNewCourse = ({courses, loading}) => {
                 <ButtonViewAll nameLink={"/course"} />
         </div>
         {/* Box show slider course featured */}
-            <SwiperShowCourse courses={showCourseFeature} loading={loading} btnsw={'newCour'} />
+            <SwiperShowCourse courses={newCourses} loading={loading} btnsw={btnsw} />
            
     </div>
     )   

@@ -4,26 +4,26 @@ import ClockIcon from "../components/icons/ClockIcon";
 import GraduationIcon from "../components/icons/GraduationIcon"
 const BoxCourse = ({item}) => {
 
-    const isNewCourse = (createdAt, students) => {
+    const isNewCourse = (createdAt) => {
+
         if (!createdAt) return false;
 
-        const diffDays = (Date.now() - new Date(createdAt)) / (1000 * 60 * 60 * 24);
+        const diffDays =
+            (Date.now() - new Date(createdAt)) / (1000 * 60 * 60 * 24);
 
-        return diffDays <= 30 && Number(students || 0) < 50;
+        return diffDays <= 30;
     };
 
     let showBadge = null;
 
-    if (isNewCourse(item.created_at, item.students)) {
+    if (isNewCourse(item.created_at)) {
         showBadge = "Khóa học mới";
     } else if (item.students >= 500) {
         showBadge = "🔥 Đặc biệt";
-    } else if (item.feature === true) {
+    } else if (item.feature) {
         showBadge = "⭐ Nổi bật";
     }
 
-
-    
     return (
         <div 
             className="
