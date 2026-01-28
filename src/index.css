@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* Banner */
-.bgr-banner{
+/* .bgr-banner{
     background: linear-gradient(to right,#FFF5BE,#D0F7EA);
-}
+} */
 
 .bgr_login{
     background: linear-gradient(to right,#FEB6B6,#B7E1FF);
