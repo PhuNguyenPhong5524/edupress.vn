@@ -6,9 +6,12 @@ const BoxBannerSmall = ({titleSmall, title, content, color1, color2, img}) => {
             <section className="py-[40px] md:py-[30px]">
                 <div
                     className={`
-                        group w-full min-h-[280px] md:h-[324px] rounded-[20px] bg-gradient-to-r from-[${color1}] to-[${color2}]
-                        flex flex-col md:flex-row items-center justify-between px-[20px] md:px-[30px] lg:px-[40px] overflow-hidden
+                        group w-full min-h-[280px] md:h-[324px] rounded-[20px] bg-gradient-to-r overflow-hidden
+                        flex flex-col md:flex-row items-center justify-between px-[20px] md:px-[30px] lg:px-[40px] 
                     `}
+                    style={{
+                        backgroundImage: `linear-gradient(to right, ${color1}, ${color2})`,
+                    }}
                 >
                     {/* Content */}
                     <div className="
