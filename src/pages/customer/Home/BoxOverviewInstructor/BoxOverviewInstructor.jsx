@@ -3,7 +3,7 @@ import ButtonView from "../../../../components/buttons/ButtonViewCourse";
 
 const BoxOverviewInstructor = () => {
     return (
-        <section className="py-[10px] md:py-[40px]">
+        <section className="">
             {/* ===== Box tổng quan ===== */}
             <div className="
                 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
@@ -32,10 +32,8 @@ const BoxOverviewInstructor = () => {
 
             {/* ===== Box nội dung ===== */}
             <div className="
-                flex flex-col lg:flex-row
-                gap-[30px] lg:gap-[60px]
-                mt-[60px]
-                items-center
+                flex flex-col lg:flex-row gap-[30px] lg:gap-[60px]
+                mt-[30px] items-center
             ">
                 <div className="w-full lg:w-1/2 flex justify-center border-[1px] border-[#EAEAEA] rounded-[20px]">
                     <img

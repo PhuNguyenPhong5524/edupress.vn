@@ -9,7 +9,7 @@ import YoutubeIcon from "./icons/YoutubeIcon";
 
 const Footer = () => {
     return (
-        <footer className="showFooter bg-[#F5F5F5] mt-[20px]">      
+        <footer className="showFooter bg-[#F5F5F5] mt-[30px]">      
             <div>
                 <div 
                     className="

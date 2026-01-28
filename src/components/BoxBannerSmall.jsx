@@ -3,7 +3,7 @@ import ButtonView from "./buttons/ButtonViewCourse";
 
 const BoxBannerSmall = ({titleSmall, title, content, color1, color2, img}) => {
     return (
-            <section className="py-[40px] md:py-[30px]">
+            <section className="py-[30px]">
                 <div
                     className={`
                         group w-full min-h-[280px] md:h-[324px] rounded-[20px] bg-gradient-to-r overflow-hidden
