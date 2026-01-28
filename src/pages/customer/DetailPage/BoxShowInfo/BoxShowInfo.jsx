@@ -6,61 +6,78 @@ import BoxCourseInfoCard from "./BoxCourseInfoCard";
 const BoxShowInfo = ({showStickyCard, showList}) => {
     return (
         <div className="w-full bg-[#000000] text-white py-10">
-            <div className="max-w-[1080px] mx-auto grid grid-cols-[2fr_1fr] gap-8 relative w-full">
-                {/* <!-- Box Left --> */}
+            <div
+                className="
+                max-w-[1080px] mx-auto w-full
+                grid gap-8
+                grid-cols-1
+                lg:grid-cols-[2fr_1fr]
+                relative
+                px-4 lg:px-0
+                "
+            >
+                {/* Box Left */}
                 <div className="showInfoCourse w-full">
-                    <div className="w-full">
-                        <h1 className="text-[38px] font-semibold">
-                            {showList && showList.course_title}
-                        </h1>
-                        <div className="flex items-center gap-4 mt-5">
-                            <div className="flex items-center">
-                                <ClockIcon size={20} className="text-[#FF782D]"/>
-                                <span className="ml-1"> {showList && showList.duration}</span>  
-                            </div>
-                            <div className="flex items-center">
-                                <GraduationIcon size={20} className="text-[#FF782D]"/>
-                                <span className="ml-1"> {showList && showList.students}</span>
-                            </div>
-                            <div className="flex items-center">
-                                <BookIcon size={20} className="text-[#FF782D]"/>
-                                <span className="ml-1"> {showList && showList.total_sections}</span>
-                            </div>
-                            <div className="flex items-center">
-                                <SignalIcon size={20} className="text-[#FF782D]"/>
-                                <span>Tất cả mức độ</span>
-                            </div>
+                    <h1
+                        className="
+                        text-[22px] leading-tight
+                        md:text-[30px]
+                        lg:text-[38px]
+                        font-semibold
+                        "
+                    >
+                        {showList?.course_title}
+                    </h1>
+
+                    <div
+                        className="
+                        flex flex-wrap items-center gap-x-6 gap-y-3
+                        mt-5 text-[14px]
+                        md:text-[15px]
+                        "
+                    >
+                        <div className="flex items-center">
+                            <ClockIcon size={18} className="text-[#FF782D]" />
+                            <span className="ml-2">{showList?.duration}</span>
+                        </div>
+
+                        <div className="flex items-center">
+                            <GraduationIcon size={18} className="text-[#FF782D]" />
+                            <span className="ml-2">{showList?.students}</span>
+                        </div>
+
+                        <div className="flex items-center">
+                            <BookIcon size={18} className="text-[#FF782D]" />
+                            <span className="ml-2">{showList?.total_sections}</span>
+                        </div>
+
+                        <div className="flex items-center">
+                            <SignalIcon size={18} className="text-[#FF782D]" />
+                            <span className="ml-2">Tất cả mức độ</span>
                         </div>
                     </div>
                 </div>
 
-                {/* <!-- Box Right --> */}
-                <div className="w-full">
-                    <div className="relative">
-                        {!showStickyCard && (
-                            <div className="absolute top-0 w-full transform transition-all ease-in-out duration-300">
-                                <BoxCourseInfoCard  showList={showList}/>
-                            </div>
-                        )}
-                    </div>
-                    
-                        {/* <!-- Modal Video --> */}
-                            {/* <div id="default-modal" tabindex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                <div className="relative p-2 w-full max-w-2xl max-h-full">
-                                
-                                    <div className="relative bg-[#ffffff] rounded-md border border-default rounded-base shadow-sm p-4 md:p-6">
-                                        <div className="flex justify-between items-center flex-col">
-                                            <p className="text-[20px] text-[#000000] font-bold mb-[10px]">Xem trước khóa học</p> 
-                                            <div className="video-container">
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
+                {/* Box Right */}
+                <div className="w-full relative hidden lg:block">
+                    {!showStickyCard && (
+                        <div
+                            className="
+                                lg:absolute lg:top-0
+                                w-full
+                                transition-all duration-300
+                            "
+                        >
+                            <BoxCourseInfoCard showList={showList} />
+                        </div>
+                    )}
+                </div>
+                <div className="w-full relative block lg:hidden">
+                    <BoxCourseInfoCard showList={showList} />
                 </div>
             </div>
         </div>
+
     );
 }
 export default BoxShowInfo;

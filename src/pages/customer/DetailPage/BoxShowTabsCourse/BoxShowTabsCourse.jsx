@@ -8,7 +8,7 @@ import BoxRequests from "./BoxRequests"
 
 const tabs = [
   { key: "overview", label: "Tổng quan" },
-  { key: "instructions", label: "Nội dung Khóa học" },
+  { key: "instructions", label: "Nội dung" },
   { key: "description", label: "Mô tả" },
   { key: "request", label: "Yêu cầu" },
 ];
@@ -25,7 +25,7 @@ export default function BoxShowTabsCourse({showList}) {
             <button
               onClick={() => setActiveTab(tab.key)}
               className={`
-                w-full py-3 text-[16px] font-semibold border-r last:border-r-0
+                w-full py-3 text-[14px] md:text-[16px] lg::text-[18px] font-semibold border-r last:border-r-0
                 transition cursor-pointer
                 ${
                   activeTab === tab.key

@@ -13,57 +13,90 @@ const BoxCourseInfoCard = ({showList}) => {
         >
             {
                 showList && (
-                    <div>
-                        <div className="relative group overflow-hidden rounded-md h-auto">
-                            <div className="imageCour">
-                                <img src={showList.image_url} alt={showList.course_title}
-                                    className="w-[400px] h-full rounded-md mb-3 object-cover transform transition-all ease-in-out duration-300 group-hover:scale-110"
+                   <div className="w-full">
+                        {/* IMAGE + PREVIEW */}
+                            <div className="relative group overflow-hidden rounded-lg w-full">
+                                <img
+                                src={showList.image_url}
+                                alt={showList.course_title}
+                                className="
+                                    w-full h-auto lg:h-[200px] object-cover transition-transform duration-300 ease-in-out
+                                    group-hover:scale-110
+                                "
                                 />
-                            </div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-2">
+
+                                {/* Overlay play */}
+                                <div
+                                className="
+                                    absolute inset-0
+                                    flex flex-col items-center justify-center gap-2
+                                    bg-black/30 opacity-100
+                                    transition-opacity duration-300
+                                "
+                                >
                                 <button
                                     type="button"
                                     className="
-                                        bg-white w-[50px] h-[50px] rounded-full flex items-center justify-center cursor-pointer
-                                        animate-pulse border-2 border-white text-[#FF782D] hover:bg-[#FF782D] hover:text-[#ffffff] transition-all duration-300 hover:scale-110
+                                    bg-white w-[48px] h-[48px]
+                                    rounded-full flex items-center justify-center
+                                    border-2 border-white text-[#FF782D]
+                                    hover:bg-[#FF782D] hover:text-white
+                                    transition-all duration-300 hover:scale-110
                                     "
                                 >
-                                    <PlayIcon size={25} className="" />
+                                    <PlayIcon size={22} />
                                 </button>
-                                <span className="text-[16px] font-semibold text-[#ffffff] -translate-y-[-20px] underline">Xem trước khóa học</span>
-                            </div>
-                        </div>
-                        <div className="mb-2">
-                            { 
-                                showList.price === 0 
-                                ? <span className="text-green-400 font-semibold text-[20px]">Free</span>
-                                : <div className="text-[30px] text-red-600 font-bold py-[10px]">
-                                    {Number(showList.price).toLocaleString('vi-VN')} 
-                                    <span className="text-[20px] underline align-super">đ</span>
+
+                                <span className="text-[14px] md:text-[15px] font-semibold text-white underline">
+                                    Xem trước khóa học
+                                </span>
                                 </div>
-                            }
-                        </div>
-                        <button 
-                            className="
-                                w-full bg-[#FF782D] text-white py-2 rounded-md mb-2 cusor-pointer
-                                transform transition-all duration-300 ease-in-out hover:opacity-70 hover:scale-95
-                            "
-                        >
-                            Thêm giỏ hàng
-                        </button>
-                        <button 
-                            className="
-                                w-full border border-[#FF782D] text-[#FF782D] py-2 rounded-md cusor-pointer
-                                transform transition-all duration-300 ease-in-out hover:bg-[#FF782D] hover:text-[#ffffff] 
-                            "
-                        >
-                            Đăng ký khóa học
-                        </button>
-                        <p className=" text-gray-500 mt-2 flex items-center gap-1">
-                            <CircleCheckIcon size={20} className="text-[#FF782D]" /> 
-                            <span>Truy cập trọn đời · Chứng nhận</span>
-                        </p>
+                            </div>
+
+                        {/* PRICE */}
+                            <div className="mt-3">
+                                {showList.price === 0 ? (
+                                <span className="text-green-400 font-semibold text-[18px]">
+                                    Free
+                                </span>
+                                ) : (
+                                <div className="text-[24px] md:text-[28px] text-red-600 font-bold">
+                                    {Number(showList.price).toLocaleString("vi-VN")}
+                                    <span className="text-[16px] underline align-super">đ</span>
+                                </div>
+                                )}
+                            </div>
+
+                        {/* BUTTONS */}
+                            <div className="flex flex-col sm:flex-row gap-3 mt-3">
+                                <button
+                                className="
+                                    w-full bg-[#FF782D] text-white py-2 rounded-md
+                                    transition-all duration-300
+                                    hover:opacity-80 hover:scale-[0.97]
+                                "
+                                >
+                                Thêm giỏ hàng
+                                </button>
+
+                                <button
+                                className="
+                                    w-full border border-[#FF782D] text-[#FF782D] py-2 rounded-md
+                                    transition-all duration-300
+                                    hover:bg-[#FF782D] hover:text-white
+                                "
+                                >
+                                Đăng ký khóa học
+                                </button>
+                            </div>
+
+                        {/* FOOTER */}
+                            <p className="mt-3 flex items-center gap-1 text-[12px] text-gray-400">
+                                <CircleCheckIcon size={16} className="text-[#FF782D]" />
+                                <span>Truy cập trọn đời · Chứng nhận</span>
+                            </p>
                     </div>
+
                 )
             }
         </div>

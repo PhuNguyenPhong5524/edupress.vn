@@ -6,13 +6,13 @@ import BoxCourseInfoCard from "./BoxShowInfo/BoxCourseInfoCard";
 import useFetchData from "../../../api/useFetchData";
 import { useParams } from "react-router";
 import { useStickyObserver } from "../../../hooks/useStickyObserver";
-
+import BoxShowCourseRelated from './BoxShowCourseRelated/BoxShowCourseRelated'
 
 // Sticky Card
 const StickyCard = memo(({ show, showList }) => {
   if (!show) return null;
   return (
-    <div className="sticky top-[100px] transform transition-all esease-in-out duration-300">
+    <div className="lg:sticky lg:top-[100px] transform transition-all esease-in-out duration-300">
       <BoxCourseInfoCard  showList={showList}   />
     </div>
   );
@@ -24,6 +24,7 @@ const DetailPage = () => {
 
     const { _id } = useParams();
     const { data: course = [] } = useFetchData("courses");
+    const { data: providers = [] } = useFetchData("providers");
 
     const showList = useMemo(() => {
         return course?.find(item => String(item._id) === String(_id));
@@ -34,23 +35,30 @@ const DetailPage = () => {
 
   return (
    <div className="mt-[80px]">
-      {/* <!-- Breadcrumb --> */}
-        <Breadcrumb nameCate="Chi tiết khách hàng" showList={showList} />
-            {/* Box Show Info */}
+    {/* Breadcrumb */}
+        <Breadcrumb nameCate="Chi tiết khóa học" showList={showList} />
+        {/* Box Show Info */}
             <BoxShowInfo showStickyCard={showStickyCard} showList={showList} />
-                {/* <!-- Nội dung khóa học và box giá --> */}
-                    <div className="max-w-[1080px] mx-auto grid grid-cols-[2fr_1fr] gap-8 py-10 ">
-                        {/* <!-- Box Left --> */}
-                            <div>
-                                {/* <!-- Tab Content --> */}
-                                <BoxShowTabsCourse  showList={showList} />
-                            </div>
-                        {/* <!-- Box Right  --> */}
-                            <div>
-                                <StickyCard show={showStickyCard} showList={showList} />
-                            </div>
+        {/* Nội dung chính */}
+            <div
+                className="
+                    max-w-[1080px] mx-auto grid gap-8 py-10 grid-cols-1
+                    lg:grid-cols-[2fr_1fr] px-[15px] lg:px-0
+                "
+            >
+                {/* LEFT */}
+                    <div className="min-w-0 flex flex-col gap-10">
+                        <BoxShowTabsCourse showList={showList} />
+                        <BoxShowCourseRelated courses={course} currentCourses={showList} providers={providers} />
                     </div>
-   </div>
+
+                {/* RIGHT */}
+                    <div className="hidden lg:block min-w-0">
+                        <StickyCard show={showStickyCard} showList={showList} />
+                    </div>
+            </div>
+    </div>
+
   );
 }
 export default DetailPage;

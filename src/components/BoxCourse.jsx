@@ -82,7 +82,7 @@ const BoxCourse = ({item}) => {
                     {/* Title */}
                         <h4 className=" text-[12px] md:text-[16px] lg:text-[18px] leading-[16px] md:leading-[20px] lg:leading-[24px] font-semibold text-[#000000] group-hover:text-[#FF782D] line-clamp-2">
                         <Link 
-                            to={`detail/${item._id}`}
+                            to={`/detail/${item._id}`}
                             className="" 
                         >
                             {item.course_title}
@@ -118,7 +118,7 @@ const BoxCourse = ({item}) => {
                                 </span>
                             </div>
                             <div className=" text-[12px] md:text-[14px] lg:text-[16px] text-black/40 font-regular">
-                                <Link to={`detail/${item._id}`} className="btnCourseDetail text-[#000000] hover:text-[#FF782D] hover:underline cursor-pointer">Chi tiết</Link>
+                                <Link to={`/detail/${item._id}`} className="btnCourseDetail text-[#000000] hover:text-[#FF782D] hover:underline cursor-pointer">Chi tiết</Link>
                             </div>
                         </div>
                 </div>
