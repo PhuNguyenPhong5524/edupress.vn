@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer";
+import FloatingButtons from "../components/buttons/FloatingButtons";
 
 
 const CustomerLayout = () =>{
@@ -9,6 +10,7 @@ const CustomerLayout = () =>{
             <Header />
                 <Outlet />
             <Footer />
+            <FloatingButtons />
         </div>
     );
 }
