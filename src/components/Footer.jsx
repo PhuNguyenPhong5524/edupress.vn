@@ -27,11 +27,10 @@ const Footer = () => {
                         alt="EduPress Logo"
                         className="w-[30px] h-[20px] md:w-[40px] md:h-[30px]"
                     />
-                    <p className="font-bold md:text-[24px] lg:text-[28px]">EduPress</p>
+                    <p className="font-bold md:text-[24px] lg:text-[28px]">{t('footer.about.brand')}</p>
                     </Link>
-                    <p className="lg:mt-[20px] font-regular text-[10px] md:text-[12px] lg:text-[16px] text-[#555555] text-justify">
-                    EduPress kết nối học viên với chuyên gia uy tín, cung cấp các khóa học chất lượng cao về công nghệ,
-                    kỹ năng mềm và phát triển nghề nghiệp. Học mọi lúc, mọi nơi để sẵn sàng cho tương lai.
+                    <p className="lg:mt-[20px] font-regular text-[10px] md:text-[12px] lg:text-[16px] text-[#555555]">
+                        {t('footer.about.description')}
                     </p>
                 </div>
 
@@ -41,22 +40,22 @@ const Footer = () => {
                     {/* Support */}
                     <div className="w-full">
                     <h3 className="text-[#000000] font-semibold text-[12px] md:text-[18px] lg:text-[20px] lg:pt-[5px] mb-[5px] lg:mb-[20px]">
-                        Hỗ trợ
+                        {t('footer.support.title')}
                     </h3>
                     <ul className="leading-[25px] md:leading-[30px] lg:leading-[40px]">
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Liên hệ
+                            {t('footer.support.contact')}
                         </Link>
                         </li>
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Hỏi đáp thường gặp (FAQ)
+                            {t('footer.support.faq')}
                         </Link>
                         </li>
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Chính sách & Điều khoản
+                            {t('footer.support.policy')}
                         </Link>
                         </li>
                     </ul>
@@ -65,27 +64,27 @@ const Footer = () => {
                     {/* Programs */}
                     <div className="w-full">
                     <h3 className="text-[#000000] font-semibold text-[12px] md:text-[18px] lg:text-[20px] pt-[5px] mb-[5px] lg:mb-[20px]">
-                        Chương trình học
+                        {t('footer.programs.title')}
                     </h3>
                     <ul className="leading-[25px] md:leading-[30px] lg:leading-[40px]">
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Phát triển Web
+                            {t('footer.programs.web')}
                         </Link>
                         </li>
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Khoa học Dữ liệu
+                            {t('footer.programs.data')}
                         </Link>
                         </li>
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Ứng dụng Di động
+                            {t('footer.programs.mobile')}
                         </Link>
                         </li>
                         <li>
                         <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
-                            Tất cả chương trình
+                            {t('footer.programs.all')}
                         </Link>
                         </li>
                     </ul>
@@ -94,17 +93,17 @@ const Footer = () => {
                     {/* Contact */}
                     <div className="w-full">
                     <h3 className="text-[#000000] font-semibold text-[12px] md:text-[18px] lg:text-[20px] pt-[5px] mb-[5px] lg:mb-[20px]">
-                        Liên hệ
+                        {t('footer.contact.title')}
                     </h3>
                     <div className="leading-[30px]">
                         <p className="text-[#555555] text-[10px] md:text-[12px] lg:text-[16px]">
-                        Địa chỉ: 1235 Đường mới, Quận Bình Tân, TP. Hồ Chí Minh
+                            {t('footer.contact.address')}
                         </p>
                         <p className="text-[#555555] text-[10px] md:text-[12px] lg:text-[16px]">
-                        Điện thoại: (0123) 456-789
+                            {t('footer.contact.phone')}
                         </p>
                         <p className="text-[#555555] text-[10px] md:text-[12px] lg:text-[16px]">
-                        Email: hotro@edupress.vn
+                            {t('footer.contact.email')}
                         </p>
                     </div>
 
@@ -125,7 +124,7 @@ const Footer = () => {
                 <div className="max-w-[1290px] mx-auto">
                 <hr className="w-full h-[1px] bg-[#555555] opacity-10" />
                 <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#555555] text-center py-[10px]">
-                    © 2025 EduPress | Nền tảng học trực tuyến cho thế hệ chuyên nghiệp
+                    {t('footer.copyright')}
                 </p>
                 </div>
             </div>
