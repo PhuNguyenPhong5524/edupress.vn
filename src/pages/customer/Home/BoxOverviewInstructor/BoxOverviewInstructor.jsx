@@ -1,7 +1,9 @@
 
+import { useTranslation } from "react-i18next";
 import ButtonView from "../../../../components/buttons/ButtonViewCourse";
 
 const BoxOverviewInstructor = () => {
+    const { t } = useTranslation();
     return (
         <section className="">
             {/* ===== Box tổng quan ===== */}
@@ -11,22 +13,22 @@ const BoxOverviewInstructor = () => {
             ">
                 <div className="bg-[#F5F5F5] h-[160px] md:h-[180px] rounded-[20px] flex flex-col justify-center items-center">
                     <h2 className="text-[#FF782D] text-[28px] md:text-[32px] font-semibold">🎓 50.000+</h2>
-                    <p className="text-[16px] md:text-[18px] font-medium">Học viên</p>
+                    <p className="text-[16px] md:text-[18px] font-medium">{t("home.overview_instructor.box_overview.box_1")}</p>
                 </div>
 
                 <div className="bg-[#F5F5F5] h-[160px] md:h-[180px] rounded-[20px] flex flex-col justify-center items-center">
                     <h2 className="text-[#FF782D] text-[28px] md:text-[32px] font-semibold">📚 120+</h2>
-                    <p className="text-[16px] md:text-[18px] font-medium">Khóa học</p>
+                    <p className="text-[16px] md:text-[18px] font-medium">{t("home.overview_instructor.box_overview.box_2")}</p>
                 </div>
 
                 <div className="bg-[#F5F5F5] h-[160px] md:h-[180px] rounded-[20px] flex flex-col justify-center items-center">
                     <h2 className="text-[#FF782D] text-[28px] md:text-[32px] font-semibold">👨‍🏫 35+</h2>
-                    <p className="text-[16px] md:text-[18px] font-medium">Giảng viên giỏi</p>
+                    <p className="text-[16px] md:text-[18px] font-medium">{t("home.overview_instructor.box_overview.box_3")}</p>
                 </div>
 
                 <div className="bg-[#F5F5F5] h-[160px] md:h-[180px] rounded-[20px] flex flex-col justify-center items-center">
                     <h2 className="text-[#FF782D] text-[28px] md:text-[32px] font-semibold">🌟 100%</h2>
-                    <p className="text-[16px] md:text-[18px] font-medium">Hài lòng học viên</p>
+                    <p className="text-[16px] md:text-[18px] font-medium">{t("home.overview_instructor.box_overview.box_4")}</p>
                 </div>
             </div>
 
@@ -50,23 +52,22 @@ const BoxOverviewInstructor = () => {
                     "
                 >
                     <h2 className="text-[24px] md:text-[28px] lg:text-[32px] font-semibold">
-                        Trở thành giảng viên trên EduPress
+                        {t("home.overview_instructor.box_instructor.title")}
                     </h2>
 
                     <p className="text-[16px] md:text-[18px] text-[#555555] ">
-                        EduPress là nền tảng giúp bạn chia sẻ kiến thức, xây dựng thương hiệu cá nhân
-                        và tạo thu nhập bền vững thông qua các khóa học trực tuyến chất lượng cao.
+                        {t("home.overview_instructor.box_instructor.description")}
                     </p>
 
                     <div className="space-y-[12px] text-left md:text-center lg:text-left">
-                        <p className="text-[16px] md:text-[18px]">✅ Đăng tải và quản lý khóa học dễ dàng.</p>
-                        <p className="text-[16px] md:text-[18px]">✅ Tiếp cận hàng nghìn học viên tiềm năng.</p>
-                        <p className="text-[16px] md:text-[18px]">✅ Chủ động thời gian giảng dạy và nội dung.</p>
-                        <p className="text-[16px] md:text-[18px]">✅ Nhận thu nhập minh bạch từ khóa học.</p>
+                        <p className="text-[16px] md:text-[18px]">✅ {t("home.overview_instructor.box_instructor.benefits.benefit_1")}</p>
+                        <p className="text-[16px] md:text-[18px]">✅ {t("home.overview_instructor.box_instructor.benefits.benefit_2")}</p>
+                        <p className="text-[16px] md:text-[18px]">✅ {t("home.overview_instructor.box_instructor.benefits.benefit_3")}</p>
+                        <p className="text-[16px] md:text-[18px]">✅ {t("home.overview_instructor.box_instructor.benefits.benefit_4")}</p>
                     </div>
 
                     <div>
-                        <ButtonView nameLink="/register" title="Đăng ký ngay" />
+                        <ButtonView nameLink="/register" title={t("home.overview_instructor.btn")} />
                     </div>
                 </div>
             </div>

@@ -1,7 +1,9 @@
 
+import { useTranslation } from "react-i18next";
 import ButtonView from "../../../../components/buttons/ButtonViewCourse";
 
 const Banner = () => {
+    const { t } = useTranslation();
     return (
         <div 
             className="
@@ -45,16 +47,15 @@ const Banner = () => {
                                 "
                             >
                                 <h1 className="text-[22px] md:text-[28px] lg:text-[48px] font-bold lg:font-semibold leading-tight">
-                                    Học nhanh <br /> Làm chủ kỹ năng!
+                                    {t("home.banner.title1")} <br /> {t("home.banner.title2")}
                                 </h1>
 
                                 <p className="text-[14px] md:text-[16px] lg:text-[18px] text-[#444]">
-                                    Xây dựng sự nghiệp vững chắc với các khóa học thực tiễn
-                                    được biên soạn bởi chuyên gia hàng đầu trong từng lĩnh vực.
+                                    {t("home.banner.content")}
                                 </p>
 
                                 <div className="animate-pulse"> 
-                                    <ButtonView nameLink="/course" title="Xem khóa học" />
+                                    <ButtonView nameLink="/course" title={t("home.banner.button")} />
                                 </div>
                             </div>
                         {/* <!-- Image Banner --> */}

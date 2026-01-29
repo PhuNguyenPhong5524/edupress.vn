@@ -4,9 +4,10 @@
 import TitleHome from "../../../../components/title/TitleHome";
 import ButtonViewAll from "../../../../components/buttons/ButtonViewAll";
 import SwiperShowCourse from "../../../../components/SwiperShowCourse";
+import { useTranslation } from "react-i18next";
 
 const BoxShowNewCourse = ({courses, loading, btnsw}) => {
-    
+    const { t } = useTranslation();
     const isNewCourse = (createdAt) => {
         if (!createdAt) return false;
 
@@ -26,8 +27,8 @@ const BoxShowNewCourse = ({courses, loading, btnsw}) => {
         <div className="py-[30px] flex justify-between items-center">
             {/* <!-- Title --> */}
                 <TitleHome  
-                    title={"Khóa học mới"} 
-                    description={"Khám phá các khóa học mới nhất"} 
+                    title={t('home.title_Home.title_3.title')}
+                    description={t('home.title_Home.title_3.description')}
                 />
             {/* <!-- Button --> */}
                 <ButtonViewAll nameLink={"/course"} />

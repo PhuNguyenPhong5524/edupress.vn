@@ -67,3 +67,79 @@
   border: 1px solid #FF782D;
   color: #FF782D;
 }
+
+/* header */
+.nav-link {
+    position: relative;
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* underline mặc định */
+/* =========================
+   NAV UNDERLINE
+========================= */
+.nav-link {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.nav-link:hover {
+    color: #FF782D;
+}
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0; 
+    width: 100%;
+    height: 3px; 
+    background-color: #FF782D;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.25s ease;
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+
+}
+
+.group:hover > .nav-link {
+    color: #FF782D;
+}
+
+.group:hover > .nav-link::after {
+    transform: scaleX(1);
+}
+
+
+/* footer */
+
+.footer-link {
+  position: relative;
+  display: inline-block;
+  color: #555555;
+  transition: color 0.3s ease;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: #FF782D;
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #FF782D;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}

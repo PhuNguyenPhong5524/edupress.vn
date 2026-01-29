@@ -1,8 +1,10 @@
 
 
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router"
 
 const ButtonViewAll = ({nameLink}) => {
+    const { t } = useTranslation();
     return (
         <button 
             className="
@@ -11,7 +13,7 @@ const ButtonViewAll = ({nameLink}) => {
                 hover:shadow-md hover:scale-110
             "
         >
-            <Link className="text-[10px] lg:text-[14px] font-medium text-[#000000] group-hover:text-[#FF782D]" to={nameLink}> Xem tất cả </Link>
+            <Link className="text-[10px] lg:text-[14px] font-medium text-[#000000] group-hover:text-[#FF782D]" to={nameLink}> {t('home.title_Home.btn')} </Link>
         </button>
     )
 }   

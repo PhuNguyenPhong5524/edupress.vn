@@ -8,7 +8,6 @@ const TitleHome = ({title, description}) => {
             <p className="text-[10px] lg:text-[12px] font-regular text-[#555555]">{description}</p>
         </div>
     )
-
 }
 
 export default TitleHome;

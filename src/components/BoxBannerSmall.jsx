@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import ButtonView from "./buttons/ButtonViewCourse";
 
 
 const BoxBannerSmall = ({titleSmall, title, content, color1, color2, img}) => {
+    const { t } = useTranslation();
     return (
             <section className="py-[30px]">
                 <div
@@ -37,7 +39,7 @@ const BoxBannerSmall = ({titleSmall, title, content, color1, color2, img}) => {
                         </p>
 
                         <div className="flex justify-center md:justify-start">
-                            <ButtonView nameLink="/course" title="Xem khóa học" />
+                            <ButtonView nameLink="/course" title={t('home.banner.button')} />
                         </div>
                     </div>
 

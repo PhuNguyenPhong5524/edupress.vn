@@ -77,149 +77,97 @@ const Header = () => {
                             <p className="hidden lg:block text-[12px] font-semibold text-center">{t('header.slogan')}</p>
                         </Link>
                     {/* <!-- Menu --> */}
-                        <nav 
-                            className="
-                                hidden lg:block
-                            "
-                        >
+                        <nav className="hidden lg:block">
                             <ul className="flex items-center overflow-visible">
-                                <li
-                                    className="
-                                        text-[#000000] h-[64px] px-[20px] flex items-center
-                                        transition-colors duration-200 hover:bg-[#F5F5F5] hover:text-[#FF782D]
-                                        rounded-md
-                                    "
-                                    >
-                                    <Link
-                                        to="/"
-                                        className="text-[16px] font-semibold"
-                                    >
-                                        Trang chủ
+                                <li className="h-[64px] px-[20px] flex items-center">
+                                    <Link to="/" className="nav-link text-[16px] font-semibold">
+                                        {t('header.nav1')}
                                     </Link>
                                 </li>
 
-                                <li className="relative group cursor-pointer">
+                                <li className="relative group cursor-pointer h-[64px] px-[20px] flex items-center">
                                     <Link
                                         to="/"
-                                        className="
-                                        flex items-center gap-2
-                                        h-[64px] px-[20px]
-                                        text-[16px] font-semibold
-                                        transition-colors duration-200
-                                        group-hover:bg-[#F5F5F5]
-                                        group-hover:text-[#FF782D]
-                                        rounded-md
-                                        "
+                                        className="nav-link flex items-center gap-2 text-[16px] font-semibold"
                                     >
-                                        Khóa học
+                                        <span>{t('header.nav2')}</span>
                                         <ChevronDown
-                                        size={20}
-                                        className="
-                                            transition-transform duration-300 ease-in-out
-                                            group-hover:rotate-180
-                                        "
+                                            size={20}
+                                            className="transition-transform duration-300 group-hover:rotate-180"
                                         />
                                     </Link>
 
                                     {/* Spacer giữ hover */}
-                                        <div className="absolute left-0 top-full h-3 w-[300px]"></div>
+                                    <div className="absolute left-0 top-full h-3 w-[300px]"></div>
 
                                     {/* Submenu */}
-                                        <div
-                                            className="
-                                            absolute left-0 top-full mt-3
-                                            w-[300px] h-[380px]
-                                            bg-white
-                                            rounded-xl border border-[#EAEAEA]
+                                    <div
+                                        className="
+                                            submenu
+                                            absolute left-0 top-full mt-3 w-[300px] h-[380px]
+                                            bg-white rounded-xl border border-[#EAEAEA]
                                             shadow-xl
-                                            opacity-0 invisible
-                                            translate-y-2 scale-95
+                                            opacity-0 invisible translate-y-2 scale-95
                                             transition-all duration-200 ease-out
                                             origin-top
-                                            group-hover:opacity-100 group-hover:visible
-                                            group-hover:translate-y-0 group-hover:scale-100
-                                            z-50
-                                            overflow-hidden
-                                            "
-                                        >
-                                            <ul
-                                            id="showCategory"
-                                            className="h-full overflow-y-auto py-2"
-                                            >
+                                            group-hover:opacity-100
+                                            group-hover:visible
+                                            group-hover:translate-y-0
+                                            group-hover:scale-100
+                                            z-50 overflow-hidden
+                                        "
+                                    >
+                                        <ul className="h-full overflow-y-auto py-2">
                                             {loading ? (
-                                                <p className="px-4 py-2 text-sm text-gray-500">Loading...</p>
+                                                <p className="px-4 py-2 text-sm text-gray-500">
+                                                    Loading...
+                                                </p>
                                             ) : (
                                                 categories?.map((item) => (
-                                                <li
-                                                    key={item.id}
-                                                    className="
-                                                    group/item
-                                                    px-[20px] py-[10px]
-                                                    text-black cursor-pointer
-                                                    transition-all duration-200 ease-in-out
-                                                    hover:text-[#FF782D]
-                                                    hover:bg-[#F9F9F9]
-                                                    hover:pl-[30px]
-                                                    border-l-2 border-transparent
-                                                    hover:border-[#FF782D]
-                                                    "
-                                                >
-                                                    <Link
-                                                    to="/"
-                                                    className="block text-[16px] font-semibold"
+                                                    <li
+                                                        key={item.id}
+                                                        className="
+                                                            px-[20px] py-[10px]
+                                                            cursor-pointer
+                                                            transition-all duration-200
+                                                            hover:text-[#FF782D]
+                                                            hover:bg-[#F9F9F9]
+                                                        "
                                                     >
-                                                    {item.cate_name}
-                                                    </Link>
-                                                </li>
+                                                        <Link
+                                                            to="/"
+                                                            className="block text-[16px] font-semibold"
+                                                        >
+                                                            {item.cate_name}
+                                                        </Link>
+                                                    </li>
                                                 ))
                                             )}
-                                            </ul>
-                                        </div>
+                                        </ul>
+                                    </div>
                                 </li>
-                                <li
-                                    className="
-                                        text-[#000000] h-[64px] px-[20px] flex items-center
-                                        transition-colors duration-200 hover:bg-[#F5F5F5] hover:text-[#FF782D]
-                                        rounded-md
-                                    "
-                                    >
-                                    <Link
-                                        to="/"
-                                        className="text-[16px] font-semibold"
-                                    >
-                                        Bài viết
+
+
+                                <li className="h-[64px] px-[20px] flex items-center">
+                                    <Link to="/" className="nav-link text-[16px] font-semibold">
+                                        {t('header.nav3')}
                                     </Link>
                                 </li>
-                                <li
-                                    className="
-                                        text-[#000000] h-[64px] px-[20px] flex items-center
-                                        transition-colors duration-200 hover:bg-[#F5F5F5] hover:text-[#FF782D]
-                                        rounded-md
-                                    "
-                                    >
-                                    <Link
-                                        to="/"
-                                        className="text-[16px] font-semibold"
-                                    >
-                                        Về EduPress
+
+                                <li className="h-[64px] px-[20px] flex items-center">
+                                    <Link to="/" className="nav-link text-[16px] font-semibold">
+                                        {t('header.nav4')}
                                     </Link>
                                 </li>
-                                <li
-                                    className="
-                                        text-[#000000] h-[64px] px-[20px] flex items-center
-                                        transition-colors duration-200 hover:bg-[#F5F5F5] hover:text-[#FF782D]
-                                        rounded-md
-                                    "
-                                    >
-                                    <Link
-                                        to="/"
-                                        className="text-[16px] font-semibold"
-                                    >
-                                        Liên hệ
+
+                                <li className="h-[64px] px-[20px] flex items-center">
+                                    <Link to="/" className="nav-link text-[16px] font-semibold">
+                                        {t('header.nav5')}
                                     </Link>
                                 </li>
                             </ul>
                         </nav>
+
                         
                         <div className="flex items-center gap-[10px]">
                             <ul className="flex items-center leading-[30px]">
@@ -367,7 +315,7 @@ const Header = () => {
                                                     hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
                                                 " 
                                             > 
-                                                <Link to="/login">Đăng nhập</Link> 
+                                                <Link to="/login">{t('header.login')}</Link> 
                                             </li>
                                             <li 
                                                 className=" 
@@ -377,7 +325,7 @@ const Header = () => {
                                                     hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
                                                 " 
                                             > 
-                                                <Link to="/register">Đăng ký</Link> 
+                                                <Link to="/register">{t('header.register')}</Link> 
                                             </li>
                                         </ul>
                                     </li>

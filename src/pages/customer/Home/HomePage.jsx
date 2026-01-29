@@ -8,10 +8,11 @@ import BoxShowNewCourse from './BoxShowNewCour/BoxShowNewCourse';
 import BoxBannerSmall from '../../../components/BoxBannerSmall';
 import BoxOverviewInstructor from './BoxOverviewInstructor/BoxOverviewInstructor'
 import BoxShowCourseCategory from './BoxShowCourseCategory/BoxShowCourseCategory';
+import { useTranslation } from 'react-i18next';
 
 
 const HomePage = () => {
-    
+    const { t }= useTranslation();
     const {data: categories, loading} = useFetchData('categories');
     const {data: courses, loading: loadingCourse } = useFetchData('courses');
     return (
@@ -21,7 +22,10 @@ const HomePage = () => {
             {/* Main */}
                 <div className="max-w-[1080px] px-[15px] lg:px-0 mx-auto relative">
                     {/* <!-- Section danh mục--> */}
-                        <BoxShowCategory  categories={categories} loading={loading} />
+                        <BoxShowCategory  
+                            categories={categories} 
+                            loading={loading} 
+                        />
                     {/* <!-- Section sản phẩm nổi bật--> */}
                         <BoxShowFeaturedCourse 
                             courses={courses} 
@@ -36,9 +40,9 @@ const HomePage = () => {
                         />
                     {/* <!-- Box Banner Quảng bá khóa học--> */}
                         <BoxBannerSmall 
-                            titleSmall={'KHÁM PHÁ KIẾN THỨC MỖI NGÀY'}
-                            title={'Nâng cấp kỹ năng – Sẵn sàng cho sự nghiệp'}
-                            content={'Khóa học thực hành về lập trình, thiết kế và kỹ năng số. Học mọi lúc, mọi nơi cùng chuyên gia trong ngành.'}
+                            titleSmall={t('home.banner_Small.title_small')}
+                            title={t('home.banner_Small.title_big')}
+                            content={t('home.banner_Small.content')}
                             color1={'#B5FFE7'} 
                             color2={'#FDC1C1'}
                             img={'/images/banner-ptweb.png'}
@@ -51,7 +55,7 @@ const HomePage = () => {
                             loading={loadingCourse}
                             category={1}
                             categories={categories}
-                            btnsw={''}
+                            btnsw={'courCate1'}
                         />
                     {/* <!-- Section Khóa học--> */}
                         <BoxShowCourseCategory
@@ -59,7 +63,7 @@ const HomePage = () => {
                             loading={loadingCourse}
                             category={2}
                             categories={categories}
-                            btnsw={''}
+                            btnsw={'courCate2'}
                         />
                 </div>
         </div>

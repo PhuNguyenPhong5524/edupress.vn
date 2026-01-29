@@ -1,16 +1,18 @@
 import TitleHome from "../../../../components/title/TitleHome";
 import ButtonViewAll from "../../../../components/buttons/ButtonViewAll";
 import SwiperShowCourse from "../../../../components/SwiperShowCourse";
+import { useTranslation } from "react-i18next";
 
 const BoxShowFeaturedCourse = ({courses, loading, btnsw}) => {
+    const { t } = useTranslation();
     const showCourseFeature = courses?.filter(item => item.feature === true);
   return (
     <div>
         <div className="py-[30px] flex justify-between items-center">
             {/* <!-- Title --> */}
                 <TitleHome  
-                    title={"Khóa học nổi bật"} 
-                    description={"Khám phá các khóa học nổi bật"} 
+                    title={t('home.title_Home.title_2.title')}
+                    description={t('home.title_Home.title_2.description')} 
                 />
             {/* <!-- Button --> */}
                 <ButtonViewAll nameLink={"/course"} />
