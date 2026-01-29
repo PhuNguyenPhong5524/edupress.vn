@@ -1,0 +1,14 @@
+{
+  "common": {
+    "home": "Trang chủ",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất"
+  },
+  "home": {
+    "title": "Chào mừng bạn đến website"
+  },
+  "header": {
+    "search": "Tìm kiếm",
+    "slogan" : "aaaaaaaaaaaaaaaaaaaaa"
+  }
+}
