@@ -37,61 +37,40 @@ const SwiperShowCourse = ({ courses, loading, btnsw }) => {
             <Swiper
                 modules={[Navigation]}
                 navigation={{
-                prevEl: `.${btnsw}-prev`,
-                nextEl: `.${btnsw}-next`,
+                    prevEl: `.${btnsw}-prev`,
+                    nextEl: `.${btnsw}-next`,
                 }}
                 spaceBetween={12}
-                onBreakpoint={(swiper, bp) =>
-                    setSlidesView(bp.slidesPerView)
-                }
                 grabCursor
+                onBreakpoint={(swiper, bp) => setSlidesView(bp.slidesPerView)}
                 breakpoints={{
-                1024: {
-                    slidesPerView: 4,
-                    slidesPerGroup: 4,
-                },
-                768: {
-                    slidesPerView: 3,
-                    slidesPerGroup: 3,
-                },
-                480: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                },
-                0: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                },
+                    1024: { slidesPerView: 4, slidesPerGroup: 4 },
+                    768: { slidesPerView: 3, slidesPerGroup: 3 },
+                    480: { slidesPerView: 2, slidesPerGroup: 2 },
+                    0: { slidesPerView: 2, slidesPerGroup: 2 },
                 }}
-            >
-                {
-                loading ? (
-                    <div className={`grid gap-4
-                        ${slidesView === 4 ? "lg:grid-cols-4" : ""}
-                        ${slidesView === 3 ? "md:grid-cols-3" : ""}
-                        ${slidesView === 2 ? "grid-cols-2" : ""}
-                    `}>
-                        {Array.from({ length: slidesView }).map((_, i) => (
+                >
+                {loading
+                    ? Array.from({ length: slidesView }).map((_, i) => (
+                        <SwiperSlide key={`skeleton-${i}`}>
                         <div
-                            key={i}
                             className="
-                                w-full h-[300px] rounded-[12px] bg-[#d8d8d8] animate-pulse flex 
-                                justify-center items-center
+                            w-full h-[300px] rounded-[12px]
+                            bg-[#d8d8d8] animate-pulse
+                            flex items-center justify-center
                             "
                         >
-                            <span className="text-[16px] text-[#000000]">loading...</span>
+                            <span className="text-[16px] text-[#555]">Loading...</span>
                         </div>
-                        ))}
-                    </div>
-                ) : (
-                    courses?.map((item) => (
-                        <SwiperSlide key={item._id}>
-                           <BoxCourse item={item} />
                         </SwiperSlide>
                     ))
-                )}
-           
+                    : courses?.map((item) => (
+                        <SwiperSlide key={item._id}>
+                        <BoxCourse item={item} />
+                        </SwiperSlide>
+                    ))}
             </Swiper>
+
         </div>
     );
 }

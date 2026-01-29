@@ -24,7 +24,7 @@ const FloatingButtons = () => {
                 animate-pulse border-2 border-white hover:bg-green-600 transition-all duration-300 hover:scale-110 cursor-pointer
                 "
             >
-                <span class="absolute inline-flex h-9 w-9 animate-ping rounded-full bg-green-400 opacity-75"></span>
+                <span className="absolute inline-flex h-9 w-9 animate-ping rounded-full bg-green-400 opacity-75"></span>
                 <PhoneIcon size={22} />
             </Link>
 
@@ -36,7 +36,7 @@ const FloatingButtons = () => {
                 animate-pulse border-2 border-white hover:bg-blue-600 transition-all duration-300 hover:scale-110 cursor-pointer
                 "
             >
-                <span class="absolute inline-flex h-9 w-9 animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                <span className="absolute inline-flex h-9 w-9 animate-ping rounded-full bg-sky-400 opacity-75"></span>
                 Zalo
             </Link>
 
