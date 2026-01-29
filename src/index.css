@@ -143,3 +143,21 @@
 .footer-link:hover::after {
   width: 100%;
 }
+
+/* InputSearch */
+.inputSearch {
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important; /* semibold ≈ 500 */
+    color: #333 !important;
+    height: 40px !important;
+    box-shadow: none !important;
+}
+
+/* Khi focus (antd dùng class này) */
+.inputSearch.ant-input-focused,
+.inputSearch:focus {
+    border-color: #FF782D !important;
+    box-shadow: 0 0 0 2px rgba(255, 120, 45, 0.15) !important;
+}

@@ -17,6 +17,7 @@ import LanguageSelect from "../LanguageSelect";
 const Header = () => {
     const { t } = useTranslation();
     const {data: categories, loading} = useFetchData('categories');
+    const {data: courses, loading: loadingCourse } = useFetchData('courses');
     const [show, setShow] = useState(true);
     const lastScrollY = useRef(0);
 
@@ -172,7 +173,10 @@ const Header = () => {
                         <div className="flex items-center gap-[10px]">
                             <ul className="flex items-center leading-[30px]">
 
-                                <SearchModal />
+                                <SearchModal 
+                                    courses={courses}
+                                    loading={loadingCourse}
+                                />
 
                                 {/* Bell */}
                                     <li
