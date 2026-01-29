@@ -34,7 +34,7 @@ const DetailPage = () => {
     useStickyObserver(setShowStickyCard);
 
   return (
-   <div className="mt-[80px]">
+   <div className="mt-[65px] lg:mt-[80px]">
     {/* Breadcrumb */}
         <Breadcrumb nameCate="Chi tiết khóa học" showList={showList} />
         {/* Box Show Info */}
