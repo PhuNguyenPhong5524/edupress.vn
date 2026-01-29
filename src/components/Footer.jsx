@@ -1,6 +1,6 @@
 
 
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import FaceBookIcon from "./icons/FaceBookIcon";
 import InstagramIcon from "./icons/InstagramIcon";
 import PinterestIcon from "./icons/PinterestIcon";

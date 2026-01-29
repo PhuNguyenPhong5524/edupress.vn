@@ -6,7 +6,7 @@ import BellIcon from "../icons/BellIcon";
 import ChevronDown from "../icons/ChevronDown";
 import UserIcon from "../icons/UserIcon";
 import useFetchData from "../../api/useFetchData";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import MenuMoblie from "./MenuMoblie";
 import SearchModal from "./SearchDropdown";

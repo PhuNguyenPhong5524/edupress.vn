@@ -1,6 +1,6 @@
 import { Form, Input, Button, Alert } from "antd";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import useFetchData from "../../api/useFetchData";
 // import axios from "axios";
 
@@ -128,9 +128,9 @@ export default function Login() {
             {/* Register */}
             <p className="text-center text-[10px] sm:text-[12px] text-gray-600">
               Nếu bạn chưa có tài khoản?
-              <a href="/register" className="text-blue-600 hover:underline ml-1">
+              <Link to="/register" className="text-blue-600 hover:underline ml-1">
                 Đăng ký
-              </a>
+              </Link>
             </p>
           </Form>
         </div>

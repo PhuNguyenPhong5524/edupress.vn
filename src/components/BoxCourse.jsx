@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import BagShoppingIcon from "../components/icons/BagShoppingIcon"
 import ClockIcon from "../components/icons/ClockIcon";
 import GraduationIcon from "../components/icons/GraduationIcon"
