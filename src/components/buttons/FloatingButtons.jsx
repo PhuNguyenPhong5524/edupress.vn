@@ -11,7 +11,7 @@ const FloatingButtons = () => {
   return (
         <div
             className={`
-                fixed bottom-2 right-6 z-50 flex flex-col gap-3
+                fixed bottom-2 right-2 z-50 flex flex-col gap-3
                 transition-transform duration-300 ease-out will-change-transform
                 ${showTop ? "-translate-y-5" : "translate-y-[40px]"}
             `}
