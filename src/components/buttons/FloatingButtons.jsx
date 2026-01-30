@@ -44,9 +44,9 @@ const FloatingButtons = () => {
             <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className={`
-                w-12 h-12 rounded-full bg-orange-500 text-white shadow-lg
+                w-11 h-11 rounded-full bg-orange-500 text-white shadow-lg
                 flex items-center justify-center cursor-pointer transition-all 
-                duration-300 ease-out will-change-transform
+                duration-300 ease-out will-change-transform hover:scale-110 ml-1
 
                 ${showTop
                     ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
