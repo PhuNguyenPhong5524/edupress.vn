@@ -7,11 +7,12 @@ import ChevronDown from "../icons/ChevronDown";
 import UserIcon from "../icons/UserIcon";
 import useFetchData from "../../api/useFetchData";
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import MenuMoblie from "./MenuMoblie";
-import SearchModal from "./SearchDropdown";
+import SearchDropdown from "./SearchDropdown";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "../LanguageSelect";
+import BoxSearchMoblie from "./BoxSearchMobile";
 
 
 const Header = () => {
@@ -40,6 +41,21 @@ const Header = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    // Search 
+    const [keyword, setKeyword] = useState("");
+    const results = useMemo(() => {
+        // Chưa nhập gì → hiện khóa học nổi bật
+            if (!keyword.trim()) {
+                return courses?.filter(item => item.feature === true);
+            }
+
+            const key = keyword.toLowerCase();
+            return courses?.filter(item =>
+                item.course_title.toLowerCase().includes(key)
+            );
+    }, [courses, keyword]);
+
 
     return (
         <header 
@@ -173,11 +189,24 @@ const Header = () => {
                         <div className="flex items-center gap-[10px]">
                             <ul className="flex items-center leading-[30px]">
 
-                                <SearchModal 
-                                    courses={courses}
-                                    loading={loadingCourse}
-                                />
-
+                                <div 
+                                    className="hidden lg:block"
+                                >
+                                    <SearchDropdown 
+                                        loading={loadingCourse}
+                                        setKeyword={setKeyword}
+                                        keyword={keyword}
+                                        results={results}
+                                    />
+                                </div>
+                                <div className="block lg:hidden">
+                                    <BoxSearchMoblie 
+                                        loading={loadingCourse}
+                                        setKeyword={setKeyword}
+                                        keyword={keyword}
+                                        results={results}
+                                    />
+                                </div>
                                 {/* Bell */}
                                     <li
                                         className="

@@ -6,26 +6,15 @@ import SearchIcon from "../icons/SearchIcon";
 import ShowCourseSearch from "./ShowCourseSearch";
 
 
-export default function SearchDropdown({ loading, courses}) {
+export default function SearchDropdown({ 
+  loading, 
+  keyword,
+  setKeyword,
+  results,
+  handleClose
+}) {
   const [open, setOpen] = useState(false);
-  const [keyword, setKeyword] = useState("");
 
-  const results = useMemo(() => {
-    // Chưa nhập gì → hiện khóa học nổi bật
-    if (!keyword.trim()) {
-      return courses?.filter(item => item.feature === true);
-    }
-
-    const key = keyword.toLowerCase();
-    return courses?.filter(item =>
-      item.course_title.toLowerCase().includes(key)
-    );
-  }, [courses, keyword]);
-
-  const handleClose = () =>{
-    setOpen(false);
-    setKeyword('');
-  }
   return (
     <Dropdown
       open={open}
