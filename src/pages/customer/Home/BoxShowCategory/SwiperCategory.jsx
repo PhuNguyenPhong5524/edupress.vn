@@ -14,7 +14,11 @@ const skeletonItems = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 const SwiperCategory = ({ categories, loading }) => {
-    const renderData = loading ? skeletonItems : categories;
+    const renderData = loading || !categories || categories.length === 0
+        ? skeletonItems
+        : categories;
+
+
   return (
         <div className="relative">
             {/* Custom arrows */}

@@ -50,25 +50,27 @@ const SwiperShowCourse = ({ courses, loading, btnsw }) => {
                     0: { slidesPerView: 2, slidesPerGroup: 2 },
                 }}
                 >
-                {loading
+                {loading || courses.length === 0
                     ? Array.from({ length: slidesView }).map((_, i) => (
                         <SwiperSlide key={`skeleton-${i}`}>
-                        <div
+                            <div
                             className="
-                            w-full h-[300px] rounded-[12px]
-                            bg-[#d8d8d8] animate-pulse
-                            flex items-center justify-center
+                                w-full h-[300px] rounded-[12px]
+                                bg-[#d8d8d8] animate-pulse
+                                flex items-center justify-center
                             "
-                        >
+                            >
                             <span className="text-[16px] text-[#555]">Loading...</span>
-                        </div>
+                            </div>
                         </SwiperSlide>
-                    ))
-                    : courses?.map((item) => (
+                        ))
+                    : courses.map((item) => (
                         <SwiperSlide key={item._id}>
-                        <BoxCourse item={item} />
+                            <BoxCourse item={item} />
                         </SwiperSlide>
-                    ))}
+                        ))
+                }
+
             </Swiper>
 
         </div>
