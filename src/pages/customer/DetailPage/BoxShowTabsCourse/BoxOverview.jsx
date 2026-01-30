@@ -1,7 +1,15 @@
+import { Spin } from "antd";
 import TickIcon from "../../../../components/icons/TickIcon";
 
 
-const BoxOverview = ({showList}) => {
+const BoxOverview = ({showList, loading}) => {
+    if(!loading && !showList) {
+        return (
+            <div className="animate-pulse w-full h-[20px] md:h-[25px] lg:h-[300px] bg-[#d8d8d8] flex items-center justify-center">
+                <Spin size="large"/>
+            </div>
+        )
+    }
     return (
         <div
             id="overview"

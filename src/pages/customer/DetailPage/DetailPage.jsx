@@ -23,12 +23,13 @@ const DetailPage = () => {
     const [showStickyCard, setShowStickyCard] = useState(false);
 
     const { _id } = useParams();
-    const { data: course = [] } = useFetchData("courses");
+    const { data: course = [], loading } = useFetchData("courses");
     const { data: providers = [] } = useFetchData("providers");
 
     const showList = useMemo(() => {
-        return course?.find(item => String(item._id) === String(_id));
-    }, [course, _id]);
+        if (loading) return null;
+        return course.find(item => item._id == _id);
+    }, [course, _id, loading]);
 
     {/* Scroll observer */}
     useStickyObserver(setShowStickyCard);
@@ -38,7 +39,7 @@ const DetailPage = () => {
     {/* Breadcrumb */}
         <Breadcrumb nameCate="Chi tiết khóa học" showList={showList} />
         {/* Box Show Info */}
-            <BoxShowInfo showStickyCard={showStickyCard} showList={showList} />
+            <BoxShowInfo showStickyCard={showStickyCard} showList={showList} loading={loading} />
         {/* Nội dung chính */}
             <div
                 className="
@@ -48,7 +49,7 @@ const DetailPage = () => {
             >
                 {/* LEFT */}
                     <div className="min-w-0 flex flex-col gap-10">
-                        <BoxShowTabsCourse showList={showList} />
+                        <BoxShowTabsCourse showList={showList} loading={loading}/>
                         <BoxShowCourseRelated courses={course} currentCourses={showList} providers={providers} />
                     </div>
 

@@ -1,6 +1,3 @@
-
-
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -8,99 +5,86 @@ import "swiper/css/navigation";
 import ChevronLeftIcon from "../../../../components/icons/ChevronLeftIcon";
 import ChevronRightIcon from "../../../../components/icons/ChevronRightIcon";
 import BoxCourse from "../../../../components/BoxCourse";
-import { useState } from "react";
 
+const SwiperShowCourseRelated = ({
+  courses,
+  currentCourses,
+  loading,
+  btnsw,
+}) => {
+  const isLoadingReal = loading || !courses;
 
-const SwiperShowCourseRelated = ({ courses, currentCourses, loading, btnsw }) => {
-  const [slidesView, setSlidesView] = useState(4);
-  const courFilter = courses?.
-        filter((item) => item.provider_id == currentCourses.provider_id && item._id != currentCourses._id).
-        sort((a, b) => b.students - a.students).
-        slice(0, 4);
-  return (
-        <div className="relative">
-            {/* Custom arrows */}
-            <button 
-                className={`
-                    ${btnsw}-prev absolute left-[-5px] lg:-left-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0]
-                    w-10 h-10 bg-white rounded-full shadow hidden md:flex items-center justify-center 
-                    hover:bg-[#FF782D] hover:text-white hover:opacity-60 transition cursor-pointer
-                `}
-            >
-                <ChevronLeftIcon size={20} />
-            </button>
+  const courFilter =
+  courses?.filter(
+      (item) =>
+        item.provider_id === currentCourses.provider_id &&
+        item._id !== currentCourses._id
+    )
+    .sort((a, b) => b.students - a.students)
+    .slice(0, 4) || [];
 
-            <button 
-                className={`
-                ${btnsw}-next absolute right-[-5px] lg:-right-5 top-1/2 -translate-y-1/2 z-10 border-[1px] border-[#E0E0E0] 
-                w-10 h-10 bg-white rounded-full shadow hidden md:flex items-center justify-center
-                hover:bg-[#FF782D] hover:text-white hover:opacity-60 transition cursor-pointer
-                `}
-            >
-                <ChevronRightIcon size={20} />
-            </button>
-
-            <Swiper
-                modules={[Navigation]}
-                navigation={{
-                prevEl: `.${btnsw}-prev`,
-                nextEl: `.${btnsw}-next`,
-                }}
-                spaceBetween={12}
-                onBreakpoint={(swiper, bp) =>
-                    setSlidesView(bp.slidesPerView)
-                }
-                grabCursor
-                breakpoints={{
-                1024: {
-                    slidesPerView: 3,
-                    slidesPerGroup: 3,
-                },
-                768: {
-                    slidesPerView: 3,
-                    slidesPerGroup: 3,
-                },
-                480: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                },
-                0: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 2,
-                },
-                }}
-            >
-                {
-                loading ? (
-                    <div className={`grid gap-4
-                        ${slidesView === 4 ? "lg:grid-cols-4" : ""}
-                        ${slidesView === 3 ? "md:grid-cols-3" : ""}
-                        ${slidesView === 2 ? "grid-cols-2" : ""}
-                    `}>
-                        {Array.from({ length: slidesView }).map((_, i) => (
-                        <div
-                            key={i}
-                            className="
-                                w-full h-[300px] rounded-[12px] bg-[#d8d8d8] animate-pulse flex 
-                                justify-center items-center
-                            "
-                        >
-                            <span className="text-[16px] text-[#000000]">loading...</span>
-                        </div>
-                        ))}
-                    </div>
-                ) : (
-                    courFilter?.map((item) => (
-                        <SwiperSlide key={item._id}>
-                           <BoxCourse item={item} />
-                        </SwiperSlide>
-                    ))
-                )}
-           
-            </Swiper>
-        </div>
+  /* ===== LOADING ===== */
+  if (isLoadingReal) {
+    return (
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="w-full h-[300px] rounded-[12px] bg-[#d8d8d8] animate-pulse flex items-center justify-center"
+          >
+            loading...
+          </div>
+        ))}
+      </div>
     );
-}
+  }
+
+  /* ===== EMPTY ===== */
+  if (courFilter.length === 0) {
+    return (
+      <div className="w-full h-[300px] rounded-[12px] bg-[#f2f2f2] flex items-center justify-center">
+        <span className="text-[16px] text-[#000000]">
+          Hiện không có khóa học liên quan
+        </span>
+      </div>
+    );
+  }
+
+  /* ===== DATA ===== */
+  return (
+    <div className="relative">
+      {/* arrows */}
+      <button className={`${btnsw}-prev ...`}>
+        <ChevronLeftIcon size={20} />
+      </button>
+
+      <button className={`${btnsw}-next ...`}>
+        <ChevronRightIcon size={20} />
+      </button>
+
+      <Swiper
+        modules={[Navigation]}
+        navigation={{
+          prevEl: `.${btnsw}-prev`,
+          nextEl: `.${btnsw}-next`,
+        }}
+        spaceBetween={12}
+        grabCursor
+        breakpoints={{
+          1024: { slidesPerView: 3, slidesPerGroup: 3 },
+          768: { slidesPerView: 3, slidesPerGroup: 3 },
+          480: { slidesPerView: 2, slidesPerGroup: 2 },
+          0: { slidesPerView: 2, slidesPerGroup: 2 },
+        }}
+      >
+        {courFilter.map((item) => (
+          <SwiperSlide key={item._id}>
+            <BoxCourse item={item} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  );
+};
 
 export default SwiperShowCourseRelated;
-

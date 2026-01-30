@@ -13,7 +13,7 @@ const tabs = [
   { key: "request", label: "Yêu cầu" },
 ];
 
-export default function BoxShowTabsCourse({showList}) {
+export default function BoxShowTabsCourse({showList, loading}) {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
@@ -42,7 +42,7 @@ export default function BoxShowTabsCourse({showList}) {
 
       {/* TAB CONTENT */}
       <div className="bg-[#F5F5F5] px-4 py-[20px]">
-        {activeTab === "overview" && <BoxOverview showList={showList}/>}
+        {activeTab === "overview" && <BoxOverview showList={showList} loading={loading}/>}
         {activeTab === "instructions" && <BoxInstructions showList={showList}/>}
         {activeTab === "description" && <BoxDescriptions showList={showList} />}
         {activeTab === "request" && <BoxRequests showList={showList} />}

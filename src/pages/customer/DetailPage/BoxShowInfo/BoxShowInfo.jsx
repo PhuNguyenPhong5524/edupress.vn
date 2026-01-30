@@ -3,7 +3,7 @@ import ClockIcon from "../../../../components/icons/ClockIcon"
 import GraduationIcon from "../../../../components/icons/GraduationIcon"
 import SignalIcon from "../../../../components/icons/SignalIcon";
 import BoxCourseInfoCard from "./BoxCourseInfoCard";
-const BoxShowInfo = ({showStickyCard, showList}) => {
+const BoxShowInfo = ({showStickyCard, showList, loading}) => {
     return (
         <div className="w-full bg-[#000000] text-white py-10">
             <div
@@ -18,16 +18,26 @@ const BoxShowInfo = ({showStickyCard, showList}) => {
             >
                 {/* Box Left */}
                 <div className="showInfoCourse w-full">
-                    <h1
-                        className="
-                        text-[22px] leading-tight
-                        md:text-[30px]
-                        lg:text-[38px]
-                        font-semibold
-                        "
-                    >
-                        {showList?.course_title}
-                    </h1>
+                    {
+                        !loading && !showList
+                            ? (
+                                <div className="flex flex-col gap-3">
+                                    <p className="animate-pulse w-full h-[20px] md:h-[25px] lg:h-[30px] bg-[#d8d8d8]"></p>
+                                    <p className="animate-pulse w-30 h-[20px] md:h-[25px] lg:h-[30px] bg-[#d8d8d8]"></p>
+                                </div>
+                            ): (
+                                <h1
+                                    className="
+                                    text-[22px] leading-tight
+                                    md:text-[30px]
+                                    lg:text-[38px]
+                                    font-semibold
+                                    "
+                                >
+                                    {showList?.course_title}
+                                </h1>
+                            )
+                    }
 
                     <div
                         className="
@@ -36,25 +46,50 @@ const BoxShowInfo = ({showStickyCard, showList}) => {
                         md:text-[15px]
                         "
                     >
-                        <div className="flex items-center">
-                            <ClockIcon size={18} className="text-[#FF782D]" />
-                            <span className="ml-2">{showList?.duration}</span>
-                        </div>
+                        {
+                            !loading && !showList
+                                ?   <p className="animate-pulse w-15 h-[20px] bg-[#d8d8d8]">
 
-                        <div className="flex items-center">
-                            <GraduationIcon size={18} className="text-[#FF782D]" />
-                            <span className="ml-2">{showList?.students}</span>
-                        </div>
+                                    </p>
+                                : (
+                                    <div className="flex items-center">
+                                        <ClockIcon size={18} className="text-[#FF782D]" />
+                                        <span className="ml-2">{showList?.duration}</span>
+                                    </div>
+                                )
+                        }
+                        {
+                            !loading && !showList
+                                ?   <p className="animate-pulse w-15 h-[20px] bg-[#d8d8d8]"></p>
+                                : (
+                                    <div className="flex items-center">
+                                        <GraduationIcon size={18} className="text-[#FF782D]" />
+                                        <span className="ml-2">{showList?.students}</span>
+                                    </div>
+                                )
+                        }
 
-                        <div className="flex items-center">
-                            <BookIcon size={18} className="text-[#FF782D]" />
-                            <span className="ml-2">{showList?.total_sections}</span>
-                        </div>
+                        {
+                            !loading && !showList
+                                ?   <p className="animate-pulse w-15 h-[20px] bg-[#d8d8d8]"></p>
+                                : (
+                                    <div className="flex items-center">
+                                        <BookIcon size={18} className="text-[#FF782D]" />
+                                        <span className="ml-2">{showList?.lectures}</span>
+                                    </div>
+                                )
+                        }
 
-                        <div className="flex items-center">
-                            <SignalIcon size={18} className="text-[#FF782D]" />
-                            <span className="ml-2">Tất cả mức độ</span>
-                        </div>
+                        {
+                            !loading && !showList
+                                ?   <p className="animate-pulse w-15 h-[20px] bg-[#d8d8d8]"></p>
+                                : (
+                                    <div className="flex items-center">
+                                        <SignalIcon size={18} className="text-[#FF782D]" />
+                                        <span className="ml-2">Tất cả mức độ</span>
+                                    </div>
+                                )
+                        }
                     </div>
                 </div>
 
@@ -68,12 +103,12 @@ const BoxShowInfo = ({showStickyCard, showList}) => {
                                 transition-all duration-300
                             "
                         >
-                            <BoxCourseInfoCard showList={showList} />
+                            <BoxCourseInfoCard showList={showList} loading={loading} />
                         </div>
                     )}
                 </div>
                 <div className="w-full relative block lg:hidden">
-                    <BoxCourseInfoCard showList={showList} />
+                    <BoxCourseInfoCard showList={showList} loading={loading} />
                 </div>
             </div>
         </div>

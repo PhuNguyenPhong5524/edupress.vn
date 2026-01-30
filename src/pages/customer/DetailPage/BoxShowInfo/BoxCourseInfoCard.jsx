@@ -1,8 +1,33 @@
 
+import { Spin } from "antd";
 import CircleCheckIcon from "../../../../components/icons/CircleCheckIcon";
 import BoxModalVideo from "./BoxModalVideo";
 
-const BoxCourseInfoCard = ({showList}) => {
+const BoxCourseInfoCard = ({showList, loading}) => {
+    if(!loading && !showList) {
+        return(
+            <div
+                className={
+                `
+                 bg-white text-gray-800 rounded-[10px] shadow-xl p-4 transition-all duration-500 border-[0.5px] border-[#EAEAEA] 
+                `
+            }
+            >
+                <div 
+                    className="animate-pulse w-full h-[20px] md:h-[25px] lg:h-[200px] bg-[#d8d8d8] flex items-center justify-center"
+                >
+                    <Spin size="large"/>
+                </div>
+                <p className="animate-pulse w-40 h-[20px] md:h-[25px] lg:h-[30px] bg-[#d8d8d8] mt-2"></p>
+
+                <div className="flex gap-3">
+                    <p className="animate-pulse w-full h-[20px] md:h-[25px] lg:h-[30px] bg-[#d8d8d8] mt-2"></p>
+                    <p className="animate-pulse w-full h-[20px] md:h-[25px] lg:h-[30px] bg-[#d8d8d8] mt-2"></p>
+                </div>
+                <p className="animate-pulse w-40 h-[5px] md:h-[10px] lg:h-[10px] bg-[#d8d8d8] mt-2"></p>
+            </div>
+        )
+    }
     return (
         <div
             className={
@@ -17,12 +42,12 @@ const BoxCourseInfoCard = ({showList}) => {
                         {/* IMAGE + PREVIEW */}
                             <div className="relative group overflow-hidden rounded-lg w-full">
                                 <img
-                                src={showList.image_url}
-                                alt={showList.course_title}
-                                className="
-                                    w-full h-auto lg:h-[200px] object-cover transition-transform duration-300 ease-in-out
-                                    group-hover:scale-110
-                                "
+                                    src={showList.image_url}
+                                    alt={showList.course_title}
+                                    className="
+                                        w-full h-auto lg:h-[200px] object-cover transition-transform duration-300 ease-in-out
+                                        group-hover:scale-110
+                                    "
                                 />
 
                                 {/* Overlay play */}
