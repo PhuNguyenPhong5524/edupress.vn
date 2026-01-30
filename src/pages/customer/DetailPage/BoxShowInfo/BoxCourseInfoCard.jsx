@@ -1,6 +1,6 @@
 
 import CircleCheckIcon from "../../../../components/icons/CircleCheckIcon";
-import PlayIcon from "../../../../components/icons/PlayIcon";
+import BoxModalVideo from "./BoxModalVideo";
 
 const BoxCourseInfoCard = ({showList}) => {
     return (
@@ -27,26 +27,16 @@ const BoxCourseInfoCard = ({showList}) => {
 
                                 {/* Overlay play */}
                                 <div
-                                className="
-                                    absolute inset-0
-                                    flex flex-col items-center justify-center gap-2
-                                    bg-black/30 opacity-100
-                                    transition-opacity duration-300
-                                "
-                                >
-                                <button
-                                    type="button"
                                     className="
-                                    bg-white w-[48px] h-[48px]
-                                    rounded-full flex items-center justify-center
-                                    border-2 border-white text-[#FF782D]
-                                    hover:bg-[#FF782D] hover:text-white
-                                    transition-all duration-300 hover:scale-110
+                                        absolute inset-0
+                                        flex flex-col items-center justify-center gap-2
+                                        bg-black/30 opacity-100
+                                        transition-opacity duration-300
                                     "
                                 >
-                                    <PlayIcon size={22} />
-                                </button>
-
+                                <BoxModalVideo 
+                                    videoLink={showList.video_url}
+                                />
                                 <span className="text-[14px] md:text-[15px] font-semibold text-white underline">
                                     Xem trước khóa học
                                 </span>
