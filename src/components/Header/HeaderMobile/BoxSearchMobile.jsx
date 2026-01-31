@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { Button, Drawer, Radio, Space } from 'antd';
-import ShowCourseSearch from './ShowCourseSearch';
-import SearchIcon from '../icons/SearchIcon';
+import ShowCourseSearch from '../ShowCourseSearch';
+import SearchIcon from '../../icons/SearchIcon';
 const BoxSearchMoblie = ({
   loading, 
   keyword,

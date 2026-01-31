@@ -15,7 +15,10 @@
       "search": "Search",
       "slogan" : "Online Learning Platform",
       "login": "Login",
-      "register": "Register"
+      "register": "Register",
+      "logout": "Logout",
+      "changepassword": "Change Password",
+      "notification": "Notification"
   },
   "home":{
     "banner":{

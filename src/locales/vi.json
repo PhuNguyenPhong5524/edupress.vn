@@ -13,7 +13,10 @@
         "search": "Tìm kiếm",
         "slogan" : "Nền tảng học trực tuyến",
         "login": "Đăng nhập",
-        "register": "Đăng ký"
+        "register": "Đăng ký",
+        "logout": "Đăng xuất",
+        "changepassword": "Đổi mật khẩu",
+        "notification": "Thông báo"
       },
   "home":{
     "banner":{

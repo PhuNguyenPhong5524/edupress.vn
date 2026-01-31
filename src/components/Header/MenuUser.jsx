@@ -1,0 +1,106 @@
+import { Avatar } from "antd";
+import { Link } from "react-router-dom";
+import KeyIcon from "../icons/KeyIcon";
+import BellIcon from "../icons/BellIcon";
+import LogoutIcon from "../icons/LogoutIcon";
+
+const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
+    return(
+        <ul
+            className={`
+            ${isAuthenticated ? 'w-[250px]' : 'w-[150px]'} absolute right-0 top-full mt-3  overflow-hidden bg-white rounded-xl
+                border border-[#EAEAEA] shadow-xl opacity-0 invisible translate-y-2 scale-95
+                transition-all duration-200 ease-out origin-top group-hover:opacity-100 group-hover:visible
+                group-hover:translate-y-0 group-hover:scale-100 z-50
+            `}
+        >
+            {
+                isAuthenticated ? (
+                    <div>
+                        <div
+                            className="
+                               px-3 py-2 border-b border-b-[#EAEAEA] flex items-center gap-3
+                            "
+                        >
+                            <Avatar 
+                                className='avatar_header' 
+                            >
+                                <span className="text-[#000000] font-semibold">{getAvatarLetter(user.username)}</span>
+                            </Avatar>
+                            <div className="leading-[20px]">
+                                <p className="text-[#2c2c2c] font-semibold p-0 m-0">{user.username}</p>
+                                <p className="text-[#a4a4a4] text-[14px] font-regular p-0 m-0">{user.email}</p>
+                            </div>
+                        </div>
+
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] flex
+                                items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                        > 
+                            <KeyIcon size={16} />
+                            <Link to="/change-password">{t('header.changepassword')}</Link> 
+                        </li>
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] flex 
+                                items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                        > 
+                            <div class="flex items-center justify-between gap-2">
+                                <BellIcon size={20} />
+                                <Link to="/notification">{t('header.notification')}</Link> 
+                                <span class="bg-red-500 w-[20px] h-[20px] rounded-full flex items-center justify-center text-white text-[12px]">0</span>
+                            </div>
+                        </li>
+                        <div className=" border-b border-b-[#EAEAEA]">
+                            
+                        </div>
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] flex 
+                                items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                            onClick={logout}
+                        > 
+                            <LogoutIcon size={24} />
+                            {t('header.logout')} 
+                        </li>
+                    </div>
+                ) : (
+                    <>
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] 
+                                cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-6 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                        > 
+                            <Link to="/login">{t('header.login')}</Link> 
+                        </li>
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] 
+                                cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-6 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                        > 
+                            <Link to="/register">{t('header.register')}</Link> 
+                        </li>
+                    </>
+                )
+            }
+        </ul>
+    )
+}
+
+export default MenuUser;

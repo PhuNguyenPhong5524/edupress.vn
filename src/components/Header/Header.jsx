@@ -8,17 +8,24 @@ import UserIcon from "../icons/UserIcon";
 import useFetchData from "../../api/useFetchData";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
-import MenuMoblie from "./MenuMoblie";
+import MenuMoblie from "./HeaderMobile/MenuMoblie";
 import SearchDropdown from "./SearchDropdown";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "../LanguageSelect";
-import BoxSearchMoblie from "./BoxSearchMobile";
+import BoxSearchMoblie from "./HeaderMobile/BoxSearchMobile";
+import useAuth from "../../hooks/useAuth";
+import { Avatar } from "antd";
+import MenuUser from "./MenuUser";
+import BoxShowMenuCate from "./BoxShowMenuCate";
+
+
 
 
 const Header = () => {
     const { t } = useTranslation();
     const {data: categories, loading} = useFetchData('categories');
     const {data: courses, loading: loadingCourse } = useFetchData('courses');
+    const {user, logout, isAuthenticated, getAvatarLetter} = useAuth();
     const [show, setShow] = useState(true);
     const lastScrollY = useRef(0);
 
@@ -118,50 +125,10 @@ const Header = () => {
                                     <div className="absolute left-0 top-full h-3 w-[300px]"></div>
 
                                     {/* Submenu */}
-                                    <div
-                                        className="
-                                            submenu
-                                            absolute left-0 top-full mt-3 w-[300px] h-[380px]
-                                            bg-white rounded-xl border border-[#EAEAEA]
-                                            shadow-xl
-                                            opacity-0 invisible translate-y-2 scale-95
-                                            transition-all duration-200 ease-out
-                                            origin-top
-                                            group-hover:opacity-100
-                                            group-hover:visible
-                                            group-hover:translate-y-0
-                                            group-hover:scale-100
-                                            z-50 overflow-hidden
-                                        "
-                                    >
-                                        <ul className="h-full overflow-y-auto py-2">
-                                            {loading ? (
-                                                <p className="px-4 py-2 text-sm text-gray-500">
-                                                    Loading...
-                                                </p>
-                                            ) : (
-                                                categories?.map((item) => (
-                                                    <li
-                                                        key={item.id}
-                                                        className="
-                                                            px-[20px] py-[10px]
-                                                            cursor-pointer
-                                                            transition-all duration-200
-                                                            hover:text-[#FF782D]
-                                                            hover:bg-[#F9F9F9]
-                                                        "
-                                                    >
-                                                        <Link
-                                                            to="/"
-                                                            className="block text-[16px] font-semibold"
-                                                        >
-                                                            {item.cate_name}
-                                                        </Link>
-                                                    </li>
-                                                ))
-                                            )}
-                                        </ul>
-                                    </div>
+                                        <BoxShowMenuCate 
+                                            categories={categories}
+                                            loading={loading}
+                                        />
                                 </li>
 
 
@@ -308,6 +275,7 @@ const Header = () => {
 
                                 {/* User */}
                                     <li className="relative group hidden lg:block">
+                             
                                         <div
                                             className="
                                             flex items-center justify-center
@@ -318,49 +286,27 @@ const Header = () => {
                                             rounded-md
                                             "
                                         >
-                                            <UserIcon size={24} />
+                                            {
+                                                isAuthenticated ?
+                                                    <Avatar 
+                                                        className='avatar_header' 
+                                                    >
+                                                        <span className="text-[#000000] font-semibold">{getAvatarLetter(user.username)}</span>
+                                                    </Avatar>
+                                                :
+                                                <UserIcon size={24} />
+                                            }
                                         </div>
-
                                         {/* Spacer */}
                                         <div className="absolute top-full right-0 h-3 w-full"></div>
-
-                                        <ul
-                                            className="
-                                            absolute right-0 top-full mt-3
-                                            w-[220px] overflow-hidden   
-                                            bg-white rounded-xl
-                                            border border-[#EAEAEA]
-                                            shadow-xl
-                                            opacity-0 invisible
-                                            translate-y-2 scale-95
-                                            transition-all duration-200 ease-out
-                                            origin-top
-                                            group-hover:opacity-100 group-hover:visible
-                                            group-hover:translate-y-0 group-hover:scale-100
-                                            z-50
-                                            "
-                                        >
-                                            <li 
-                                                className=" 
-                                                    text-black px-3 py-2 border-l-2 border-l-[#ffffff] 
-                                                    cursor-pointer transition-all duration-300 ease-in-out 
-                                                    hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
-                                                    hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
-                                                " 
-                                            > 
-                                                <Link to="/login">{t('header.login')}</Link> 
-                                            </li>
-                                            <li 
-                                                className=" 
-                                                    text-black px-3 py-2 border-l-2 border-l-[#ffffff] 
-                                                    cursor-pointer transition-all duration-300 ease-in-out 
-                                                    hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
-                                                    hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
-                                                " 
-                                            > 
-                                                <Link to="/register">{t('header.register')}</Link> 
-                                            </li>
-                                        </ul>
+                                        {/* Menu User */}
+                                            <MenuUser 
+                                                t={t}
+                                                user={user}
+                                                logout={logout}
+                                                isAuthenticated={isAuthenticated}
+                                                getAvatarLetter={getAvatarLetter}
+                                            />
                                     </li>
 
                                 {/* Language */}

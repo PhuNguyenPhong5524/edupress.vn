@@ -2,41 +2,40 @@ import { Form, Input, Button, Alert } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFetchData from "../../api/useFetchData";
-// import axios from "axios";
+import useAuth from "../../hooks/useAuth";
+import { message } from "antd";
 
 export default function Login() {
   const { data: users = [] } = useFetchData("users");
-  const [message, setMessage] = useState({
-      type: "", // success, error
-      content: "",
-  });
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
-  
+  const { login } = useAuth();
   const onFinish = (values) => {
     setLoading(true);
-    setMessage({ type: "", content: "" });
-
-    const checkUserLogin = users.find(
+    const user = users.find(
       (u) =>
         u.email === values.email &&
         String(u.password) === String(values.password)
     );
 
-    if (!checkUserLogin) {
+    if (!user) {
       setTimeout(() => {
-        setMessage({
-          type: "error",
-          content: "Email hoặc mật khẩu không đúng!",
-        });
+        message.error("Email hoặc mật khẩu không đúng!");
         setLoading(false);
       }, 600);
-
-      return;
+      return; 
     }
-    localStorage.setItem("user", JSON.stringify(checkUserLogin)); 
-    nav(checkUserLogin.role === "admin" ? "/admin" : "/");
-};
+
+    login(user);
+
+    setTimeout(() => {
+      message.success("Đăng nhập thành công!");
+      setLoading(false);
+
+      nav(user.role === "admin" ? "/admin" : "/");
+    }, 600);
+  };
+
   return (
    <div className="bgr_login min-h-screen flex items-center justify-center px-4 bg-gray-50">
       <div className="flex flex-col sm:flex-row items-center gap-6 lg:gap-12 w-full max-w-5xl">

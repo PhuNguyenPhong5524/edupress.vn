@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button, Drawer, Radio, Space } from 'antd';
-import BarsIcon from '../icons/BarsIcon';
+import BarsIcon from '../../icons/BarsIcon';
 const MenuMoblie = () => {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState('left');
