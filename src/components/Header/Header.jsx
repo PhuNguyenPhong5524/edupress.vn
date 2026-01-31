@@ -8,7 +8,7 @@ import UserIcon from "../icons/UserIcon";
 import useFetchData from "../../api/useFetchData";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
-import MenuMoblie from "./HeaderMobile/MenuMoblie";
+import MenuMoblie from "./HeaderMobile/MenuMoblie/MenuMoblie";
 import SearchDropdown from "./SearchDropdown";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "../LanguageSelect";
@@ -83,7 +83,15 @@ const Header = () => {
                 >   
                     {/* Button Mobile */}
                         <div className=" lg:hidden">
-                            <MenuMoblie />
+                            <MenuMoblie
+                                t={t}
+                                user={user}
+                                logout={logout}
+                                isAuthenticated={isAuthenticated}
+                                getAvatarLetter={getAvatarLetter}
+                                categories={categories}
+                                loading={loading}
+                            />
                         </div>
                     {/* <!-- Logo --> */}
                         <Link to="/" className="md:leading-[20px] w-full flex md:w-auto md:flex-col justify-center items-center">

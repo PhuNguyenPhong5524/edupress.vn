@@ -52,10 +52,10 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
                                 hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
                             " 
                         > 
-                            <div class="flex items-center justify-between gap-2">
+                            <div className="flex items-center justify-between gap-2">
                                 <BellIcon size={20} />
                                 <Link to="/notification">{t('header.notification')}</Link> 
-                                <span class="bg-red-500 w-[20px] h-[20px] rounded-full flex items-center justify-center text-white text-[12px]">0</span>
+                                <span className="bg-red-500 w-[20px] h-[20px] rounded-full flex items-center justify-center text-white text-[12px]">0</span>
                             </div>
                         </li>
                         <div className=" border-b border-b-[#EAEAEA]">

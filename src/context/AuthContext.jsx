@@ -1,9 +1,13 @@
+import { Modal } from "antd";
 import { createContext, useEffect, useState } from "react";
+import { message } from "antd";
+
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const { confirm } = Modal;
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -18,9 +22,18 @@ const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        localStorage.removeItem("user");
-        setUser(null);
-    }
+        confirm({
+            title: "Đăng xuất",
+            content: "Bạn có chắc chắn muốn đăng xuất không?",
+            okText: "Đăng xuất",
+            cancelText: "Hủy",
+            onOk() {
+                localStorage.removeItem("user");
+                setUser(null);
+                message.success("Bạn đã đăng xuất");
+            }
+        });
+    };
 
     // check quyền 
     const hasRole = (role) => {
