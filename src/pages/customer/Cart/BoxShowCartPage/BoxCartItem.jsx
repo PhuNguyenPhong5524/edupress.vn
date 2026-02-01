@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 
 const BoxCartItem = ({ item, showNameProvider }) => {
@@ -15,10 +16,13 @@ const BoxCartItem = ({ item, showNameProvider }) => {
 
             {/* INFO */}
                 <div className="flex-1">
-                    <h2 className="font-bold text-[16px] leading-snug">
+                    <Link
+                        className="font-bold text-[16px] leading-snug"
+                        to={`/detail/${item.course._id}`}
+                    >
                         {item.course.course_title}
-                    </h2>
-
+                    </Link>
+                    
                     <p className="text-sm text-[#000000] py-1">
                         Giảng viên: <span className="font-semibold text-[#ff9a1e]">{showNameProvider?.provider_name} </span>   
                     </p>

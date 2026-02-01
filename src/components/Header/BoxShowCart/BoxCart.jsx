@@ -1,6 +1,7 @@
 import { Spin } from "antd";
+import { Link } from "react-router";
 
-const BoxShowCart = ({ showCart, isReady }) => {
+const BoxShowCart = ({ showCart, isReady, totalOriginalPrice }) => {
     
     if (!isReady) {
         return (
@@ -23,20 +24,33 @@ const BoxShowCart = ({ showCart, isReady }) => {
         <div className="p-4 space-y-4">
         {showCart.map(item => (
             <div key={item.id} className="flex gap-3">
-            <img
-                src={item.course.image_url}
-                alt={item.course.course_title}
-                className="w-[60px] h-[60px] rounded-lg object-cover"
-            />
+                <img
+                    src={item.course.image_url}
+                    alt={item.course.course_title}
+                    className="w-[60px] h-[60px] rounded-lg object-cover"
+                />
 
-            <div>
-                <p className="font-semibold text-[15px] line-clamp-1 hover:text-[#FF782D] cursor-pointer">
-                {item.course.course_title}
-                </p>
-                <p className="text-sm text-gray-500 line-clamp-2">
-                {item.course.description}
-                </p>
-            </div>
+                <div>
+                    <Link
+                        to={`/detail/${item.course._id}`}
+                        className="text-sm font-semibold line-clamp-2 text-[#000000] hover:text-[#FF782D]"
+                    >
+                        {item.course.course_title}        
+                    </Link>
+
+                    <div className="flex items-center justify-between ">
+                        <p className="text-[12px] text-gray-400 ">
+                            {item.course.total_lectures} bài giảng
+                        </p>
+
+                        <span className="text-[#000000] text-[14px] font-semibold">
+                            {  totalOriginalPrice === 0   
+                                ? <span className="text-green-400 font-semibold">Free</span>
+                                : `${Number(totalOriginalPrice).toLocaleString('vi-VN')} VND`
+                            }
+                        </span>
+                    </div>
+                </div>
             </div>
         ))}
         </div>

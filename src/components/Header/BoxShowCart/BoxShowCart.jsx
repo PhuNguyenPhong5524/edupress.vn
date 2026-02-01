@@ -21,7 +21,13 @@ const BoxShowCart = ({cart, cartLoading, loadingCourse, courses}) => {
         .filter(item => item.course);
     }, [cart, courses, isReady]);
 
+    const totalOriginalPrice = useMemo(() => {
+        if (!Array.isArray(showCart)) return 0;
 
+        return showCart.reduce((total, item) => {
+            return total + (item.course?.price ?? 0);
+        }, 0);
+    }, [showCart]);
 
     return (
         <div
@@ -36,12 +42,19 @@ const BoxShowCart = ({cart, cartLoading, loadingCourse, courses}) => {
                 <BoxCart 
                     showCart={showCart}
                     isReady={isReady}
+                    totalOriginalPrice={totalOriginalPrice}
                 />
             <div className="border-t px-4 py-3 text-center ">
                 <p className="text-lg font-semibold">
-                    Tổng: <span className="text-[#FF782D]">200.000đ</span>
+                    Tổng: 
+                    <span className="text-[#000000] font-semibold pl-2">
+                        {  totalOriginalPrice === 0   
+                            ? <span className="text-green-400 font-semibold">Free</span>
+                            : `${Number(totalOriginalPrice).toLocaleString('vi-VN')} VND`
+                        }
+                    </span>
                 </p>
-                <p className="text-sm text-gray-500">2 khóa học</p>
+                <p className="text-sm text-gray-500">{showCart.length} khóa học</p>
                 <Link
                     to={`/cart`}
                     className="
