@@ -207,31 +207,35 @@ const Header = () => {
                                 {/* Cart */}
                                     <li className="relative group">
                                     {/* Icon */}
-                                        <div
-                                            className="
-                                            relative flex items-center justify-center
-                                            h-[64px] w-[48px]
-                                            cursor-pointer
-                                            transition-colors duration-200
-                                            group-hover:bg-[#F5F5F5] group-hover:text-[#FF782D]
-                                            rounded-md
-                                            "
+                                        <Link
+                                            to="/cart"
                                         >
-                                            <BagShoppingIcon size={24} />
-
-                                            {/* Badge */}
-                                            <span
-                                            className="
-                                                absolute top-[14px] right-[8px]
-                                                w-[16px] h-[16px]
-                                                text-[10px] text-white
-                                                bg-red-500 rounded-full
-                                                flex items-center justify-center
-                                            "
+                                            <div
+                                                className="
+                                                relative flex items-center justify-center
+                                                h-[64px] w-[48px]
+                                                cursor-pointer
+                                                transition-colors duration-200
+                                                group-hover:bg-[#F5F5F5] group-hover:text-[#FF782D]
+                                                rounded-md
+                                                "
                                             >
-                                                {cart !== null && cart.length}
-                                            </span>
-                                        </div>
+                                                <BagShoppingIcon size={24} />
+
+                                                {/* Badge */}
+                                                <span
+                                                    className="
+                                                        absolute top-[14px] right-[8px]
+                                                        w-[16px] h-[16px]
+                                                        text-[10px] text-white
+                                                        bg-red-500 rounded-full
+                                                        flex items-center justify-center
+                                                    "
+                                                >
+                                                    {cart !== null && cart.length}
+                                                </span>
+                                            </div>
+                                        </Link>
 
                                         {/* Spacer giữ hover */}
                                         <div className="absolute top-full right-0 h-3 w-full"></div>
