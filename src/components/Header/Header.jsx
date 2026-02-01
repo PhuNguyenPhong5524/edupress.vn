@@ -9,14 +9,16 @@ import useFetchData from "../../api/useFetchData";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import MenuMoblie from "./HeaderMobile/MenuMoblie/MenuMoblie";
-import SearchDropdown from "./SearchDropdown";
+import SearchDropdown from "./BoxSearch/SearchDropdown";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "../LanguageSelect";
 import BoxSearchMoblie from "./HeaderMobile/BoxSearchMobile";
 import useAuth from "../../hooks/useAuth";
 import { Avatar } from "antd";
-import MenuUser from "./MenuUser";
-import BoxShowMenuCate from "./BoxShowMenuCate";
+import MenuUser from "./BoxMenu/MenuUser";
+import BoxShowMenuCate from "./BoxMenu/BoxShowMenuCate";
+import { useCartStore } from "../../stores/cart.store";
+import BoxShowCart from "./BoxShowCart/BoxShowCart";
 
 
 
@@ -28,7 +30,7 @@ const Header = () => {
     const {user, logout, isAuthenticated, getAvatarLetter} = useAuth();
     const [show, setShow] = useState(true);
     const lastScrollY = useRef(0);
-
+    const { cart, loading: cartLoading, fetchCart } = useCartStore();
     useEffect(() => {    
         const handleScroll = () => {
             const currentScroll = window.scrollY;
@@ -63,6 +65,11 @@ const Header = () => {
             );
     }, [courses, keyword]);
 
+     useEffect(() => {
+        if (user?.id) {
+            fetchCart(user.id);
+        }
+    }, [user?.id, fetchCart]);
 
     return (
         <header 
@@ -222,63 +229,20 @@ const Header = () => {
                                                 flex items-center justify-center
                                             "
                                             >
-                                            0
+                                                {cart !== null && cart.length}
                                             </span>
                                         </div>
 
                                         {/* Spacer giữ hover */}
                                         <div className="absolute top-full right-0 h-3 w-full"></div>
 
-                                        {/* Dropdown */}
-                                        <div
-                                            className="
-                                            absolute right-0 top-full mt-3
-                                            w-[300px] bg-white
-                                            rounded-xl border border-[#EAEAEA]
-                                            shadow-xl
-                                            opacity-0 invisible
-                                            translate-y-2 scale-95
-                                            transition-all duration-200 ease-out
-                                            origin-top
-                                            group-hover:opacity-100 group-hover:visible
-                                            group-hover:translate-y-0 group-hover:scale-100
-                                            z-50
-                                            "
-                                        >
-                                            <div className="p-4">
-                                            <div className="flex gap-3">
-                                                <img
-                                                src="https://v2.fullbootcamp.com/uploads/0f57a59b2dcc410385e6b40d922e9bb1_c0165976ca.webp"
-                                                className="w-[60px] h-[60px] rounded-lg object-cover"
-                                                />
-                                                <div>
-                                                <p className="font-semibold text-[15px] line-clamp-1 hover:text-[#FF782D] cursor-pointer">
-                                                    Fullstack PHP & Laravel
-                                                </p>
-                                                <p className="text-sm text-gray-500 line-clamp-2">
-                                                    Chuyển đổi tuần luyện tập với Fullstack PHP & Laravel
-                                                </p>
-                                                </div>
-                                            </div>
-                                            </div>
-
-                                            <div className="border-t px-4 py-3 text-center">
-                                            <p className="text-lg font-semibold">
-                                                Tổng: <span className="text-[#FF782D]">200.000đ</span>
-                                            </p>
-                                            <p className="text-sm text-gray-500">2 khóa học</p>
-                                            <button
-                                                className="
-                                                mt-3 w-full h-[44px]
-                                                rounded-lg bg-[#FF782D]
-                                                text-white font-semibold
-                                                hover:bg-[#FF782D]/80 transition
-                                                "
-                                            >
-                                                Chuyển đến giỏ hàng
-                                            </button>
-                                            </div>
-                                        </div>
+                                        {/* Box show cart */}
+                                            <BoxShowCart 
+                                                cart={cart} 
+                                                cartLoading={cartLoading} 
+                                                loadingCourse={loadingCourse}
+                                                courses={courses}
+                                            />
                                     </li>
 
                                 {/* User */}

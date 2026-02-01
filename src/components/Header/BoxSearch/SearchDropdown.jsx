@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Dropdown } from "antd";
-import SearchIcon from "../icons/SearchIcon";
+import SearchIcon from "../../../components/icons/SearchIcon";
 import ShowCourseSearch from "./ShowCourseSearch";
 
 
@@ -10,11 +10,14 @@ export default function SearchDropdown({
   loading, 
   keyword,
   setKeyword,
-  results,
-  handleClose
+  results
 }) {
   const [open, setOpen] = useState(false);
 
+  const handleClose = () => {
+    setOpen(false);
+    setKeyword('');
+  };
   return (
     <Dropdown
       open={open}

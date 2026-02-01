@@ -11,6 +11,7 @@ import ManagementUsers from './pages/admin/ManagementUsers/ManagementUsers.jsx'
 import Register from './pages/Register/Register.jsx'
 import "./i18n.js"
 import AuthProvider from './context/AuthContext.jsx'
+import CartPage from './pages/customer/Cart/CartPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/' element={<CustomerLayout />} >
             <Route index element={<HomePage />} />
             <Route path='detail/:_id' element={<DetailPage />} />
+            <Route path='cart' element={<CartPage /> } />
           </Route>
           <Route path='/admin'  element={<AdminLayout />} >
             <Route path='employee' element={<ManagementUsers />} />

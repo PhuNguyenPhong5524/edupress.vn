@@ -1,8 +1,8 @@
 import { Avatar } from "antd";
 import { Link } from "react-router-dom";
-import KeyIcon from "../icons/KeyIcon";
-import BellIcon from "../icons/BellIcon";
-import LogoutIcon from "../icons/LogoutIcon";
+import KeyIcon from "../../icons/KeyIcon";
+import BellIcon from "../../icons/BellIcon";
+import LogoutIcon from "../../icons/LogoutIcon";
 
 const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
     return(

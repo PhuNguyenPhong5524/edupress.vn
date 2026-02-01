@@ -1,9 +1,9 @@
 
 import { Input, Empty, Spin } from "antd";
-import SearchIcon from "../icons/SearchIcon";
+import SearchIcon from "../../../components/icons/SearchIcon";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import CloseIcon from "../icons/CloseIcon";
+import CloseIcon from "../../../components/icons/CloseIcon";
 
 const ShowCourseSearch = ({keyword, setKeyword, results, loading, onclose}) => {
     const [searchLoading, setSearchLoading] = useState(false);

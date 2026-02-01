@@ -5,6 +5,9 @@ const useFetchData = (nameResource) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [reload, setReload] = useState(0)
+
+  const refetch = () => setReload(prev => prev + 1)
 
   useEffect(() => {
     if (!nameResource) return
@@ -24,6 +27,7 @@ const useFetchData = (nameResource) => {
       } catch (err) {
         if (err.name !== "CanceledError") {
           setError(err)
+          setData([])
         }
       } finally {
         setLoading(false)
@@ -32,9 +36,10 @@ const useFetchData = (nameResource) => {
 
     fetchData()
     return () => controller.abort()
-  }, [nameResource])
+  }, [nameResource, reload]) // 👈 quan trọng
 
-  return { data, loading, error }
+  return { data, loading, error, refetch }
 }
 
-export default useFetchData
+
+export default useFetchData;
