@@ -1,10 +1,25 @@
-import { Avatar } from "antd";
-import { Link } from "react-router-dom";
+import { Avatar, message, Modal } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import KeyIcon from "../../icons/KeyIcon";
 import BellIcon from "../../icons/BellIcon";
 import LogoutIcon from "../../icons/LogoutIcon";
 
 const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
+    const nav = useNavigate();
+    const { confirm } = Modal;
+    const handleLogout = () => {
+        confirm({
+            title: "Đăng xuất",
+            content: "Bạn có chắc chắn muốn đăng xuất không?",
+            okText: "Đăng xuất",
+            cancelText: "Hủy",
+            onOk() {
+                logout();
+                message.success("Bạn đã đăng xuất");
+                nav("/");
+            }
+        });
+    };
     return(
         <ul
             className={`
@@ -68,7 +83,7 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
                                 hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
                                 hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
                             " 
-                            onClick={logout}
+                            onClick={handleLogout}
                         > 
                             <LogoutIcon size={24} />
                             {t('header.logout')} 

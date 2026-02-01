@@ -5,12 +5,12 @@ import {
   LogoutOutlined,
 
 } from "@ant-design/icons";
-import { Menu, Spin } from "antd";
+import { Menu, message, Modal, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const MenuMobileItem = ({ onClose, logout}) => {
   const navigate = useNavigate();
-
+  const { confirm } = Modal;
   // map key -> route
   const routeMap = {
     changepassword: "/change-password",
@@ -39,18 +39,30 @@ const MenuMobileItem = ({ onClose, logout}) => {
   ];
 
 const handleClick = ({ key }) => {
-    if (key === "logout") {
+  if (key === "logout") {
+    confirm({
+      title: "Đăng xuất",
+      content: "Bạn có chắc chắn muốn đăng xuất không?",
+      okText: "Đăng xuất",
+      cancelText: "Hủy",
+      onOk() {
+        localStorage.removeItem("user");
         logout();
-        onClose();
-        return;
-    }
+        message.success("Bạn đã đăng xuất");
+        navigate("/");
+        onClose?.();
+      },
+    });
+    return;
+  }
 
-    if (routeMap[key]) {
-        navigate(routeMap[key]);
-    }
+  if (routeMap[key]) {
+    navigate(routeMap[key]);
+  }
 
-    onClose && onClose();
+  onClose?.();
 };
+
 
 
   return (
