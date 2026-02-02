@@ -1,7 +1,13 @@
 import { Link } from "react-router";
+import PopopConfirm from "../PopopConfirm/PopopConfirm";
 
 
-const BoxCartItem = ({ item, showNameProvider }) => {
+const BoxCartItem = ({ item, showNameProvider, user, removeFromCart }) => {
+    const handleRemoveFromCart = () => {
+        if (!user?._id || !item?._id) return;
+        removeFromCart(item._id, Number(user.id));
+    };
+
     return (
         <div
             key={item._id}
@@ -41,9 +47,7 @@ const BoxCartItem = ({ item, showNameProvider }) => {
                         </p>
                     </div>
 
-                    <button className="text-sm text-red-500 mt-3 hover:underline">
-                        Xóa khỏi giỏ
-                    </button>
+                    <PopopConfirm handleRemoveFromCart={handleRemoveFromCart} />
                 </div>
 
             {/* PRICE */}

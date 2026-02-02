@@ -10,7 +10,7 @@ import BoxCheckoutPage from "./BoxCheckoutPage/BoxCheckoutPage";
 
 const CartPage = () => {
     const { user } = useAuth();
-    const { cart, loading: cartLoading, fetchCart } = useCartStore();
+    const { cart, loading: cartLoading, fetchCart, removeFromCart } = useCartStore();
     const { data: course, loading: courseLoading } = useFetchData("courses");
     const { data: provider } = useFetchData("providers");
 
@@ -67,11 +67,13 @@ const CartPage = () => {
                     <h1 className="text-2xl font-bold mb-3">🛒 Giỏ hàng</h1>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* LEFT */}
-                            <div className="lg:col-span-2 space-y-4">
+                            <div className="lg:col-span-2 space-y-4 px-4 shadow-xl border border-gray-300 border-dashed rounded-[10px]">
                                 <BoxShowCartPage
                                     showSpin={showSpin}
                                     showCart={showCart}
                                     showNameProvider={showNameProvider}
+                                    user={user}
+                                    removeFromCart={removeFromCart}
                                 />
                             </div>
 
