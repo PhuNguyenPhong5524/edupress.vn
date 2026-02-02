@@ -30,7 +30,7 @@ const Header = () => {
     const {user, logout, isAuthenticated, getAvatarLetter} = useAuth();
     const [show, setShow] = useState(true);
     const lastScrollY = useRef(0);
-    const { cart, loading: cartLoading, fetchCart } = useCartStore();
+    const {cart , loading: cartLoading, fetchCart } = useCartStore();
     useEffect(() => {    
         const handleScroll = () => {
             const currentScroll = window.scrollY;
@@ -65,16 +65,17 @@ const Header = () => {
             );
     }, [courses, keyword]);
 
-     useEffect(() => {
+    useEffect(() => {
         if (user?.id) {
             fetchCart(user.id);
         }
-    }, [user?.id, fetchCart]);
+    }, [user?.id]);
     
-    const userCartCount = useMemo(() => {
-        if (!user?.id) return 0;
-        return cart.filter(item => item.user_id === user.id).length;
-    }, [cart, user?.id]);
+    const courseCount = cart?.courses?.length || 0;
+
+
+
+
     return (
         <header 
             className={
@@ -236,7 +237,7 @@ const Header = () => {
                                                         flex items-center justify-center
                                                     "
                                                 >
-                                                    {userCartCount}
+                                                 { courseCount ? courseCount : 0 }
                                                 </span>
                                             </div>
                                         </Link>
@@ -247,10 +248,9 @@ const Header = () => {
                                         {/* Box show cart */}
                                             <BoxShowCart 
                                                 cart={cart} 
-                                                cartLoading={cartLoading} 
-                                                loadingCourse={loadingCourse}
                                                 course={courses}
-                                                user = {user}
+                                                loadingCourse={loadingCourse}
+                                                cartLoading={cartLoading}
                                             />
                                     </li>
 

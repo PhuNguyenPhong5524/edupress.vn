@@ -5,72 +5,120 @@ const API =
   "https://mindx-mockup-server.vercel.app/api/resources/cart?apiKey=6957348a9dda81df11d0c527";
 
 export const useCartStore = create((set, get) => ({
-    cart: [],
-    loading: false,
+  cart: null,
+  loading: false,
 
-    fetchCart: async () => {
-        set({ loading: true });
+  // ======================
+  // FETCH CART BY USER
+  // ======================
+  fetchCart: async (userId) => {
+    if (!userId) return;
 
-        try {
-            const res = await axios.get(API);
+    set({ loading: true });
 
-            set({
-                cart: res?.data?.data?.data ?? [],
-                loading: false,
-            });
-        } catch (err) {
-            set({
-                cart: [],
-                loading: false,
-            });
-        }
-    },
+    try {
+      const res = await axios.get(API);
+      const carts = res?.data?.data?.data ?? [];
 
-    addToCart: async (courseId, userId) => {
-        if (!userId) return false;
+      const userCart = carts.find(
+        c => Number(c.user_id) === Number(userId) && c.status === "active"
+      );
 
-        const { cart } = get();
-        const exists = cart.some(i => i.course_id === courseId);
-        if (exists) return false;
+      set({
+        cart: userCart || null,
+        loading: false,
+      });
+    } catch {
+      set({ cart: null, loading: false });
+    }
+  },
 
-        await axios.post(API, {
-            user_id: userId,
-            course_id: courseId,
-            status: "active",
-            created_at: new Date().toISOString(),
-        });
+  // ======================
+  // ADD COURSE TO CART
+  // ======================
+  addToCart: async (courseId, userId) => {
+    if (!userId) return false;
 
-        await get().fetchCart(userId);
-        return true;
-    },
+    const { cart } = get();
 
-    clearCart: () => set({ cart: [], loading: false }),
+    // 🟢 CHƯA CÓ CART → TẠO CART MỚI
+    if (!cart) {
+      await axios.post(API, {
+        user_id: userId,
+        status: "active",
+        courses: [{ course_id: courseId }],
+        created_at: new Date().toISOString(),
+      });
 
-
-    removeFromCart: async (cartId, userId) => {
-        const { cart } = get();
-
-        const cartItem = cart.find(
-            item =>
-            item._id === cartId &&
-            Number(item.user_id) === Number(userId)
-        );
-
-        if (!cartItem) {
-            console.warn("Không tìm thấy cart item hợp lệ", { cartId, userId });
-            return;
-        }
-
-        await axios.delete(
-            `https://mindx-mockup-server.vercel.app/api/resources/cart/${cartId}?apiKey=6957348a9dda81df11d0c527`
-        );
-
-        set({
-            cart: cart.filter(item => item._id !== cartId)
-        });
+      await get().fetchCart(userId);
+      return true;
     }
 
+    // 🔴 ĐÃ CÓ COURSE
+    const exists = cart.courses.some(
+      c => c.course_id === courseId
+    );
+    if (exists) return false;
 
+    // 🟢 UPDATE CART (PUT FULL OBJECT)
+    await axios.put(
+      `${API}&id=${cart._id}`,
+      {
+        ...cart,
+        courses: [...cart.courses, { course_id: courseId }],
+        updated_at: new Date().toISOString(),
+      }
+    );
 
+    set({
+      cart: {
+        ...cart,
+        courses: [...cart.courses, { course_id: courseId }],
+      }
+    });
 
+    return true;
+  },
+
+  // ======================
+  // REMOVE COURSE
+  // ======================
+  removeFromCart: async (courseId) => {
+    const { cart } = get();
+    if (!cart) return;
+
+    const newCourses = cart.courses.filter(
+      c => c.course_id !== courseId
+    );
+
+    await axios.put(
+      `${API}&id=${cart._id}`,
+      { ...cart, courses: newCourses }
+    );
+
+    set({
+      cart: { ...cart, courses: newCourses }
+    });
+  },
+
+  // ======================
+  // CHECKOUT / CLEAR CART
+  // ======================
+  checkoutCart: async () => {
+    const { cart } = get();
+    if (!cart) return;
+
+    await axios.put(
+      `${API}&id=${cart._id}`,
+      {
+        ...cart,
+        status: "checked_out",
+        courses: [],
+      }
+    );
+
+    set({ cart: null });
+  },
+
+  clearLocalCart: () => set({ cart: null }),
 }));

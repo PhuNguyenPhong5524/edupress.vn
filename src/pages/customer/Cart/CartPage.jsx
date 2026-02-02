@@ -10,16 +10,12 @@ import BoxCheckoutPage from "./BoxCheckoutPage/BoxCheckoutPage";
 
 const CartPage = () => {
     const { user } = useAuth();
-    const { cart, loading: cartLoading, fetchCart, removeFromCart } = useCartStore();
+    const { cart, loading: cartLoading, fetchCart, clearCartByUser } = useCartStore();
     const { data: course, loading: courseLoading } = useFetchData("courses");
     const { data: provider } = useFetchData("providers");
 
     /* ================= FETCH CART ================= */
-    useEffect(() => {
-        if (user?.id) {
-            fetchCart(user.id);
-        }
-    }, [user?.id, fetchCart]);
+   
 
     const [showSpin, setShowSpin] = useState(true);
 
@@ -36,54 +32,65 @@ const CartPage = () => {
     // Loading
     const isReady = course !== null && !isLoading;
 
-    const userCart = useMemo(() => {
-        if (!user?.id) return [];
-        return cart.filter(item => item.user_id === user.id);
-    }, [cart, user?.id]);
-
+    useEffect(() => {
+        if (user?.id) {
+            fetchCart(user.id);
+        }
+    }, [user?.id]);
+    
+    
     const showCart = useMemo(() => {
-        if (!isReady || userCart.length === 0 || !Array.isArray(course)) return [];
+        if (!cart || !Array.isArray(course)) return [];
 
         const courseMap = Object.fromEntries(
             course.map(c => [c._id, c])
         );
 
-        return userCart
-            .map(item => ({
-                ...item,
-                course: courseMap[item.course_id],
-            }))
-            .filter(item => item.course);
-    }, [userCart, course, isReady]);
+        return cart.courses
+            .map(item => courseMap[item.course_id])
+            .filter(Boolean);
+    }, [cart, course]);
+
+    const totalPrice = useMemo(() => {
+        return showCart.reduce(
+            (sum, c) => sum + Number(c.price || 0),
+            0
+        );
+    }, [showCart]);
+    
 
     const showNameProvider = useMemo(() => {
-        return provider.find(item => item.id === showCart[0]?.course.provider_id);
-    })
+        if (!showCart.length || !provider) return null;
+
+        const providerId = showCart[0].provider_id;
+        return provider.find(p => p.id === providerId) || null;
+    }, [showCart, provider]);
 
     return (
         <div className="mt-[60px] max-w-[1080px] mx-auto px-[15px] lg:px-0">
-             <div className=" bg-gray-50 pt-8">
+            <div className=" bg-gray-50 pt-8">
                 <div className="max-w-[1080px] mx-auto ">
                     <h1 className="text-2xl font-bold mb-3">🛒 Giỏ hàng</h1>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* LEFT */}
-                            <div className="lg:col-span-2 space-y-4 px-4 shadow-xl border border-gray-300 border-dashed rounded-[10px]">
+                            <div className="lg:col-span-2 space-y-4 py-2 px-4 shadow-xl border border-gray-300 border-dashed rounded-[10px]">
                                 <BoxShowCartPage
                                     showSpin={showSpin}
                                     showCart={showCart}
-                                    showNameProvider={showNameProvider}
                                     user={user}
-                                    removeFromCart={removeFromCart}
+                                    showNameProvider={showNameProvider}
                                 />
                             </div>
 
                         {/* RIGHT */}
                             <BoxCheckoutPage 
                                 showCart={showCart}
+                                totalPrice={totalPrice}
+                                clearCartByUser={clearCartByUser}
                             />
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
         );
 

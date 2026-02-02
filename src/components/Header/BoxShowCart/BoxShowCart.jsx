@@ -2,36 +2,27 @@ import { Link } from "react-router-dom"
 import BoxCart from "./BoxCart"
 import { useMemo } from "react";
 
-const BoxShowCart = ({cart, cartLoading, loadingCourse, course, user}) => {
+const BoxShowCart = ({cart, course, cartLoading, loadingCourse}) => {
     const isLoading = cartLoading || loadingCourse;
     const isReady = course !== null && !isLoading;
 
-     const userCart = useMemo(() => {
-        if (!user?.id) return [];
-        return cart.filter(item => item.user_id === user.id);
-    }, [cart, user?.id]);
-
     const showCart = useMemo(() => {
-        if (!isReady || userCart.length === 0 || !Array.isArray(course)) return [];
+        if (!cart || !Array.isArray(course)) return [];
 
         const courseMap = Object.fromEntries(
             course.map(c => [c._id, c])
         );
 
-        return userCart
-            .map(item => ({
-                ...item,
-                course: courseMap[item.course_id],
-            }))
-            .filter(item => item.course);
-    }, [userCart, course, isReady]);
+        return cart.courses
+            .map(item => courseMap[item.course_id])
+            .filter(Boolean);
+    }, [cart, course]);
 
-    const totalOriginalPrice = useMemo(() => {
-        if (!Array.isArray(showCart)) return 0;
-
-        return showCart.reduce((total, item) => {
-            return total + (item.course?.price ?? 0);
-        }, 0);
+    const totalPrice = useMemo(() => {
+        return showCart.reduce(
+            (sum, c) => sum + Number(c.price || 0),
+            0
+        );
     }, [showCart]);
 
     return (
@@ -50,15 +41,15 @@ const BoxShowCart = ({cart, cartLoading, loadingCourse, course, user}) => {
                 <BoxCart    
                     showCart={showCart}
                     isReady={isReady}
-                    totalOriginalPrice={totalOriginalPrice}
+                
                 />
-            <div className="border-t px-4 py-3 text-center ">
+            <div className="border-t border-[#EAEAEA] px-4 py-3 text-center ">
                 <p className="text-lg font-semibold">
                     Tổng: 
                     <span className="text-[#000000] font-semibold pl-2">
-                        {  totalOriginalPrice === 0   
+                        {  totalPrice === 0   
                             ? <span className="text-green-400 font-semibold">Free</span>
-                            : `${Number(totalOriginalPrice).toLocaleString('vi-VN')} VND`
+                            : `${Number(totalPrice).toLocaleString('vi-VN')} VND`
                         }
                     </span>
                 </p>
