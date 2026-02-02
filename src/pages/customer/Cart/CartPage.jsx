@@ -36,20 +36,25 @@ const CartPage = () => {
     // Loading
     const isReady = course !== null && !isLoading;
 
+    const userCart = useMemo(() => {
+        if (!user?.id) return [];
+        return cart.filter(item => item.user_id === user.id);
+    }, [cart, user?.id]);
+
     const showCart = useMemo(() => {
-        if (!isReady || cart.length === 0 || !Array.isArray(course)) return [];
+        if (!isReady || userCart.length === 0 || !Array.isArray(course)) return [];
 
         const courseMap = Object.fromEntries(
             course.map(c => [c._id, c])
         );
 
-        return cart
+        return userCart
             .map(item => ({
-            ...item,
-            course: courseMap[item.course_id],
+                ...item,
+                course: courseMap[item.course_id],
             }))
             .filter(item => item.course);
-    }, [cart, course, isReady]);
+    }, [userCart, course, isReady]);
 
     const showNameProvider = useMemo(() => {
         return provider.find(item => item.id === showCart[0]?.course.provider_id);

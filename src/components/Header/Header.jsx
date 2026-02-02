@@ -70,7 +70,11 @@ const Header = () => {
             fetchCart(user.id);
         }
     }, [user?.id, fetchCart]);
-
+    
+    const userCartCount = useMemo(() => {
+        if (!user?.id) return 0;
+        return cart.filter(item => item.user_id === user.id).length;
+    }, [cart, user?.id]);
     return (
         <header 
             className={
@@ -232,7 +236,7 @@ const Header = () => {
                                                         flex items-center justify-center
                                                     "
                                                 >
-                                                    {cart !== null && cart.length}
+                                                    {userCartCount}
                                                 </span>
                                             </div>
                                         </Link>
@@ -245,7 +249,8 @@ const Header = () => {
                                                 cart={cart} 
                                                 cartLoading={cartLoading} 
                                                 loadingCourse={loadingCourse}
-                                                courses={courses}
+                                                course={courses}
+                                                user = {user}
                                             />
                                     </li>
 

@@ -2,24 +2,29 @@ import { Link } from "react-router-dom"
 import BoxCart from "./BoxCart"
 import { useMemo } from "react";
 
-const BoxShowCart = ({cart, cartLoading, loadingCourse, courses}) => {
+const BoxShowCart = ({cart, cartLoading, loadingCourse, course, user}) => {
     const isLoading = cartLoading || loadingCourse;
-    const isReady = courses !== null && !isLoading;
+    const isReady = course !== null && !isLoading;
+
+     const userCart = useMemo(() => {
+        if (!user?.id) return [];
+        return cart.filter(item => item.user_id === user.id);
+    }, [cart, user?.id]);
 
     const showCart = useMemo(() => {
-        if (!isReady || cart.length === 0 || !Array.isArray(courses)) return [];
+        if (!isReady || userCart.length === 0 || !Array.isArray(course)) return [];
 
         const courseMap = Object.fromEntries(
-        courses.map(c => [c._id, c])
-    );
+            course.map(c => [c._id, c])
+        );
 
-    return cart
-        .map(item => ({
-            ...item,
-            course: courseMap[item.course_id],
-        }))
-        .filter(item => item.course);
-    }, [cart, courses, isReady]);
+        return userCart
+            .map(item => ({
+                ...item,
+                course: courseMap[item.course_id],
+            }))
+            .filter(item => item.course);
+    }, [userCart, course, isReady]);
 
     const totalOriginalPrice = useMemo(() => {
         if (!Array.isArray(showCart)) return 0;
@@ -42,7 +47,7 @@ const BoxShowCart = ({cart, cartLoading, loadingCourse, courses}) => {
             `}
         >
             {/* Box Cart */}
-                <BoxCart 
+                <BoxCart    
                     showCart={showCart}
                     isReady={isReady}
                     totalOriginalPrice={totalOriginalPrice}

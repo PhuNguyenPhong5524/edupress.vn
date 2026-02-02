@@ -8,15 +8,11 @@ export const useCartStore = create((set, get) => ({
     cart: [],
     loading: false,
 
-    fetchCart: async (userId) => {
-        if (!userId) return;
-
+    fetchCart: async () => {
         set({ loading: true });
 
         try {
-            const res = await axios.get(
-            `${API}&user_id=${userId}&status=active`
-            );
+            const res = await axios.get(API);
 
             set({
                 cart: res?.data?.data?.data ?? [],

@@ -23,7 +23,7 @@ const BoxShowCartPage = ({
                     <div className="space-y-4">
                         {
                             showCart.map(item => (
-                                <BoxCartItem key={item.id} item={item} showNameProvider={showNameProvider} />
+                                <BoxCartItem key={item._id} item={item} showNameProvider={showNameProvider} />
                             ))
                         }
                     </div>
