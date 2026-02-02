@@ -7,10 +7,12 @@ import {
 } from "@ant-design/icons";
 import { Menu, message, Modal, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useCartStore } from "../../../../stores/cart.store";
 
 const MenuMobileItem = ({ onClose, logout}) => {
   const navigate = useNavigate();
   const { confirm } = Modal;
+  const {clearCart} = useCartStore();
   // map key -> route
   const routeMap = {
     changepassword: "/change-password",
@@ -46,7 +48,7 @@ const handleClick = ({ key }) => {
       okText: "Đăng xuất",
       cancelText: "Hủy",
       onOk() {
-        localStorage.removeItem("user");
+        clearCart();
         logout();
         message.success("Bạn đã đăng xuất");
         navigate("/");

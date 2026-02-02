@@ -31,12 +31,15 @@ const BoxShowCart = ({cart, cartLoading, loadingCourse, courses}) => {
 
     return (
         <div
-            className="
+            className={`
+                ${showCart.length === 0 ? 'h-[200px]' : ''}
+                ${showCart.length === 1 ? 'h-[230px]' : ''}
+                ${showCart.length > 1 ? 'h-[310px]' : ''}
                 absolute right-0 top-full mt-3 w-[300px] bg-white rounded-xl border border-[#EAEAEA]
                 shadow-xl opacity-0 invisible translate-y-2 scale-95 transition-all duration-200 ease-out
                 origin-top group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 hidden lg:block
-                group-hover:scale-100 z-50
-            "
+                group-hover:scale-100 z-50 overflow-hidden    
+            `}
         >
             {/* Box Cart */}
                 <BoxCart 

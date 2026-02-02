@@ -3,10 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import KeyIcon from "../../icons/KeyIcon";
 import BellIcon from "../../icons/BellIcon";
 import LogoutIcon from "../../icons/LogoutIcon";
+import { useCartStore } from "../../../stores/cart.store";
 
 const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
     const nav = useNavigate();
     const { confirm } = Modal;
+    const {clearCart} = useCartStore();
     const handleLogout = () => {
         confirm({
             title: "Đăng xuất",
@@ -14,6 +16,7 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
             okText: "Đăng xuất",
             cancelText: "Hủy",
             onOk() {
+                clearCart();
                 logout();
                 message.success("Bạn đã đăng xuất");
                 nav("/");

@@ -30,24 +30,26 @@ export const useCartStore = create((set, get) => ({
         }
     },
 
-
-    addToCart: async (course, userId) => {
-        if (!userId) return;
+    addToCart: async (courseId, userId) => {
+        if (!userId) return false;
 
         const { cart } = get();
-        if (cart.some(i => i.course_id === course.id)) return "EXISTED";
+        const exists = cart.some(i => i.course_id === courseId);
+        if (exists) return false;
 
         await axios.post(API, {
-        user_id: userId,
-        course_id: course.id,
-        price: course.price,
-        discount_price: course.discount_price,
-        status: "active"
+            user_id: userId,
+            course_id: courseId,
+            status: "active",
+            created_at: new Date().toISOString(),
         });
 
         await get().fetchCart(userId);
-        return "ADDED";
+        return true;
     },
+
+    clearCart: () => set({ cart: [], loading: false }),
+
 
     removeFromCart: async (id, userId) => {
         if (!userId) return;

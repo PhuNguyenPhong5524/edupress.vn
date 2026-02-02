@@ -14,16 +14,24 @@ const BoxShowCart = ({ showCart, isReady, totalOriginalPrice }) => {
 
     if (showCart.length === 0) {
         return (
-        <div className="p-4 text-center text-gray-400">
-            Chưa có khóa học trong giỏ
+        <div className="p-4 text-center text-gray-400 flex justify-center items-center  h-[70px]">
+            <span 
+                className={`
+                    ${showCart.length === 0 ? 'h-[40px]' : ''}
+                    text-[14px] font-semibold border border-gray-300 w-full
+                    border-dashed flex flex-col justify-center items-center    
+                `}
+            >
+                Chưa có khóa học trong giỏ
+            </span>
         </div>
         );
     }   
 
     return (
-        <div className="p-4 space-y-4">
+        <div className={`${showCart.length === 1 ? 'h-[100px]' : 'h-[180px]'} p-4 space-y-4 overflow-y-auto`}>
         {showCart.map(item => (
-            <div key={item.id} className="flex gap-3">
+            <div key={item._id} className="flex gap-3">
                 <img
                     src={item.course.image_url}
                     alt={item.course.course_title}
@@ -44,9 +52,9 @@ const BoxShowCart = ({ showCart, isReady, totalOriginalPrice }) => {
                         </p>
 
                         <span className="text-[#000000] text-[14px] font-semibold">
-                            {  totalOriginalPrice === 0   
+                            {  item.course.price === 0   
                                 ? <span className="text-green-400 font-semibold">Free</span>
-                                : `${Number(totalOriginalPrice).toLocaleString('vi-VN')} VND`
+                                : `${Number(item.course.price).toLocaleString('vi-VN')} VND`
                             }
                         </span>
                     </div>

@@ -1,9 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BagShoppingIcon from "../components/icons/BagShoppingIcon"
 import ClockIcon from "../components/icons/ClockIcon";
 import GraduationIcon from "../components/icons/GraduationIcon"
+import { useCartStore } from "../stores/cart.store";
+import { message, Modal, Spin } from "antd";
+import useAuth from "../hooks/useAuth";
+import { useState } from "react";
+
 const BoxCourse = ({item}) => {
 
+    const {cart, addToCart} = useCartStore();
+    const [adding, setAdding] = useState(false);
+    const {user} = useAuth();
+    const nav = useNavigate();
     const isNewCourse = (createdAt) => {
 
         if (!createdAt) return false;
@@ -23,6 +32,30 @@ const BoxCourse = ({item}) => {
     } else if (item.feature) {
         showBadge = "⭐ Nổi bật";
     }
+
+   const handleAddToCart = async () => {
+        if (adding) return; // 🔥 chặn click spam
+
+        if (!user?.id) {
+            Modal.confirm({
+                title: "Đăng nhập",
+                content: "Vui lòng đăng nhập để thêm khóa học!",
+                okText: "Đăng nhập",
+                cancelText: "Hủy",
+                onOk: () => nav("/login"),
+            });
+            return;
+        }
+
+        setAdding(true);
+        const ok = await addToCart(item._id, user.id);
+        setAdding(false);
+
+        ok
+            ? message.success("Đã thêm vào giỏ")
+            : message.warning("Khóa học đã có trong giỏ!");
+    };
+
 
     return (
         <div 
@@ -61,16 +94,21 @@ const BoxCourse = ({item}) => {
                             duration-300 ease-in-out group-hover:bg-black/50 group-hover:opacity-100
                         "
                     >
-                        <Link 
-                            to={`/`}
-                            className="
-                                absolute top-[85%] right-1/2 translate-x-1/2 w-[50px] h-[50px] bg-[#FF782D]/70 opacity-0 rounded-full flex 
-                                justify-center items-center text-[#ffffff] transform transition-transform duration-400 ease-in-out 
-                                group-hover:opacity-100 group-hover:translate-y-[-150%] z-[30] cursor-pointer hover:scale-110 hover:bg-[#FF782D]
-                                group-hover:
-                            ">
-                            <BagShoppingIcon size={26}/>
-                        </Link>
+                        <button
+                            onClick={handleAddToCart}
+                            disabled={adding}
+                            className={`
+                                ${adding
+                                    ? "bg-gray-400 cursor-not-allowed"
+                                    : "bg-[#FF782D] hover:opacity-80 hover:scale-95 text-white"}
+                                    absolute top-[85%] right-1/2 translate-x-1/2 w-[50px] h-[50px]  opacity-0 rounded-full flex 
+                                    justify-center items-center text-[#ffffff] transform transition-transform duration-400 ease-in-out 
+                                    group-hover:opacity-100 group-hover:translate-y-[-150%] z-[30] cursor-pointer hover:scale-110 hover:bg-[#FF782D]
+                            `}
+                        >
+                            {adding ? <Spin size="large" /> : <BagShoppingIcon size={26}/>}
+                        </button>
+
                     </div>
                 </div>
             {/* <!-- Content --> */}
@@ -81,12 +119,12 @@ const BoxCourse = ({item}) => {
                         </p>
                     {/* Title */}
                         <h4 className=" text-[12px] md:text-[16px] lg:text-[18px] leading-[16px] md:leading-[20px] lg:leading-[24px] font-semibold text-[#000000] group-hover:text-[#FF782D] line-clamp-2">
-                        <Link 
-                            to={`/detail/${item._id}`}
-                            className="" 
-                        >
-                            {item.course_title}
-                        </Link>
+                            <Link 
+                                to={`/detail/${item._id}`}
+                                className="" 
+                            >
+                                {item.course_title}
+                            </Link>
                         </h4>
                     {/* Info */}
                         <div className="flex items-center gap-[30px]">
