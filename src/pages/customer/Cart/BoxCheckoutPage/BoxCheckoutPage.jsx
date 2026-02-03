@@ -58,9 +58,9 @@ const BoxCheckoutPage = ({ showCart, checkoutCart, setCouponInput, couponInput, 
                     <span>
                     {totalOriginalPrice === 0 ? (
                         <span className="text-green-500">Free</span>
-                    ) : (
-                        `${totalOriginalPrice.toLocaleString("vi-VN")} VND`
-                    )}
+                        ) : (
+                            `${totalOriginalPrice.toLocaleString("vi-VN")} VND`
+                        )}
                     </span>
                 </div>
 

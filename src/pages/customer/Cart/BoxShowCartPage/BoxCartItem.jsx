@@ -4,7 +4,7 @@ import { useCartStore } from "../../../../stores/cart.store";
 import Item from "antd/es/list/Item";
 import { useMemo } from "react";
 
-const BoxCartItem = ({ course, user, provider }) => {
+const BoxCartItem = ({ course, user, provider, setAppliedCoupon, setCouponInput }) => {
   const { removeFromCart, cart } = useCartStore();
 
   const handleRemoveFromCart = async () => {
@@ -16,7 +16,16 @@ const BoxCartItem = ({ course, user, provider }) => {
 
     if (!cartItem) return false;
 
+    // số khóa học trước khi xóa
+    const isLastItem = cart.courses.length === 1;
+
     await removeFromCart(course._id);
+
+    if (isLastItem) {
+      setAppliedCoupon(null);
+      setCouponInput("");
+    }
+
     return true;
   };
 
