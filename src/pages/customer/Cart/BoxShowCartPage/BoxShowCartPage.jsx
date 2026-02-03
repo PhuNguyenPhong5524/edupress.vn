@@ -2,7 +2,7 @@ import { Spin } from "antd";
 import BoxCartItem from "./BoxCartItem";
 
 
-const BoxShowCartPage = ({ showSpin, showCart, user, showNameProvider }) => {
+const BoxShowCartPage = ({ showSpin, showCart, user, provider, setAppliedCoupon, setCouponInput }) => {
   return (
     <div className="relative">
       {showSpin ? (
@@ -11,8 +11,8 @@ const BoxShowCartPage = ({ showSpin, showCart, user, showNameProvider }) => {
         </div>
       ) : showCart.length === 0 ? (
         <div className="text-center text-gray-500 py-20">
-          <img src="/images/cart-img.png" alt="empty-cart" className="mx-auto mb-3" />
-          <span className="text-[16px] font-semibold">
+          <img src="/images/cart-img.png" alt="empty-cart" className="mx-auto w-[150px] lg:w-[200px] h-auto" />
+          <span className="text-[12px] md:text-[14px] lg:text-[16px] font-semibold text-[#bcbcbc]">
             Chưa có khóa học trong giỏ hàng
           </span>
         </div>
@@ -23,7 +23,9 @@ const BoxShowCartPage = ({ showSpin, showCart, user, showNameProvider }) => {
               key={course._id}
               course={course}
               user={user}
-              showNameProvider={showNameProvider}
+              provider={provider}
+              setAppliedCoupon={setAppliedCoupon}
+              setCouponInput={setCouponInput}
             />
           ))}
         </div>

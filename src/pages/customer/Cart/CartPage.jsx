@@ -10,7 +10,7 @@ import BoxCheckoutPage from "./BoxCheckoutPage/BoxCheckoutPage";
 
 const CartPage = () => {
     const { user } = useAuth();
-    const { cart, loading: cartLoading, fetchCart, clearCartByUser } = useCartStore();
+    const { cart, loading: cartLoading, fetchCart, checkoutCart} = useCartStore();
     const { data: course, loading: courseLoading } = useFetchData("courses");
     const { data: provider } = useFetchData("providers");
 
@@ -18,6 +18,8 @@ const CartPage = () => {
    
 
     const [showSpin, setShowSpin] = useState(true);
+    const [couponInput, setCouponInput] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
 
     const isLoading = cartLoading || courseLoading;
     useEffect(() => {
@@ -59,13 +61,6 @@ const CartPage = () => {
     }, [showCart]);
     
 
-    const showNameProvider = useMemo(() => {
-        if (!showCart.length || !provider) return null;
-
-        const providerId = showCart[0].provider_id;
-        return provider.find(p => p.id === providerId) || null;
-    }, [showCart, provider]);
-
     return (
         <div className="mt-[60px] max-w-[1080px] mx-auto px-[15px] lg:px-0">
             <div className=" bg-gray-50 pt-8">
@@ -73,12 +68,14 @@ const CartPage = () => {
                     <h1 className="text-2xl font-bold mb-3">🛒 Giỏ hàng</h1>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* LEFT */}
-                            <div className="lg:col-span-2 space-y-4 py-2 px-4 shadow-xl border border-gray-300 border-dashed rounded-[10px]">
+                            <div className="lg:col-span-2 space-y-4 ">
                                 <BoxShowCartPage
                                     showSpin={showSpin}
                                     showCart={showCart}
                                     user={user}
-                                    showNameProvider={showNameProvider}
+                                    provider={provider}
+                                    setCouponInput={setCouponInput}
+                                    setAppliedCoupon={setAppliedCoupon}
                                 />
                             </div>
 
@@ -86,7 +83,11 @@ const CartPage = () => {
                             <BoxCheckoutPage 
                                 showCart={showCart}
                                 totalPrice={totalPrice}
-                                clearCartByUser={clearCartByUser}
+                                checkoutCart={checkoutCart}
+                                setCouponInput={setCouponInput}
+                                couponInput={couponInput}
+                                setAppliedCoupon={setAppliedCoupon}
+                                appliedCoupon={appliedCoupon}
                             />
                     </div>
                 </div>

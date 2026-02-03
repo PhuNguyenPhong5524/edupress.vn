@@ -4,121 +4,155 @@ import axios from "axios";
 const API =
   "https://mindx-mockup-server.vercel.app/api/resources/cart?apiKey=6957348a9dda81df11d0c527";
 
+const cartUrl = (id) =>
+  `https://mindx-mockup-server.vercel.app/api/resources/cart/${id}?apiKey=6957348a9dda81df11d0c527`;
+
 export const useCartStore = create((set, get) => ({
   cart: null,
   loading: false,
+  hasFetchedCart: false,
 
   // ======================
-  // FETCH CART BY USER
+  // FETCH CART
   // ======================
   fetchCart: async (userId) => {
-    if (!userId) return;
+    if (!userId || get().hasFetchedCart) return;
 
     set({ loading: true });
-
     try {
       const res = await axios.get(API);
-      const carts = res?.data?.data?.data ?? [];
+      const carts = res.data.data.data || [];
 
-      const userCart = carts.find(
-        c => Number(c.user_id) === Number(userId) && c.status === "active"
+      const cart = carts.find(
+        c => c.user_id == userId && c.status === "active"
       );
 
       set({
-        cart: userCart || null,
-        loading: false,
+        cart: cart || null,
+        hasFetchedCart: true,
+        loading: false
       });
-    } catch {
+    } catch (e) {
       set({ cart: null, loading: false });
     }
   },
 
   // ======================
-  // ADD COURSE TO CART
+  // ADD TO CART
   // ======================
   addToCart: async (courseId, userId) => {
     if (!userId) return false;
 
     const { cart } = get();
 
-    // 🟢 CHƯA CÓ CART → TẠO CART MỚI
-    if (!cart) {
-      await axios.post(API, {
-        user_id: userId,
-        status: "active",
-        courses: [{ course_id: courseId }],
-        created_at: new Date().toISOString(),
-      });
-
-      await get().fetchCart(userId);
-      return true;
+    // check couses đã có trên cart chưa
+    if (cart?.courses?.some(c => c.course_id === courseId)) {
+      return false;
     }
 
-    // 🔴 ĐÃ CÓ COURSE
-    const exists = cart.courses.some(
-      c => c.course_id === courseId
-    );
-    if (exists) return false;
+    // optimistic update
+    const optimisticCart = cart
+      ? {
+          ...cart,
+          courses: [...cart.courses, { course_id: courseId }],
+        }
+      : {
+          user_id: userId,
+          status: "active",
+          courses: [{ course_id: courseId }],
+        };
 
-    // 🟢 UPDATE CART (PUT FULL OBJECT)
-    await axios.put(
-      `${API}&id=${cart._id}`,
-      {
-        ...cart,
-        courses: [...cart.courses, { course_id: courseId }],
-        updated_at: new Date().toISOString(),
+    set({ cart: optimisticCart });
+
+    try {
+      // Chưa có cart → POST
+      if (!cart?._id) {
+        const res = await axios.post(API, {
+          name: `cart-user-${userId}`,
+          ...optimisticCart,
+        });
+
+        set({ cart: res.data });
+        return true;
       }
-    );
 
-    set({
-      cart: {
-        ...cart,
-        courses: [...cart.courses, { course_id: courseId }],
-      }
-    });
+      // CÓ cart → PUT
+      await axios.put(cartUrl(cart._id), optimisticCart);
+      return true;
 
-    return true;
+    } catch (err) {
+      console.error("ADD TO CART ERROR", err);
+
+      // rollback nếu lỗi
+      fetchCart(userId);
+      return false;
+    }
   },
+
 
   // ======================
   // REMOVE COURSE
   // ======================
   removeFromCart: async (courseId) => {
-    const { cart } = get();
+    const { cart, fetchCart } = get();
     if (!cart) return;
 
-    const newCourses = cart.courses.filter(
-      c => c.course_id !== courseId
-    );
+    const optimisticCart = {
+      ...cart,
+      courses: cart.courses.filter(c => c.course_id !== courseId),
+    };
 
-    await axios.put(
-      `${API}&id=${cart._id}`,
-      { ...cart, courses: newCourses }
-    );
-
+    // optimistic update
     set({
-      cart: { ...cart, courses: newCourses }
+      cart: optimisticCart.courses.length === 0
+        ? null
+        : optimisticCart
     });
+
+    try {
+      // sync server
+      await axios.put(cartUrl(cart._id), optimisticCart);
+    } catch (e) {
+      console.error("REMOVE FROM CART ERROR", e);
+      // rollback nếu lỗi
+      fetchCart(cart.user_id);
+    }
   },
 
   // ======================
-  // CHECKOUT / CLEAR CART
+  // CHECKOUT
   // ======================
-  checkoutCart: async () => {
+  checkoutCart: async (userId) => {
     const { cart } = get();
-    if (!cart) return;
+    if (!cart?._id) return false;
 
-    await axios.put(
-      `${API}&id=${cart._id}`,
-      {
-        ...cart,
-        status: "checked_out",
-        courses: [],
+    // set optimistic
+      set({
+        cart: {
+          ...cart,
+          status: "checked_out",
+          courses: [],
+        },
+      });
+
+      try {
+        // update
+        await axios.put(cartUrl(cart._id), {
+          ...cart,
+          status: "checked_out",
+        });
+
+        return true;
+      } catch (err) {
+        console.error("CHECKOUT CART ERROR", err);
+
+        // rollback nếu lỗi
+        fetchCart(userId);
+        return false;
       }
-    );
-
-    set({ cart: null });
   },
 
-  clearLocalCart: () => set({ cart: null }),
+
+
+  clearCart: () => set({ cart: null }),
 }));

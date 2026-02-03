@@ -1,22 +1,43 @@
 import { Link } from "react-router";
 import PopopConfirm from "../../Cart/PopopConfirm/PopopConfirm";
 import { useCartStore } from "../../../../stores/cart.store";
+import Item from "antd/es/list/Item";
+import { useMemo } from "react";
 
-const BoxCartItem = ({ course, user, showNameProvider }) => {
+const BoxCartItem = ({ course, user, provider }) => {
   const { removeFromCart, cart } = useCartStore();
 
-  const handleRemoveFromCart = () => {
-    if (!user?.id) return;
+  const handleRemoveFromCart = async () => {
+    if (!user?.id) return false;
 
-    // tìm cartItem chứa course này
     const cartItem = cart?.courses?.find(
       c => c.course_id === course._id
     );
 
-    if (!cartItem) return;
+    if (!cartItem) return false;
 
-    removeFromCart(cartItem._id, user.id);
+    await removeFromCart(course._id);
+    return true;
   };
+
+
+  const showNameProvider = useMemo(() => {
+    if (!cart?.courses?.length || !provider || !course) return null;
+
+    // kiểm tra course này có trong cart không
+    const isInCart = cart.courses.some(
+      c => c.course_id === course._id
+    );
+
+    if (!isInCart) return null;
+
+    // tìm provider theo provider_id của COURSE
+    return provider.find(
+      p => String(p.id) === String(course.provider_id)
+    ) || null;
+
+  }, [cart, course, provider]);
+
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 flex gap-4">
@@ -36,13 +57,13 @@ const BoxCartItem = ({ course, user, showNameProvider }) => {
           {course.course_title}
         </Link>
         {showNameProvider && (
-            <p className="text-sm">
-              Giảng viên:{" "}
-              <span className="font-semibold text-[#ff9a1e]">
-                {showNameProvider.provider_name}
-              </span>
-            </p>
-          )}
+          <p className="text-sm">
+            Giảng viên:{" "}
+            <span className="font-semibold text-[#ff9a1e]">
+              {showNameProvider.provider_name}
+            </span>
+          </p>
+        )}
         <div className="flex flex-wrap gap-3 text-sm text-gray-600 mt-2">
           <p className="text-[12px]">
             <strong>{course.total_sections}</strong> phần

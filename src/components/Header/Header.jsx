@@ -30,7 +30,7 @@ const Header = () => {
     const {user, logout, isAuthenticated, getAvatarLetter} = useAuth();
     const [show, setShow] = useState(true);
     const lastScrollY = useRef(0);
-    const {cart , loading: cartLoading, fetchCart } = useCartStore();
+    const {cart , loading: cartLoading, fetchCart, hasFetchedCart } = useCartStore();
     useEffect(() => {    
         const handleScroll = () => {
             const currentScroll = window.scrollY;
@@ -66,13 +66,12 @@ const Header = () => {
     }, [courses, keyword]);
 
     useEffect(() => {
-        if (user?.id) {
+        if (user?.id && !hasFetchedCart) {
             fetchCart(user.id);
         }
-    }, [user?.id]);
-    
-    const courseCount = cart?.courses?.length || 0;
+    }, [user?.id, hasFetchedCart]);
 
+    const courseCount = cart?.courses?.length ?? 0;
 
 
 

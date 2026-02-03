@@ -1,17 +1,23 @@
+import { useEffect, useState } from "react";
 import { message, Popconfirm } from "antd";
 
-
 const PopopConfirm = ({ handleRemoveFromCart }) => {
-  const [messageApi, holder] = message.useMessage();
+  const [removed, setRemoved] = useState(false);
 
   const onConfirm = async () => {
     await handleRemoveFromCart();
-    messageApi.success("Đã xóa khóa học khỏi giỏ");
+    setRemoved(true);
   };
+
+  useEffect(() => {
+    if (removed) {
+      message.success("Đã xóa khóa học khỏi giỏ");
+      setRemoved(false);
+    }
+  }, [removed]);
 
   return (
     <>
-      {holder}
       <Popconfirm
         title="Xóa khóa học"
         description="Bạn chắc chắn muốn xóa khóa học này?"
@@ -19,7 +25,7 @@ const PopopConfirm = ({ handleRemoveFromCart }) => {
         okText="Xóa"
         cancelText="Hủy"
       >
-        <button className="text-sm text-red-500 mt-3 hover:underline">
+        <button className="text-sm text-red-500 hover:underline">
           Xóa khỏi giỏ
         </button>
       </Popconfirm>
