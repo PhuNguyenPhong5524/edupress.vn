@@ -3,7 +3,47 @@ import ClockIcon from "../../../../components/icons/ClockIcon"
 import GraduationIcon from "../../../../components/icons/GraduationIcon"
 import SignalIcon from "../../../../components/icons/SignalIcon";
 import BoxCourseInfoCard from "./BoxCourseInfoCard";
-const BoxShowInfo = ({showStickyCard, showList, loading}) => {
+import { message, Modal } from "antd";
+import { useNavigate } from "react-router-dom";
+const BoxShowInfo = ({
+    showStickyCard,
+    showList, 
+    loading,
+    addToCart,
+    cart,
+    adding,
+    setAdding,
+    user,
+}) => {
+
+    const handleAddToCart = async () => {
+        if (adding) return;
+
+        if (!user?.id) {
+            Modal.confirm({
+                title: "Đăng nhập",
+                content: "Vui lòng đăng nhập để thêm khóa học!",
+                okText: "Đăng nhập",
+                cancelText: "Hủy",
+                onOk: () => nav("/login"),
+            });
+            return;
+        }
+
+        if (!showList?._id) {
+            message.error("Không tìm thấy khóa học");
+            return;
+        }
+
+        setAdding(true);
+        const ok = await addToCart(showList._id, user.id);
+        setAdding(false);
+
+        ok
+            ? message.success("Đã thêm vào giỏ")
+            : message.warning("Khóa học đã có trong giỏ!");
+    };
+
     return (
         <div className="w-full bg-[#000000] text-white py-10">
             <div
@@ -103,12 +143,22 @@ const BoxShowInfo = ({showStickyCard, showList, loading}) => {
                                 transition-all duration-300
                             "
                         >
-                            <BoxCourseInfoCard showList={showList} loading={loading} />
+                            <BoxCourseInfoCard 
+                                showList={showList} 
+                                loading={loading} 
+                                adding={adding} 
+                                handleAddToCart={handleAddToCart}
+                            />
                         </div>
                     )}
                 </div>
                 <div className="w-full relative block lg:hidden">
-                    <BoxCourseInfoCard showList={showList} loading={loading} />
+                    <BoxCourseInfoCard 
+                        showList={showList} 
+                        loading={loading} 
+                        adding={adding} 
+                        handleAddToCart={handleAddToCart}
+                    />
                 </div>
             </div>
         </div>

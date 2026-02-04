@@ -2,8 +2,9 @@
 import { Spin } from "antd";
 import CircleCheckIcon from "../../../../components/icons/CircleCheckIcon";
 import BoxModalVideo from "./BoxModalVideo";
+import BagShoppingIcon from "../../../../components/icons/BagShoppingIcon";
 
-const BoxCourseInfoCard = ({showList, loading}) => {
+const BoxCourseInfoCard = ({showList, loading, adding, handleAddToCart}) => {
     if(!loading && !showList) {
         return(
             <div
@@ -28,6 +29,8 @@ const BoxCourseInfoCard = ({showList, loading}) => {
             </div>
         )
     }
+
+    
     return (
         <div
             className={
@@ -85,14 +88,21 @@ const BoxCourseInfoCard = ({showList, loading}) => {
                         {/* BUTTONS */}
                             <div className="flex flex-col sm:flex-row gap-3 mt-3">
                                 <button
-                                className="
-                                    w-full bg-[#FF782D] text-white py-2 rounded-md
-                                    transition-all duration-300
-                                    hover:opacity-80 hover:scale-[0.97]
-                                "
+                                    onClick={handleAddToCart}
+                                    disabled={adding}
+                                    className={`
+                                        ${adding
+                                            ? "bg-gray-400 cursor-not-allowed"
+                                            : "bg-[#FF782D] hover:opacity-80 hover:scale-95 text-white"
+                                        }
+                                        w-full bg-[#FF782D] text-white py-2 rounded-md
+                                        transition-all duration-300 cursor-pointer
+                                        hover:opacity-80 hover:scale-[0.97]    
+                                    `}
                                 >
-                                Thêm giỏ hàng
+                                    {adding ? <Spin size="small" /> : "Thêm vào giỏ hàng"}
                                 </button>
+              
 
                                 <button
                                 className="

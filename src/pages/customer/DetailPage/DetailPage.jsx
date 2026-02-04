@@ -7,6 +7,8 @@ import useFetchData from "../../../api/useFetchData";
 import { useParams } from "react-router";
 import { useStickyObserver } from "../../../hooks/useStickyObserver";
 import BoxShowCourseRelated from './BoxShowCourseRelated/BoxShowCourseRelated'
+import { useCartStore } from "../../../stores/cart.store";
+import useAuth from "../../../hooks/useAuth";
 
 // Sticky Card
 const StickyCard = memo(({ show, showList }) => {
@@ -25,7 +27,8 @@ const DetailPage = () => {
     const { _id } = useParams();
     const { data: course = [], loading } = useFetchData("courses");
     const { data: providers = [] } = useFetchData("providers");
-
+    const { cart , addToCart} = useCartStore();
+    const [adding, setAdding] = useState(false);
     const showList = useMemo(() => {
         if (loading) return null;
         return course.find(item => item._id == _id);
@@ -33,13 +36,24 @@ const DetailPage = () => {
 
     {/* Scroll observer */}
     useStickyObserver(setShowStickyCard);
+    const {user} = useAuth();   
+
 
   return (
    <div className="mt-[65px] lg:mt-[60px]">
     {/* Breadcrumb */}
         <Breadcrumb nameCate="Chi tiết khóa học" showList={showList} />
         {/* Box Show Info */}
-            <BoxShowInfo showStickyCard={showStickyCard} showList={showList} loading={loading} />
+            <BoxShowInfo 
+                showStickyCard={showStickyCard} 
+                showList={showList} 
+                loading={loading} 
+                addToCart={addToCart}
+                cart={cart}
+                adding={adding}
+                setAdding={setAdding}
+                user={user}
+            />
         {/* Nội dung chính */}
             <div
                 className="
