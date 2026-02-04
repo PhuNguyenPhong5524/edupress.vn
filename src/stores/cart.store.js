@@ -52,10 +52,12 @@ export const useCartStore = create((set, get) => ({
 
     // optimistic update
     const optimisticCart = cart
+    // CÓ cart → add course
       ? {
           ...cart,
           courses: [...cart.courses, { course_id: courseId }],
         }
+      // Chưa có cart → tạo cart mới
       : {
           user_id: userId,
           status: "active",
@@ -81,7 +83,7 @@ export const useCartStore = create((set, get) => ({
       return true;
 
     } catch (err) {
-      console.error("ADD TO CART ERROR", err);
+      console.error("Thêm vào cart error", err);
 
       // rollback nếu lỗi
       fetchCart(userId);

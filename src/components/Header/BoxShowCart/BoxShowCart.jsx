@@ -51,12 +51,7 @@
                 <div className="border-t border-[#EAEAEA] px-4 py-3 text-center ">
                     <p className="text-lg font-semibold">
                         Tổng: 
-                        <span className="text-[#000000] font-semibold pl-2">
-                            {  totalPrice === 0   
-                                ? <span className="text-green-400 font-semibold">Free</span>
-                                : `${Number(totalPrice).toLocaleString('vi-VN')} VND`
-                            }
-                        </span>
+              
                     </p>
                     <p className="text-sm text-gray-500">{showCart.length} khóa học</p>
                     <Link
