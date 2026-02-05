@@ -19,36 +19,31 @@ const ButtonCheckout = ({ showCart, finalTotal , checkoutCart, setCouponInput, s
             return;
         }
 
+        const cartSnapshot = [...showCart];
+
         try {
             setLoading(true);
 
             const payload = {
                 user_id: user.id,
-                course_ids: showCart.map(i => i.course_id),
+                course_ids: cartSnapshot.map(i => i._id), 
                 total: finalTotal,
                 status: "pending",
                 created_at: new Date().toISOString(),
             };
 
-            // TẠO ORDER
             await axios.post(
-                "https://mindx-mockup-server.vercel.app/api/resources/checkout?apiKey=6957348a9dda81df11d0c527",
-                payload
+            "https://mindx-mockup-server.vercel.app/api/resources/checkout?apiKey=6957348a9dda81df11d0c527",
+            payload
             );
 
-            // ĐỔI CART STATUS
+            // xóa cart sau khi thanh toan
             await checkoutCart(user.id);
 
-            // set coupon
             setCouponInput("");
             setAppliedCoupon(null);
 
             message.success("Tạo đơn hàng thành công");
-
-            // 👉 sau này:
-            // setOrderId(orderId)
-            // openQrModal()
-
         } catch (error) {
             console.error(error);
             message.error("Thanh toán thất bại");
@@ -56,7 +51,6 @@ const ButtonCheckout = ({ showCart, finalTotal , checkoutCart, setCouponInput, s
             setLoading(false);
         }
     };
-
 
 
     return (

@@ -124,32 +124,17 @@ export const useCartStore = create((set, get) => ({
   // ======================
   // CHECKOUT
   // ======================
-  checkoutCart: async (userId) => {
+  checkoutCart: async () => {
     const { cart } = get();
-    if (!cart?._id) return false;
+    if (!cart?._id) return;
 
-    const updateCart = {
-      ...cart,
-      status: "checked_out",
-      courses: [],
-      created_at: new Date().toISOString(),
-    };
-    // set optimistic
-      set({ cart: updateCart });
+    await axios.delete(cartUrl(cart._id));
 
-      try {
-        // update
-        await axios.put(cartUrl(cart._id), updateCart);
-        return true;
-      } catch (err) {
-        console.error("CHECKOUT CART ERROR", err);
-
-        // rollback nếu lỗi
-        fetchCart(userId);
-        return false;
-      }
+    set({
+      cart: null,
+      hasFetchedCart: false,
+    });
   },
-
 
 
   clearCart: () => set({ cart: null }),
