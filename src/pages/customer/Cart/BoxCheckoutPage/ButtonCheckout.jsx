@@ -5,11 +5,10 @@ import useAuth from "../../../../hooks/useAuth";
 import ArrowRightIcon from "../../../../components/icons/ArrowRightIcon";
 import { useNavigate } from "react-router-dom";
 
-const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, setAppliedCoupon}) => {
+const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, appliedCoupon, setAppliedCoupon}) => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const nav = useNavigate();
-
     const handleCheckout = async () => {
         if (!showCart?.length) {
             message.warning("Giỏ hàng trống");
@@ -25,12 +24,28 @@ const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, setAppliedCoupo
 
         const payload = {
             user_id: user.id,
-            course_ids: showCart.map(i => i._id),
-            total: finalTotal,
+
+            courses: showCart.map(item => ({
+                course_id: item.course_id,
+                title: item.course_title,
+                price: item.price,
+                image_url: item.image_url,
+                total_lectures: item.total_lectures,
+            })),
+
+            coupon: appliedCoupon
+                ? {
+                    code: appliedCoupon.code,
+                    percent: appliedCoupon.percent,
+                }
+                : null,
+
+            total: finalTotal, 
             status: "pending",
             token,
             created_at: new Date().toISOString(),
         };
+
 
         try {
             setLoading(true);
@@ -42,7 +57,7 @@ const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, setAppliedCoupo
 
             message.success("Tạo đơn hàng thành công");
             setAppliedCoupon(null);
-            setCouponInput(null);
+            setCouponInput("");
             nav(`/checkout?token=${token}`);
         } catch (err) {
             message.error("Thanh toán thất bại");
@@ -50,7 +65,6 @@ const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, setAppliedCoupo
             setLoading(false);
         }
         };
-
 
 
     return (

@@ -18,9 +18,6 @@ const CartPage = () => {
    
 
     const [showSpin, setShowSpin] = useState(true);
-    const [couponInput, setCouponInput] = useState("");
-    const [appliedCoupon, setAppliedCoupon] = useState(null);
-
     const isLoading = cartLoading || courseLoading;
     useEffect(() => {
         if (!isLoading) {
@@ -42,26 +39,17 @@ const CartPage = () => {
     
     
     const showCart = useMemo(() => {
-        if (!cart || !Array.isArray(course)) return [];
+        if (!cart?.courses) return [];
 
-        const courseMap = Object.fromEntries(
-            course.map(c => [c._id, c])
-        );
+        return cart.courses.map(item => ({
+            course_id: item.course_id,
+            course_title: item.course_title,
+            price: item.price,
+            image_url: item.image_url,
+            total_lectures: item.total_lectures
+        }));
+    }, [cart]);
 
-        return cart.courses
-            .map(item => courseMap[item.course_id])
-            .filter(Boolean);
-    }, [cart, course]);
-
-    const totalPrice = useMemo(() => {
-        return showCart.reduce(
-            (sum, c) => sum + Number(c.price || 0),
-            0
-        );
-    }, [showCart]);
-    
-
-    
     return (
         <div className="mt-[45px] lg:mt-[50px] max-w-[1080px] mx-auto px-[15px] lg:px-0">
             <div className=" bg-gray-50 pt-8">
@@ -75,19 +63,12 @@ const CartPage = () => {
                                     showCart={showCart}
                                     user={user}
                                     provider={provider}
-                                    setCouponInput={setCouponInput}
-                                    setAppliedCoupon={setAppliedCoupon}
                                 />
                             </div>
 
                         {/* RIGHT */}
                             <BoxCheckoutPage 
                                 showCart={showCart}
-                                totalPrice={totalPrice}
-                                setCouponInput={setCouponInput}
-                                couponInput={couponInput}
-                                setAppliedCoupon={setAppliedCoupon}
-                                appliedCoupon={appliedCoupon}
                             />
                     </div>
                 </div>

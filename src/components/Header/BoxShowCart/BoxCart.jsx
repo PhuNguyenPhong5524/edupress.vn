@@ -27,8 +27,8 @@ const BoxCart = ({ showCart, isReady }) => {
         showCart.length === 1 ? "h-[100px]" : "h-[180px]"
       } p-4 space-y-4 overflow-y-auto`}
     >
-      {showCart.map(item => (
-        <div key={item._id} className="flex gap-3">
+      {showCart?.map(item => (
+        <div key={item.course_id} className="flex gap-3">
           <img
             src={item.image_url}
             alt={item.course_title}
@@ -37,7 +37,7 @@ const BoxCart = ({ showCart, isReady }) => {
 
           <div className="flex-1">
             <Link
-              to={`/detail/${item._id}`}
+              to={`/detail/${item.course_id}`}
               className="text-sm font-semibold line-clamp-2 text-black hover:text-[#FF782D]"
             >
               {item.course_title}

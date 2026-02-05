@@ -2,7 +2,7 @@ import { Spin } from "antd";
 import BoxCartItem from "./BoxCartItem";
 
 
-const BoxShowCartPage = ({ showSpin, showCart, user, provider, setAppliedCoupon, setCouponInput }) => {
+const BoxShowCartPage = ({ showSpin, showCart, user, provider }) => {
   return (
     <div className="relative">
       {showSpin ? (
@@ -18,14 +18,12 @@ const BoxShowCartPage = ({ showSpin, showCart, user, provider, setAppliedCoupon,
         </div>
       ) : (
         <div className="space-y-4">
-          {showCart.map(course => (
+          {showCart?.map(course => (
             <BoxCartItem
-              key={course._id}
+              key={course.course_id}
               course={course}
               user={user}
               provider={provider}
-              setAppliedCoupon={setAppliedCoupon}
-              setCouponInput={setCouponInput}
             />
           ))}
         </div>

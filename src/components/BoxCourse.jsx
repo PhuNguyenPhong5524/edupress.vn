@@ -33,28 +33,40 @@ const BoxCourse = ({item}) => {
         showBadge = "⭐ Nổi bật";
     }
 
-   const handleAddToCart = async () => {
-        if (adding) return; // 🔥 chặn click spam
+    const handleAddToCart = async () => {
+        if (adding) return;
 
         if (!user?.id) {
             Modal.confirm({
-                title: "Đăng nhập",
-                content: "Vui lòng đăng nhập để thêm khóa học!",
-                okText: "Đăng nhập",
-                cancelText: "Hủy",
-                onOk: () => nav("/login"),
+            title: "Đăng nhập",
+            content: "Vui lòng đăng nhập để thêm khóa học!",
+            okText: "Đăng nhập",
+            cancelText: "Hủy",
+            onOk: () => nav("/login"),
             });
             return;
         }
 
         setAdding(true);
-        const ok = await addToCart(item._id, user.id);
+
+        const ok = await addToCart(
+            {
+                course_id: item._id,
+                course_title: item.course_title,
+                price: item.price,
+                image_url: item.image_url,   
+                total_lectures: item.total_lectures,
+            },
+            user.id
+        );
+
         setAdding(false);
 
         ok
             ? message.success("Đã thêm vào giỏ")
             : message.warning("Khóa học đã có trong giỏ!");
     };
+
 
 
     return (
@@ -70,7 +82,7 @@ const BoxCourse = ({item}) => {
                 <div className="relative overflow-hidden ">
                     <img 
                         src={item.image_url}
-                        alt={item.course_name}
+                        alt={item.course_title}
                         className="
                             w-full h-[120px] md:h-[180px] object-cover transform transition-transform duration-300 
                             ease-in-out rounded-t-[10px] group-hover:scale-110

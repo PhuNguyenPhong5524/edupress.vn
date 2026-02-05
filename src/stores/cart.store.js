@@ -49,56 +49,56 @@ export const useCartStore = create((set, get) => ({
   // ======================
   // ADD TO CART
   // ======================
-  addToCart: async (courseId, userId) => {
-    if (!userId) return false;
+  addToCart: async (courseItem, userId) => {
+    if (!userId || !courseItem?.course_id) return false;
 
-    const { cart } = get();
+    const { cart, fetchCart } = get();
 
-    // check couses đã có trên cart chưa
-    if (cart?.courses?.some(c => c.course_id === courseId)) {
+    // đã có course
+    if (cart?.courses?.some(c => c.course_id === courseItem.course_id)) {
       return false;
     }
 
-    // optimistic update
-    const optimisticCart = cart
-    // CÓ cart → add course
-      ? {
-          ...cart,
-          courses: [...cart.courses, { course_id: courseId }],
-        }
-      // Chưa có cart → tạo cart mới
-      : {
-          user_id: userId,
-          status: "active",
-          courses: [{ course_id: courseId }],
-        };
+    const newCourses = cart?.courses
+      ? [...cart.courses, courseItem]
+      : [courseItem];
 
-    set({ cart: optimisticCart });
+    // optimistic update
+    set({
+      cart: cart
+        ? { ...cart, courses: newCourses }
+        : {
+            user_id: userId,
+            status: "active",
+            courses: newCourses,
+          },
+    });
+
+    const payload = {
+      user_id: userId,
+      status: "active",
+      courses: newCourses,
+    };
 
     try {
-      // Chưa có cart → POST
       if (!cart?._id) {
         const res = await axios.post(API, {
           name: `cart-user-${userId}`,
-          ...optimisticCart,
+          ...payload,
         });
-
         set({ cart: res.data.data });
-        return true;
+      } else {
+        await axios.put(cartUrl(cart._id), payload);
       }
 
-      // CÓ cart → PUT
-      await axios.put(cartUrl(cart._id), optimisticCart);
       return true;
-
     } catch (err) {
-      console.error("Thêm vào cart error", err);
-
-      // rollback nếu lỗi
+      console.error("addToCart error", err);
       fetchCart(userId);
       return false;
     }
   },
+
 
 
   // ======================

@@ -3,10 +3,14 @@ import PopopConfirm from "../../Cart/PopopConfirm/PopopConfirm";
 import { useCartStore } from "../../../../stores/cart.store";
 import Item from "antd/es/list/Item";
 import { useMemo } from "react";
+import useCartPricing from "../../../../hooks/useCartPricing";
 
-const BoxCartItem = ({ course, user, provider, setAppliedCoupon, setCouponInput }) => {
+const BoxCartItem = ({ course, user, provider}) => {
   const { removeFromCart, cart } = useCartStore();
-
+  const {
+      setCouponInput,
+      setAppliedCoupon
+    } = useCartPricing(cart?.courses || []);
   const handleRemoveFromCart = async () => {
     if (!user?.id) return false;
 

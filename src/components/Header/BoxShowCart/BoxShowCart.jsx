@@ -2,24 +2,19 @@
     import BoxCart from "./BoxCart"
     import { useMemo } from "react";
 
-    const BoxShowCart = ({cart, course, cartLoading, loadingCourse}) => {
-        const isLoading = cartLoading || loadingCourse;
-        const isReady = course !== null && !isLoading;
-
+    const BoxShowCart = ({cart, cartLoading, loadingCourse}) => {
+        if (!cart || cartLoading || loadingCourse) return null;
         const showCart = useMemo(() => {
-            if (!cart || !Array.isArray(course)) return [];
+            if (!cart?.courses) return [];
 
-            const courses = Array.isArray(cart.courses) ? cart.courses : [];
-
-            const courseMap = Object.fromEntries(
-                course.map(c => [c._id, c])
-            );
-
-            return courses
-                .map(item => courseMap[item.course_id])
-                .filter(Boolean);
-        }, [cart, course]);
-
+            return cart.courses.map(item => ({
+                course_id: item.course_id,
+                course_title: item.course_title,
+                price: item.price,
+                image_url: item.image_url,
+                total_lectures: item.total_lectures
+            }));
+        }, [cart]);
 
         const totalPrice = useMemo(() => {
             return showCart.reduce(
@@ -45,7 +40,6 @@
                 {/* Box Cart */}
                     <BoxCart    
                         showCart={showCart}
-                        isReady={isReady}
                     
                     />
                 <div className="border-t border-[#EAEAEA] px-4 py-3 text-center ">

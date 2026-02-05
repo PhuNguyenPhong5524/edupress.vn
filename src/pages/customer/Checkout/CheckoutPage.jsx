@@ -4,6 +4,7 @@ import useFetchData from "../../../api/useFetchData";
 import useAuth from "../../../hooks/useAuth";
 import BoxQR from "./BoxQR/BoxQR";
 import { useSearchParams } from "react-router-dom";
+import BoxCheckoutInfo from "./BoxCheckoutInfo/BoxCheckoutInfo";
 
 
 
@@ -13,7 +14,7 @@ const CheckoutPage = () => {
     const token = searchParams.get("token");
     const { user } = useAuth();
     const { data: checkout } = useFetchData(`checkout`);
-
+    const { data: course } = useFetchData(`courses`);    
     const checkoutCart = useMemo(() => 
         checkout?.find(item => 
             item.token === token &&
@@ -38,35 +39,7 @@ const CheckoutPage = () => {
                                         Không tìm thấy khóa học....
                                     </div>
                                 ) : (
-                                    <div className="space-y-3 text-sm text-gray-600">
-                                        <div className="flex justify-between">
-                                            <span>Học viên</span>
-                                            <span className="font-medium text-gray-800">
-                                                {user.username}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <span>Khóa học</span>
-                                            <span className="font-medium text-gray-800">
-                                                ReactJS Nâng Cao
-                                            </span>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <span>Mã đơn</span>
-                                            <span className="font-medium text-gray-800">
-                                                #CHK-10293
-                                            </span>
-                                        </div>
-
-                                        <div className="border-t pt-3 flex justify-between text-base">
-                                            <span className="font-semibold">Tổng tiền</span>
-                                            <span className="font-bold text-green-600">
-                                                1.200.000đ
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <BoxCheckoutInfo user={user} checkoutCart={checkoutCart} course={course}  />
                                 )
                             }
                             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">

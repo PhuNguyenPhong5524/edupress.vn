@@ -247,7 +247,6 @@ const Header = () => {
                                         {/* Box show cart */}
                                             <BoxShowCart 
                                                 cart={cart} 
-                                                course={courses}
                                                 loadingCourse={loadingCourse}
                                                 cartLoading={cartLoading}
                                             />
