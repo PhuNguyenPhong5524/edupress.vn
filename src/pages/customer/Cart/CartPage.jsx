@@ -62,10 +62,10 @@ const CartPage = () => {
     
 
     return (
-        <div className="mt-[60px] max-w-[1080px] mx-auto px-[15px] lg:px-0">
+        <div className="mt-[45px] lg:mt-[50px] max-w-[1080px] mx-auto px-[15px] lg:px-0">
             <div className=" bg-gray-50 pt-8">
                 <div className="max-w-[1080px] mx-auto ">
-                    <h1 className="text-2xl font-bold mb-3">🛒 Giỏ hàng</h1>
+                    <h1 className="text-[#000000] text-[16px] md:text-[22px] lg:text-[26px] font-bold mb-3">🛒 Giỏ hàng</h1>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* LEFT */}
                             <div className="lg:col-span-2 space-y-4 ">

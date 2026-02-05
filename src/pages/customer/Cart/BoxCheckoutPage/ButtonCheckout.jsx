@@ -67,8 +67,8 @@ const ButtonCheckout = ({ showCart, finalTotal , checkoutCart, setCouponInput, s
                 className={`
                     w-full mt-5 bg-[#FF782D]
                     ${loading ? "opacity-60 cursor-not-allowed" : "hover:opacity-60 hover:scale-95"}
-                    flex items-center justify-center gap-3
-                    text-white py-3 rounded-lg
+                    flex items-center justify-center gap-3 text-[10px] md:text-[12px] lg:text-[14px]
+                    text-white h-[40px] lg:h-[48px] rounded-lg
                     font-semibold transition
                 `}
             >
