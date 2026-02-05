@@ -1,13 +1,30 @@
 
+import { use, useMemo } from "react";
+import useFetchData from "../../../api/useFetchData";
+import useAuth from "../../../hooks/useAuth";
 import BoxQR from "./BoxQR/BoxQR";
+import { useSearchParams } from "react-router-dom";
 
 
 
 const CheckoutPage = () => {
     
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
+    const { user } = useAuth();
+    const { data: checkout } = useFetchData(`checkout`);
+
+    const checkoutCart = useMemo(() => 
+        checkout?.find(item => 
+            item.token === token &&
+            item.user_id === user.id &&
+            item.status === "pending"
+        ), 
+        [checkout, token]
+    );
     return (
-        <div className="mt-[80px]  max-w-[1080px] mx-auto">
-            <div className="w-full bg-gray-50 p-4 md:p-6">
+        <div className="mt-[90px] max-w-[1080px] mx-auto">
+            <div className="w-full bg-gray-50 ">
                 <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                     
                     {/* LEFT - ORDER INFO */}
@@ -15,37 +32,43 @@ const CheckoutPage = () => {
                             <h1 className="text-2xl font-bold text-gray-800">
                                 Thanh toán khóa học
                             </h1>
+                            {
+                                !checkoutCart ? (
+                                    <div>
+                                        Không tìm thấy khóa học....
+                                    </div>
+                                ) : (
+                                    <div className="space-y-3 text-sm text-gray-600">
+                                        <div className="flex justify-between">
+                                            <span>Học viên</span>
+                                            <span className="font-medium text-gray-800">
+                                                {user.username}
+                                            </span>
+                                        </div>
 
-                            <div className="space-y-3 text-sm text-gray-600">
-                                <div className="flex justify-between">
-                                    <span>Học viên</span>
-                                    <span className="font-medium text-gray-800">
-                                        Nguyễn Văn A
-                                    </span>
-                                </div>
+                                        <div className="flex justify-between">
+                                            <span>Khóa học</span>
+                                            <span className="font-medium text-gray-800">
+                                                ReactJS Nâng Cao
+                                            </span>
+                                        </div>
 
-                                <div className="flex justify-between">
-                                    <span>Khóa học</span>
-                                    <span className="font-medium text-gray-800">
-                                        ReactJS Nâng Cao
-                                    </span>
-                                </div>
+                                        <div className="flex justify-between">
+                                            <span>Mã đơn</span>
+                                            <span className="font-medium text-gray-800">
+                                                #CHK-10293
+                                            </span>
+                                        </div>
 
-                                <div className="flex justify-between">
-                                    <span>Mã đơn</span>
-                                    <span className="font-medium text-gray-800">
-                                        #CHK-10293
-                                    </span>
-                                </div>
-
-                                <div className="border-t pt-3 flex justify-between text-base">
-                                    <span className="font-semibold">Tổng tiền</span>
-                                    <span className="font-bold text-green-600">
-                                        1.200.000đ
-                                    </span>
-                                </div>
-                            </div>
-
+                                        <div className="border-t pt-3 flex justify-between text-base">
+                                            <span className="font-semibold">Tổng tiền</span>
+                                            <span className="font-bold text-green-600">
+                                                1.200.000đ
+                                            </span>
+                                        </div>
+                                    </div>
+                                )
+                            }
                             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
                                 ⏳ Vui lòng quét mã QR để hoàn tất thanh toán.
                                 Trang sẽ tự động cập nhật khi thanh toán thành công.

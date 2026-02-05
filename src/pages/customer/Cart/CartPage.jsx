@@ -10,7 +10,7 @@ import BoxCheckoutPage from "./BoxCheckoutPage/BoxCheckoutPage";
 
 const CartPage = () => {
     const { user } = useAuth();
-    const { cart, loading: cartLoading, fetchCart, checkoutCart} = useCartStore();
+    const { cart, loading: cartLoading, fetchCart} = useCartStore();
     const { data: course, loading: courseLoading } = useFetchData("courses");
     const { data: provider } = useFetchData("providers");
 
@@ -61,6 +61,7 @@ const CartPage = () => {
     }, [showCart]);
     
 
+    
     return (
         <div className="mt-[45px] lg:mt-[50px] max-w-[1080px] mx-auto px-[15px] lg:px-0">
             <div className=" bg-gray-50 pt-8">
@@ -83,7 +84,6 @@ const CartPage = () => {
                             <BoxCheckoutPage 
                                 showCart={showCart}
                                 totalPrice={totalPrice}
-                                checkoutCart={checkoutCart}
                                 setCouponInput={setCouponInput}
                                 couponInput={couponInput}
                                 setAppliedCoupon={setAppliedCoupon}

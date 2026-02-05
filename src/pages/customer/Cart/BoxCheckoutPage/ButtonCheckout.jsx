@@ -3,10 +3,12 @@ import axios from "axios";
 import { message } from "antd";
 import useAuth from "../../../../hooks/useAuth";
 import ArrowRightIcon from "../../../../components/icons/ArrowRightIcon";
+import { useNavigate } from "react-router-dom";
 
-const ButtonCheckout = ({ showCart, finalTotal , checkoutCart, setCouponInput, setAppliedCoupon}) => {
+const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, setAppliedCoupon}) => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
+    const nav = useNavigate();
 
     const handleCheckout = async () => {
         if (!showCart?.length) {
@@ -19,38 +21,36 @@ const ButtonCheckout = ({ showCart, finalTotal , checkoutCart, setCouponInput, s
             return;
         }
 
-        const cartSnapshot = [...showCart];
+        const token = `ach${Date.now()}JLK${Math.floor(Math.random() * 1000)}`;
+
+        const payload = {
+            user_id: user.id,
+            course_ids: showCart.map(i => i._id),
+            total: finalTotal,
+            status: "pending",
+            token,
+            created_at: new Date().toISOString(),
+        };
 
         try {
             setLoading(true);
-
-            const payload = {
-                user_id: user.id,
-                course_ids: cartSnapshot.map(i => i._id), 
-                total: finalTotal,
-                status: "pending",
-                created_at: new Date().toISOString(),
-            };
 
             await axios.post(
             "https://mindx-mockup-server.vercel.app/api/resources/checkout?apiKey=6957348a9dda81df11d0c527",
             payload
             );
 
-            // xóa cart sau khi thanh toan
-            await checkoutCart(user.id);
-
-            setCouponInput("");
-            setAppliedCoupon(null);
-
             message.success("Tạo đơn hàng thành công");
-        } catch (error) {
-            console.error(error);
+            setAppliedCoupon(null);
+            setCouponInput(null);
+            nav(`/checkout?token=${token}`);
+        } catch (err) {
             message.error("Thanh toán thất bại");
         } finally {
             setLoading(false);
         }
-    };
+        };
+
 
 
     return (

@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { message } from "antd";
 import ButtonCheckout from "./ButtonCheckout";
 
-const BoxCheckoutPage = ({ showCart, checkoutCart, setCouponInput, couponInput, setAppliedCoupon, appliedCoupon}) => {
+const BoxCheckoutPage = ({ showCart, setCouponInput, couponInput, setAppliedCoupon, appliedCoupon}) => {
   
 
    const [messageApi, contextHolder] = message.useMessage();
@@ -86,7 +86,6 @@ const BoxCheckoutPage = ({ showCart, checkoutCart, setCouponInput, couponInput, 
             <ButtonCheckout
                 showCart={showCart}
                 finalTotal={finalTotal}
-                checkoutCart={checkoutCart}
                 setAppliedCoupon={setAppliedCoupon}
                 setCouponInput={setCouponInput}
             />

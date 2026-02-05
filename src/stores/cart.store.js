@@ -1,39 +1,48 @@
 import { create } from "zustand";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const API =
   "https://mindx-mockup-server.vercel.app/api/resources/cart?apiKey=6957348a9dda81df11d0c527";
 
 const cartUrl = (id) =>
   `https://mindx-mockup-server.vercel.app/api/resources/cart/${id}?apiKey=6957348a9dda81df11d0c527`;
+const API_CHECKOUT = "https://mindx-mockup-server.vercel.app/api/resources/checkout?apiKey=6957348a9dda81df11d0c527";
 
 export const useCartStore = create((set, get) => ({
   cart: null,
   loading: false,
   hasFetchedCart: false,
+  cartUI: null,
 
   // ======================
   // FETCH CART
   // ======================
   fetchCart: async (userId) => {
-    if (!userId || get().hasFetchedCart) return;
+    if (!userId) return;
 
     set({ loading: true });
+
     try {
       const res = await axios.get(API);
       const carts = res.data.data.data || [];
 
       const cart = carts.find(
         c => c.user_id == userId && c.status === "active"
-      );
+      ) || null;
 
       set({
-        cart: cart || null,
+        cart,
+        cartUI: cart,    
         hasFetchedCart: true,
-        loading: false
+        loading: false,
       });
     } catch (e) {
-      set({ cart: null, loading: false });
+      set({
+        cart: null,
+        cartUI: null,
+        loading: false,
+      });
     }
   },
 
@@ -119,21 +128,6 @@ export const useCartStore = create((set, get) => ({
       // rollback nếu lỗi
       fetchCart(cart.user_id);
     }
-  },
-
-  // ======================
-  // CHECKOUT
-  // ======================
-  checkoutCart: async () => {
-    const { cart } = get();
-    if (!cart?._id) return;
-
-    await axios.delete(cartUrl(cart._id));
-
-    set({
-      cart: null,
-      hasFetchedCart: false,
-    });
   },
 
 
