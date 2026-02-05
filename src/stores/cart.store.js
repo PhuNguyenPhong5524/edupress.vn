@@ -74,7 +74,7 @@ export const useCartStore = create((set, get) => ({
           ...optimisticCart,
         });
 
-        set({ cart: res.data });
+        set({ cart: res.data.data });
         return true;
       }
 
@@ -128,22 +128,18 @@ export const useCartStore = create((set, get) => ({
     const { cart } = get();
     if (!cart?._id) return false;
 
+    const updateCart = {
+      ...cart,
+      status: "checked_out",
+      courses: [],
+      created_at: new Date().toISOString(),
+    };
     // set optimistic
-      set({
-        cart: {
-          ...cart,
-          status: "checked_out",
-          courses: [],
-        },
-      });
+      set({ cart: updateCart });
 
       try {
         // update
-        await axios.put(cartUrl(cart._id), {
-          ...cart,
-          status: "checked_out",
-        });
-
+        await axios.put(cartUrl(cart._id), updateCart);
         return true;
       } catch (err) {
         console.error("CHECKOUT CART ERROR", err);

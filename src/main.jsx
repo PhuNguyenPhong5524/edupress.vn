@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login/Login.jsx'
 import HomePage from './pages/customer/Home/HomePage.jsx'
 import CustomerLayout from './layouts/CustomerLayout.jsx'
-import DetailPage from './pages/customer/DetailPage/DetailPage.jsx'
+import Detail from './pages/customer/Detail/DetailPage.jsx'
 import ManagementUsers from './pages/admin/ManagementUsers/ManagementUsers.jsx'
 import Register from './pages/Register/Register.jsx'
 import "./i18n.js"
@@ -20,7 +20,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path='/' element={<CustomerLayout />} >
             <Route index element={<HomePage />} />
-            <Route path='detail/:_id' element={<DetailPage />} />
+            <Route path='detail/:_id' element={<Detail />} />
             <Route path='cart' element={<CartPage /> } />
           </Route>
           <Route path='/admin'  element={<AdminLayout />} >
