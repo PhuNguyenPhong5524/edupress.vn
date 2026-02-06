@@ -2,58 +2,50 @@
     import BoxCart from "./BoxCart"
     import { useMemo } from "react";
 
-    const BoxShowCart = ({cart, cartLoading, loadingCourse}) => {
-        const isLoading = cartLoading || loadingCourse;
-        const showCart = useMemo(() => {
-            if (!cart?.courses) return [];
 
-            return cart.courses.map(item => ({
-                course_id: item.course_id,
-                course_title: item.course_title,
-                price: item.price,
-                image_url: item.image_url,
-                total_lectures: item.total_lectures
-            }));
-        }, [cart]);
+    const BoxShowCart = ({cart, cartLoading, loadingCourse}) => {
+       const isLoading = cartLoading || loadingCourse;
+
+        const courses = cart?.courses ?? [];
 
         const totalPrice = useMemo(() => {
-            return showCart.reduce(
+            return courses.reduce(
                 (sum, c) => sum + Number(c.price || 0),
                 0
             );
-        }, [showCart]);
-        
-
-
+        }, [courses]);
+    
         return (
             <div
-                className={`
-                    ${showCart.length === 0 ? 'h-[200px]' : ''}
-                    ${showCart.length === 1 ? 'h-[230px]' : ''}
-                    ${showCart.length > 1 ? 'h-[310px]' : ''}
-                    absolute right-0 top-full mt-3 w-[300px] bg-white rounded-xl border border-[#EAEAEA]
-                    shadow-xl opacity-0 invisible translate-y-2 scale-95 transition-all duration-200 ease-out
-                    origin-top group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 hidden lg:block
-                    group-hover:scale-100 z-50 overflow-hidden    
-                `}
-            >
+                className="
+                    absolute right-0 top-full mt-3 w-[300px]
+                    bg-white rounded-xl border border-[#EAEAEA] shadow-xl
+                    opacity-0 invisible translate-y-2 scale-95
+                    transition-all duration-200 ease-out origin-top
+                    group-hover:opacity-100 group-hover:visible
+                    group-hover:translate-y-0 group-hover:scale-100
+                    hidden lg:block z-50 overflow-hidden
+                    min-h-[200px] max-h-[320px]
+                "
+                >
+
                 {/* Box Cart */}
                     <BoxCart    
-                        showCart={showCart}
+                        showCart={courses}
                         isReady={!isLoading}
                     />
                 <div className="border-t border-[#EAEAEA] px-4 py-3 text-center ">
                     <p className="text-lg font-semibold">
                         Tổng: 
                            {
-                                !showCart.length ? " 0" : totalPrice === 0 ? (
+                                !courses.length ? " 0" : totalPrice === 0 ? (
                                     <span className="text-green-500">Free</span>
                                 ):(
                                     ` ${totalPrice.toLocaleString("vi-VN")} VND`
                                 )
                             }
                     </p>
-                    <p className="text-sm text-gray-500">{showCart.length} khóa học</p>
+                    <p className="text-sm text-gray-500">{courses.length} khóa học</p>
                     <Link
                         to={`/cart`}
                         className="

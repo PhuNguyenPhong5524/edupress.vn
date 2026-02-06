@@ -66,10 +66,9 @@ const Header = () => {
     }, [courses, keyword]);
 
     useEffect(() => {
-        if (user?.id && !hasFetchedCart) {
-            fetchCart(user.id);
-        }
-    }, [user?.id, hasFetchedCart]);
+        fetchCart(user?.id);
+    }, [ user?.id ]);
+
 
     const courseCount = cart?.courses?.length ?? 0;
 

@@ -129,6 +129,13 @@ export const useCartStore = create((set, get) => ({
     }
   },
 
+  clearCartUI: () => {
+    set({
+      cart: null,
+      cartUI: null,
+      hasFetchedCart: true,
+    });
+  },
 
   clearCart: () => set({ cart: null }),
 }));
