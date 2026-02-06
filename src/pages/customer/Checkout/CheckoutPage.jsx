@@ -1,80 +1,69 @@
-
-import { useEffect, useMemo, useRef } from "react";
-import useFetchData from "../../../api/useFetchData";
-import useAuth from "../../../hooks/useAuth";
+import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Spin } from "antd";
+
+import useAuth from "../../../hooks/useAuth";
+import { useCheckoutStore } from "../../../stores/checkout.store";
 import BoxShowCheckout from "./BoxShowCheckout/BoxShowCheckout";
-import useFetchCheckout from "../../../api/useFetchCheckout";
-
-
 
 const CheckoutPage = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const { user } = useAuth();
 
   const {
-    checkoutList,
-    loadingCheckout,
-    refetchCheckout,
-  } = useFetchCheckout();
+    currentCheckout,
+    loading,
+    fetchCheckoutByToken,
+  } = useCheckoutStore();
 
-  const { data: course } = useFetchData("courses");
-
-  // 🔥 REFRESH CHECKOUT KHI CÓ TOKEN
+  // 🔄 fetch checkout theo token
   useEffect(() => {
-    if (!token) return;
-    refetchCheckout();
-  }, [token, refetchCheckout]);
+    if (token) {
+      fetchCheckoutByToken(token);
+    }
+  }, [token, fetchCheckoutByToken]);
 
-  const checkoutCart = useMemo(() => {
-    if (!checkoutList.length || !user) return null;
-
-    return checkoutList.find(
-      item => item.token === token && item.user_id === user.id
-    );
-  }, [checkoutList, user, token]);
-
-  const loading = loadingCheckout || !course.length;
+  // ⏳ loading
   if (loading) {
-  return (
-    <div className="animate-pulse w-full absolute top-0 left-0 h-screen flex items-center justify-center">
-      <Spin fullscreen size="large" />
-    </div>
-  );
-}
-
-if (!checkoutCart) {
-  return (
-    <div className="mt-[90px] max-w-[1080px] mx-auto">
-      <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
-        ❌ Đơn hàng không tồn tại hoặc đã hết hạn
+    return (
+      <div className="h-screen">
+        <Spin fullscreen tip="Đang xử lý đơn hàng..." />
       </div>
-    </div>
-  );
-}
+    );
+  }
 
+  // ❌ không tìm thấy đơn
+  if (!currentCheckout) {
+    return (
+      <div className="mt-[90px] max-w-[1080px] mx-auto">
+        <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+          ❌ Đơn hàng không tồn tại hoặc đã hết hạn
+        </div>
+      </div>
+    );
+  }
+  // ✅ render theo status
   return (
-    <div className="mt-[90px] max-w-[1080px] mx-auto">
-      <div className="w-full bg-gray-50 h-screen">
-        {
-            checkoutCart.status === "pending" ? (
-                <BoxShowCheckout
-                    checkoutCart={checkoutCart}
-                    course={course}
-                    user={user}
-                />
-            ) : checkoutCart.status === "paid" ? (
-                <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
-                    ✅ Thanh toán thành công
-                </div>
-            ) : checkoutCart.status === "cancelled" ? (
-                <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
-                    ❌ Đơn hàng đã bị huỷ
-                </div>
-            ) : null
-        }
+    <div className="mt-[90px] max-w-[1080px] mx-auto h-screen">
+      <div className="w-full  bg-gray-50 h-screen">
+
+        {currentCheckout.status === "pending" && (
+          <BoxShowCheckout
+            currentCheckout={currentCheckout}
+          />
+        )}
+
+        {currentCheckout.status === "paid" && (
+          <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+            ✅ Thanh toán thành công
+          </div>
+        )}
+
+        {currentCheckout.status === "cancelled" && (
+          <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+            ❌ Đơn hàng đã bị huỷ
+          </div>
+        )}
 
       </div>
     </div>

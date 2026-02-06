@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 import BoxShowCoursesCheckout from "./BoxShowCourseCheckout";
 import { useCartStore } from "../../../../stores/cart.store";
+import useAuth from "../../../../hooks/useAuth";
 
 
-const BoxCheckoutInfo = ({user, checkoutCart}) => {
+const BoxCheckoutInfo = ({currentCheckout}) => {
 
     const {cart} =  useCartStore();
+    const { user } = useAuth();
      const showCheckout = useMemo(() => {
         if (!cart?.courses) return [];
 
@@ -24,7 +26,7 @@ const BoxCheckoutInfo = ({user, checkoutCart}) => {
              <div className="flex justify-between my-3">
                 <span className="text-[12px] md:text-[14px] lg:text-[16px] font-sans text-[#b3b3b3]">Mã đơn</span>
                 <span className="font-medium text-gray-800 text-[12px] md:text-[14px] lg:text-[16px]">
-                    {checkoutCart?._id}    
+                    {currentCheckout?.cart_id}    
                 </span>
             </div>
 
@@ -58,9 +60,9 @@ const BoxCheckoutInfo = ({user, checkoutCart}) => {
             <div className="flex justify-between my-3">
                 <span className="text-[12px] md:text-[14px] lg:text-[16px] font-sans text-[#b3b3b3]">Giảm giá</span>
                     {
-                        checkoutCart?.coupon === null ? '—' : (
+                        currentCheckout?.coupon === null ? '—' : (
                             <span className="font-medium text-green-600">
-                                {checkoutCart?.coupon.code} (-{checkoutCart?.coupon.percent}%)
+                                {currentCheckout?.coupon.code} (-{currentCheckout?.coupon.percent}%)
                             </span>
                         )
                     }
@@ -68,7 +70,7 @@ const BoxCheckoutInfo = ({user, checkoutCart}) => {
             <div className=" flex justify-between text-base">
                 <span className="font-bold text-[#000000]">Tổng tiền</span>
                 <span className="font-bold text-[14px] md:text-[16px] lg:text-[18px] text-red-600">
-                    {Number(checkoutCart?.total).toLocaleString("vi-VN")} VND
+                    {Number(currentCheckout?.total).toLocaleString("vi-VN")} VND
                 </span>
             </div>
         </div>

@@ -10,12 +10,12 @@ const cartUrl = (id) =>
 
 export const useCartStore = create((set, get) => ({
   cart: null,
+  cartUI: [],
   loading: false,
   hasFetchedCart: false,
-  cartUI: null,
 
   // ======================
-  // FETCH CART
+  // FETCH CART  
   // ======================
   fetchCart: async (userId) => {
     if (!userId) return;
@@ -26,24 +26,25 @@ export const useCartStore = create((set, get) => ({
       const res = await axios.get(`${API}&_t=${Date.now()}`);
       const carts = res.data?.data?.data || [];
 
-      const cart = carts.find(
+      const activeCart = carts.find(
         c => c.user_id == userId && c.status === "active"
       ) || null;
 
       set({
-        cart,
-        cartUI: cart,
+        cart: activeCart,
+        cartUI: activeCart?.courses || [],
         hasFetchedCart: true,
         loading: false,
       });
     } catch (e) {
       set({
         cart: null,
-        cartUI: null,
+        cartUI: [],
         loading: false,
       });
     }
-},
+  },
+
 
 
   // ======================
@@ -52,19 +53,18 @@ export const useCartStore = create((set, get) => ({
   addToCart: async (courseItem, userId) => {
     if (!userId || !courseItem?.course_id) return false;
 
-    const { cart, fetchCart } = get();
+    const { cart, cartUI } = get();
 
-    // đã có course
-    if (cart?.courses?.some(c => c.course_id === courseItem.course_id)) {
+    // guard
+    if (cartUI.some(c => c.course_id === courseItem.course_id)) {
       return false;
     }
 
-    const newCourses = cart?.courses
-      ? [...cart.courses, courseItem]
-      : [courseItem];
+    const newCourses = [...cartUI, courseItem];
 
-    // optimistic update
+    // 🔥 optimistic update: SYNC CẢ cart + cartUI
     set({
+      cartUI: newCourses,
       cart: cart
         ? { ...cart, courses: newCourses }
         : {
@@ -86,7 +86,11 @@ export const useCartStore = create((set, get) => ({
           name: `cart-user-${userId}`,
           ...payload,
         });
-        set({ cart: res.data.data });
+
+        // update lại cart cho khớp DB
+        set({
+          cart: res.data.data,
+        });
       } else {
         await axios.put(cartUrl(cart._id), payload);
       }
@@ -94,11 +98,16 @@ export const useCartStore = create((set, get) => ({
       return true;
     } catch (err) {
       console.error("addToCart error", err);
-      fetchCart(userId);
+
+      // rollback UI nếu muốn (optional)
+      set({
+        cartUI,
+        cart,
+      });
+
       return false;
     }
   },
-
 
 
   // ======================
@@ -129,6 +138,40 @@ export const useCartStore = create((set, get) => ({
       fetchCart(cart.user_id);
     }
   },
+
+  // ======================
+  // Update cart after payment
+  // ======================
+  updateCartAfterPayment: async (userId) => {
+  if (!userId) return;
+
+  try {
+    const { cart } = get();
+
+    // update DB nếu còn cart active
+    if (cart?._id) {
+      await axios.put(
+        cartUrl(cart._id),
+        {
+          ...cart,
+          courses: [],
+          status: "inactive",
+          updatedAt: new Date().toISOString(),
+        }
+      );
+    }
+
+    // clear UI cart
+    set({
+      cart: null,
+      cartUI: [],
+      hasFetchedCart: true,
+    });
+
+  } catch (err) {
+    console.error("❌ updateCartAfterPayment error:", err);
+  }
+},
 
   clearCartUI: () => {
     set({
