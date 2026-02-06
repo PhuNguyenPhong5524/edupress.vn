@@ -93,7 +93,6 @@ const ScanPage = () => {
         // Clear UI cart + success
         clearCartUI();
         setIsStatus("success");
-        Navigate(`/checkout?token=${token}`);
         } catch (err) {
             console.error("❌ Scan failed:", err);
             setIsStatus("error");
