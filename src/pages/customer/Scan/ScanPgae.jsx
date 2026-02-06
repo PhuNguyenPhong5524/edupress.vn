@@ -1,6 +1,6 @@
 import { Spin } from "antd";
 import BoxResult from "./BoxResult/BoxResult";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useCartStore } from "../../../stores/cart.store";
@@ -93,6 +93,7 @@ const ScanPage = () => {
         // Clear UI cart + success
         clearCartUI();
         setIsStatus("success");
+        Navigate(`/checkout?token=${token}`);
         } catch (err) {
             console.error("❌ Scan failed:", err);
             setIsStatus("error");
