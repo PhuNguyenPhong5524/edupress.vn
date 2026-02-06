@@ -5,10 +5,13 @@ import { Spin } from "antd";
 import useAuth from "../../../hooks/useAuth";
 import { useCheckoutStore } from "../../../stores/checkout.store";
 import BoxShowCheckout from "./BoxShowCheckout/BoxShowCheckout";
+import { useCartStore } from "../../../stores/cart.store";
 
 const CheckoutPage = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
+  const { user } = useAuth();
+  const { updateCartAfterPayment } = useCartStore();
 
   const {
     currentCheckout,
@@ -16,12 +19,22 @@ const CheckoutPage = () => {
     fetchCheckoutByToken,
   } = useCheckoutStore();
 
-  // 🔄 fetch checkout theo token
   useEffect(() => {
     if (token) {
       fetchCheckoutByToken(token);
     }
-  }, [token, fetchCheckoutByToken]);
+  }, [token]);
+
+  //fetch checkout theo token
+  useEffect(() => {
+    if (
+      currentCheckout?.status === "paid" &&
+      user?.id
+    ) {
+      updateCartAfterPayment(user.id);
+    }
+  }, [currentCheckout?.status, user?.id]);
+
 
   // ⏳ loading
   if (loading) {
