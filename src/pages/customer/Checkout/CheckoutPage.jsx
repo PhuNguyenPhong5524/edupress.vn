@@ -20,20 +20,26 @@ const CheckoutPage = () => {
   } = useCheckoutStore();
 
   useEffect(() => {
-    if (token) {
+    if (!token || currentCheckout?.status !== "pending") return;
+
+    const interval = setInterval(() => {
       fetchCheckoutByToken(token);
-    }
-  }, [token]);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [token, currentCheckout?.status]);
+
+
 
   //fetch checkout theo token
   useEffect(() => {
-    if (
-      currentCheckout?.status === "paid" &&
-      user?.id
-    ) {
-      updateCartAfterPayment(user.id);
-    }
-  }, [currentCheckout?.status, user?.id]);
+  if (
+    currentCheckout?.status === "paid" &&
+    user?.id
+  ) {
+    updateCartAfterPayment(user.id);
+  }
+}, [currentCheckout?.status]);
 
 
   // ⏳ loading
