@@ -15,42 +15,43 @@ const ScanPage = () => {
         const handleScan = async () => {
             if (!token) {
                 setIsStatus("invalid");
+            return;
+            }
+
+            setIsStatus("loading");
+
+            try {
+            const res = await axios.get(`${API_CHECKOUT}&token=${token}`);
+            const checkout = res.data?.data?.data?.[0];
+
+            if (!checkout) {
+                setIsStatus("invalid");
                 return;
             }
 
-            try {
-                const res = await axios.get(`${API_CHECKOUT}&token=${token}`);
-                const checkout = res.data?.data?.data?.[0];
+            if (checkout.status !== "pending") {
+                setIsStatus("done");
+                return;
+            }
 
-                if (!checkout) {
-                    setIsStatus("invalid");
-                    return;
+            await axios.put(
+                `https://mindx-mockup-server.vercel.app/api/resources/checkout/${checkout._id}?apiKey=6957348a9dda81df11d0c527`,
+                {
+                ...checkout,
+                status: "paid",
+                updatedAt: new Date().toISOString()
                 }
+            );
 
-                // Nếu đã xử lý rồi
-                if (checkout.status !== "pending") {
-                    setIsStatus("done");
-                    return;
-                }
+            setIsStatus("success");
 
-                // update checkout
-                await axios.put(
-                    `https://mindx-mockup-server.vercel.app/api/resources/checkout/${checkout._id}?apiKey=6957348a9dda81df11d0c527`,
-                    {
-                    ...checkout,
-                    status: "paid",
-                    updatedAt: new Date().toISOString()
-                    }
-                );
-
-                // xóa cart khi thanh toán thành công
-                if (checkout.cart_id) {
-                    await axios.delete(
+            if (checkout.cart_id) {
+                axios
+                .delete(
                     `https://mindx-mockup-server.vercel.app/api/resources/cart/${checkout.cart_id}?apiKey=6957348a9dda81df11d0c527`
-                    );
-                }
-
-                setIsStatus("success");
+                )
+                .catch(console.error);
+            }
             } catch (error) {
                 console.error(error);
                 setIsStatus("error");
@@ -59,6 +60,7 @@ const ScanPage = () => {
 
         handleScan();
     }, [token]);
+
 
     return (
         <div className="mt-[90px]  max-w-[1080px] mx-auto">
