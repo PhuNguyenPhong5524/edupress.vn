@@ -28,8 +28,11 @@ export const useCartStore = create((set, get) => ({
 
       const cart = carts.find(
         c => c.user_id == userId && c.status === "active"
-      ) || null;
-
+      ) || {
+        user_id: userId,
+        courses: [],
+        status: "active",
+      };
       set({
         cart,
         cartUI: cart,    

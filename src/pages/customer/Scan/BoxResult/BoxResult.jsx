@@ -9,34 +9,56 @@ const BoxResult = ({isStatus}) => (
     {
         isStatus === "loading" ? (
             <div className="flex justify-center items-center h-[300px]">
-                <Spin size="large" fullscreen tip="Đang xử lý thanh toán..." />
+            <Spin size="large" fullscreen tip="Đang xử lý thanh toán..." />
             </div>
         ) : (
             <Result
-                status={isStatus === "success" || isStatus === "done" ? "success" : "error"}
-                title={isStatus === "success" || isStatus === "done" ? "Thanh toán thành công!" : "Vui lòng thanh toán lại!"}
-                subTitle={`Mã đơn hàng: 2017182818828182881 | Thanh toán: 200.000đ. `}
-                className='shadow-lg rounded-2xl bg-white'
-                extra={[
-                    <div
-                        key="checkout-history" 
-                        className='flex justify-center flex-col items-center  '>
-                        <Link
-                            to={`/checkout-history`}
-                            className="
-                                text-[12px] md:text-[14px] lg:text-[16px] font-semibold flex justify-center border-[1px] border-gray-500 border-dashed
-                                    !text-gray-500 rounded-[5px] px-[10px]  items-center h-[40px] !transform !transition-all !duration-300 !ease-in-out 
-                                    hover:bg-gray-500 cursor-pointer hover:scale-95 hover:!text-blue-500 hover:!border-blue-500
-                            "
-                        >
-                            <ArrowRightIcon size={20} />
-                            Lịch sử khóa học
-                        </Link>
-                    </div>
-                ]}
+            status={
+                isStatus === "success" || isStatus === "already_paid"
+                ? "success"
+                : "error"
+            }
+            title={
+                isStatus === "success"
+                ? "Thanh toán thành công!"
+                : isStatus === "already_paid"
+                ? "Đơn hàng đã được thanh toán trước đó"
+                : "Thanh toán không thành công"
+            }
+            subTitle={
+                isStatus === "success"
+                ? "Cảm ơn bạn đã mua khóa học."
+                : isStatus === "already_paid"
+                ? "Bạn không cần thanh toán lại đơn hàng này."
+                : "Vui lòng thử lại hoặc tạo đơn hàng mới."
+            }
+            className="shadow-lg rounded-2xl bg-white"
+            extra={[
+                <div
+                key="checkout-history"
+                className="flex justify-center flex-col items-center"
+                >
+                <Link
+                    to="/checkout-history"
+                    className="
+                    text-[12px] md:text-[14px] lg:text-[16px] font-semibold
+                    flex justify-center items-center
+                    border border-gray-500 border-dashed
+                    text-gray-500 rounded-[5px] px-[10px] h-[40px]
+                    transition-all duration-300 ease-in-out
+                    hover:bg-gray-500 hover:text-blue-500 hover:border-blue-500
+                    hover:scale-95
+                    "
+                >
+                    <ArrowRightIcon size={20} />
+                    Lịch sử khóa học
+                </Link>
+                </div>,
+            ]}
             />
         )
     }
+
   </div>
 
 );
