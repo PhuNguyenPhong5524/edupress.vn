@@ -10,15 +10,18 @@ const useFetchCheckout = () => {
 
   const fetchCheckout = useCallback(async () => {
     try {
-      setLoadingCheckout(true);
-      const res = await axios.get(CHECKOUT_API);
-      setCheckoutList(res.data?.data?.data || []);
+        setLoadingCheckout(true);
+        const res = await axios.get(
+        `${CHECKOUT_API}&_t=${Date.now()}`
+        );
+        setCheckoutList(res.data?.data?.data || []);
     } catch (e) {
-      setCheckoutList([]);
+        setCheckoutList([]);
     } finally {
-      setLoadingCheckout(false);
+        setLoadingCheckout(false);
     }
-  }, []);
+    }, []);
+
 
   useEffect(() => {
     fetchCheckout();

@@ -23,19 +23,16 @@ export const useCartStore = create((set, get) => ({
     set({ loading: true });
 
     try {
-      const res = await axios.get(API);
-      const carts = res.data.data.data || [];
+      const res = await axios.get(`${API}&_t=${Date.now()}`);
+      const carts = res.data?.data?.data || [];
 
       const cart = carts.find(
         c => c.user_id == userId && c.status === "active"
-      ) || {
-        user_id: userId,
-        courses: [],
-        status: "active",
-      };
+      ) || null;
+
       set({
         cart,
-        cartUI: cart,    
+        cartUI: cart,
         hasFetchedCart: true,
         loading: false,
       });
@@ -46,7 +43,8 @@ export const useCartStore = create((set, get) => ({
         loading: false,
       });
     }
-  },
+},
+
 
   // ======================
   // ADD TO CART

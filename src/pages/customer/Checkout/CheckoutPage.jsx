@@ -5,6 +5,8 @@ import useAuth from "../../../hooks/useAuth";
 import { useSearchParams } from "react-router-dom";
 import { Spin } from "antd";
 import BoxShowCheckout from "./BoxShowCheckout/BoxShowCheckout";
+import useFetchCheckout from "../../../api/useFetchCheckout";
+
 
 
 const CheckoutPage = () => {
@@ -35,26 +37,45 @@ const CheckoutPage = () => {
   }, [checkoutList, user, token]);
 
   const loading = loadingCheckout || !course.length;
+  if (loading) {
+  return (
+    <div className="animate-pulse w-full absolute top-0 left-0 h-screen flex items-center justify-center">
+      <Spin fullscreen size="large" />
+    </div>
+  );
+}
+
+if (!checkoutCart) {
+  return (
+    <div className="mt-[90px] max-w-[1080px] mx-auto">
+      <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+        ❌ Đơn hàng không tồn tại hoặc đã hết hạn
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="mt-[90px] max-w-[1080px] mx-auto">
       <div className="w-full bg-gray-50 h-screen">
-        {loading || !checkoutCart ? (
-          <div className="animate-pulse w-full absolute top-0 left-0 h-screen flex items-center justify-center">
-            <Spin fullscreen size="large" />
-          </div>
-        ) : checkoutCart.status === "pending" ||
-          checkoutCart.status === "cancelled" ? (
-          <BoxShowCheckout
-            checkoutCart={checkoutCart}
-            course={course}
-            user={user}
-          />
-        ) : checkoutCart.status === "paid" ? (
-          <div className="bg-white rounded-2xl shadow-lg p-10">
-            ✅ Thanh toán thành công
-          </div>
-        ) : null}
+        {
+            checkoutCart.status === "pending" ? (
+                <BoxShowCheckout
+                    checkoutCart={checkoutCart}
+                    course={course}
+                    user={user}
+                />
+            ) : checkoutCart.status === "paid" ? (
+                <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+                    ✅ Thanh toán thành công
+                </div>
+            ) : checkoutCart.status === "cancelled" ? (
+                <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+                    ❌ Đơn hàng đã bị huỷ
+                </div>
+            ) : null
+        }
+
       </div>
     </div>
   );
