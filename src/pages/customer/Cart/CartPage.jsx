@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useCartStore } from "../../../stores/cart.store";
 import useFetchData from "../../../api/useFetchData";
-import { Spin } from "antd";
-import BoxShowCart from "../../../components/Header/BoxShowCart/BoxCart";
 import BoxShowCartPage from "./BoxShowCartPage/BoxShowCartPage";
 import BoxCheckoutPage from "./BoxCheckoutPage/BoxCheckoutPage";
 
@@ -11,14 +9,13 @@ import BoxCheckoutPage from "./BoxCheckoutPage/BoxCheckoutPage";
 const CartPage = () => {
     const { user } = useAuth();
     const { cart, loading: cartLoading, fetchCart} = useCartStore();
-    const { data: course, loading: courseLoading } = useFetchData("courses");
     const { data: provider } = useFetchData("providers");
 
     /* ================= FETCH CART ================= */
    
 
     const [showSpin, setShowSpin] = useState(true);
-    const isLoading = cartLoading || courseLoading;
+    const isLoading = cartLoading ;
     useEffect(() => {
         if (!isLoading) {
             const t = setTimeout(() => setShowSpin(false), 400);
@@ -29,7 +26,7 @@ const CartPage = () => {
     }, [isLoading]);
 
     // Loading
-    const isReady = course !== null && !isLoading;
+    // const isReady = course !== null && !isLoading;
 
     useEffect(() => {
         if (user?.id) {
@@ -69,6 +66,7 @@ const CartPage = () => {
                         {/* RIGHT */}
                             <BoxCheckoutPage 
                                 showCart={showCart}
+                                cart={cart}
                             />
                     </div>
                 </div>

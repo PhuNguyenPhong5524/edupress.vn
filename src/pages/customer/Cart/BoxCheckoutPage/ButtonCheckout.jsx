@@ -5,10 +5,11 @@ import useAuth from "../../../../hooks/useAuth";
 import ArrowRightIcon from "../../../../components/icons/ArrowRightIcon";
 import { useNavigate } from "react-router-dom";
 
-const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, appliedCoupon, setAppliedCoupon}) => {
+const ButtonCheckout = ({ showCart, cart, finalTotal , setCouponInput, appliedCoupon, setAppliedCoupon}) => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const nav = useNavigate();
+    
     const handleCheckout = async () => {
         if (!showCart?.length) {
             message.warning("Giỏ hàng trống");
@@ -24,7 +25,7 @@ const ButtonCheckout = ({ showCart, finalTotal , setCouponInput, appliedCoupon, 
 
         const payload = {
             user_id: user.id,
-
+            cart_id: cart?._id,
             courses: showCart.map(item => ({
                 course_id: item.course_id,
                 title: item.course_title,

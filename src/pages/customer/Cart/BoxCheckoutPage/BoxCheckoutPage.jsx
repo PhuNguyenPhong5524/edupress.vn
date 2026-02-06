@@ -2,7 +2,7 @@ import { message } from "antd";
 import ButtonCheckout from "./ButtonCheckout";
 import useCartPricing from "../../../../hooks/useCartPricing";
 
-const BoxCheckoutPage = ({ showCart }) => {
+const BoxCheckoutPage = ({ showCart, cart }) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const {
@@ -68,6 +68,7 @@ const BoxCheckoutPage = ({ showCart }) => {
           setCouponInput={setCouponInput}
           appliedCoupon={appliedCoupon}
           setAppliedCoupon={setAppliedCoupon}
+          cart={cart}
         />
 
         <p className="text-[10px] md:text-[12px] lg:text-[14px] text-gray-500 mt-1">

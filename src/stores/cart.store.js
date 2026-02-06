@@ -7,7 +7,6 @@ const API =
 
 const cartUrl = (id) =>
   `https://mindx-mockup-server.vercel.app/api/resources/cart/${id}?apiKey=6957348a9dda81df11d0c527`;
-const API_CHECKOUT = "https://mindx-mockup-server.vercel.app/api/resources/checkout?apiKey=6957348a9dda81df11d0c527";
 
 export const useCartStore = create((set, get) => ({
   cart: null,

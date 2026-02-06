@@ -12,12 +12,11 @@ const BoxShowCoursesCheckout = ({item}) => {
           />
 
           <div className="flex-1">
-            <Link
-              to={`/detail/${item.course_id}`}
-              className="text-sm font-semibold line-clamp-2 text-black hover:text-[#FF782D]"
+            <h3
+              className="text-[12px] md:text-[14px] lg:text-[16px] font-semibold line-clamp-2 text-black"
             >
               {item.course_title}
-            </Link>
+            </h3>
 
             <div className="flex items-center justify-between mt-1">
               <p className="text-[12px] text-gray-400">

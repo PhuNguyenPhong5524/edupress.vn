@@ -3,7 +3,7 @@
     import { useMemo } from "react";
 
     const BoxShowCart = ({cart, cartLoading, loadingCourse}) => {
-        if (!cart || cartLoading || loadingCourse) return null;
+        const isLoading = cartLoading || loadingCourse;
         const showCart = useMemo(() => {
             if (!cart?.courses) return [];
 
@@ -40,7 +40,7 @@
                 {/* Box Cart */}
                     <BoxCart    
                         showCart={showCart}
-                    
+                        isReady={!isLoading}
                     />
                 <div className="border-t border-[#EAEAEA] px-4 py-3 text-center ">
                     <p className="text-lg font-semibold">
