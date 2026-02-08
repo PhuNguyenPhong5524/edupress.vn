@@ -11,25 +11,17 @@ const BoxCartItem = ({ course, user, provider}) => {
       setCouponInput,
       setAppliedCoupon
     } = useCartPricing(cart?.courses || []);
+
+    
   const handleRemoveFromCart = async () => {
-    if (!user?.id) return false;
-
-    const cartItem = cart?.courses?.find(
-      c => c.course_id === course._id
-    );
-
-    if (!cartItem) return false;
-
-    // số khóa học trước khi xóa
+    if (!user?.id) return;
     const isLastItem = cart.courses.length === 1;
-
-    await removeFromCart(course._id);
+    await removeFromCart(course.course_id);
 
     if (isLastItem) {
       setAppliedCoupon(null);
       setCouponInput("");
     }
-
     return true;
   };
 

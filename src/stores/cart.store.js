@@ -115,63 +115,60 @@ export const useCartStore = create((set, get) => ({
   // ======================
   removeFromCart: async (courseId) => {
     const { cart, fetchCart } = get();
-    if (!cart) return;
+    if (!cart?._id) return;
 
-    const optimisticCart = {
-      ...cart,
-      courses: cart.courses.filter(c => c.course_id !== courseId),
-    };
+    const newCourses = cart.courses.filter(
+      c => c.course_id !== courseId
+    );
 
     // optimistic update
     set({
-      cart: optimisticCart.courses.length === 0
+      cart: newCourses.length === 0
         ? null
-        : optimisticCart
+        : { ...cart, courses: newCourses },
+      cartUI: newCourses,
     });
 
     try {
-      // sync server
-      await axios.put(cartUrl(cart._id), optimisticCart);
+      await axios.put(cartUrl(cart._id), {
+        name: `cart-user-${cart.user_id}`,               
+        user_id: cart.user_id,
+        status: "active",
+        courses: newCourses,
+      });
     } catch (e) {
       console.error("REMOVE FROM CART ERROR", e);
-      // rollback nếu lỗi
       fetchCart(cart.user_id);
     }
   },
 
+
+
   // ======================
   // Update cart after payment
   // ======================
-  updateCartAfterPayment: async (userId) => {
-  if (!userId) return;
+  updateCartAfterPayment: async (cartId) => {
+    if (!cartId) return false;
 
-  try {
-    const { cart } = get();
+    try {
+      await axios.put(cartUrl(cartId), {
+        status: "inactive",
+        courses: [],
+      });
 
-    // update DB nếu còn cart active
-    if (cart?._id) {
-      await axios.put(
-        cartUrl(cart._id),
-        {
-          ...cart,
-          courses: [],
-          status: "inactive",
-          updatedAt: new Date().toISOString(),
-        }
-      );
+      set({
+        cart: null,
+        cartUI: [],
+        hasFetchedCart: true,
+      });
+
+      return true;
+    } catch (err) {
+      console.error("updateCartAfterPayment error:", err);
+      return false;
     }
+  },
 
-    // clear UI cart
-    set({
-      cart: null,
-      cartUI: [],
-      hasFetchedCart: true,
-    });
-
-  } catch (err) {
-    console.error("❌ updateCartAfterPayment error:", err);
-  }
-},
 
   clearCartUI: () => {
     set({

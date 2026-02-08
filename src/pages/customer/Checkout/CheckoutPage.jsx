@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Spin } from "antd";
 
@@ -6,12 +6,16 @@ import useAuth from "../../../hooks/useAuth";
 import { useCheckoutStore } from "../../../stores/checkout.store";
 import BoxShowCheckout from "./BoxShowCheckout/BoxShowCheckout";
 import { useCartStore } from "../../../stores/cart.store";
+import BoxResult from "./BoxResult/BoxResult";
 
 const CheckoutPage = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const { user } = useAuth();
   const { updateCartAfterPayment } = useCartStore();
+  const [cartUpdated, setCartUpdated] = useState(false);
+  const [time, setTime] = useState(20);
+  const [expired, setExpired] = useState(false);
+
 
   const {
     currentCheckout,
@@ -20,26 +24,59 @@ const CheckoutPage = () => {
   } = useCheckoutStore();
 
   useEffect(() => {
-    if (!token || currentCheckout?.status !== "pending") return;
+    if (token) {
+      fetchCheckoutByToken(token);
+    }
+  }, [token]);
+
+  // count down
+  useEffect(() => {
+    if (currentCheckout?.status !== "pending") return ;
+
+    setTime(20);
+    setExpired(false);
+
+    const istime = setInterval(() =>{
+      setTime(prev =>{
+        if(prev <= 1){
+          clearInterval(istime);
+          setExpired(true);
+          return 0;
+        }
+        return prev - 1; 
+      });
+    }, 1000);
+
+    return () => clearInterval(istime);
+  }, [currentCheckout?.status]);
+
+ // fetch checkout trong 10s neu checkout chua thanh toan -> mã hết hạn 
+  useEffect(() => {
+    if (!token || expired) return;
+    if (currentCheckout?.status !== "pending") return;
 
     const interval = setInterval(() => {
       fetchCheckoutByToken(token);
-    }, 3000);
+    }, 20000);
 
     return () => clearInterval(interval);
-  }, [token, currentCheckout?.status]);
+  }, [token, currentCheckout?.status, expired]);
 
-
-
-  //fetch checkout theo token
+  // update cart after payment
   useEffect(() => {
-  if (
-    currentCheckout?.status === "paid" &&
-    user?.id
-  ) {
-    updateCartAfterPayment(user.id);
-  }
-}, [currentCheckout?.status]);
+    if (
+      currentCheckout?.status === "paid" &&
+      !cartUpdated &&
+      currentCheckout?.cart_id
+    ) {
+      const update = async () => {
+        await updateCartAfterPayment(currentCheckout.cart_id);
+        setCartUpdated(true);
+      };
+
+      update();
+    }
+  }, [currentCheckout?.status, currentCheckout?.cart_id, cartUpdated]);
 
 
   // ⏳ loading
@@ -51,38 +88,26 @@ const CheckoutPage = () => {
     );
   }
 
-  // ❌ không tìm thấy đơn
-  if (!currentCheckout) {
-    return (
-      <div className="mt-[90px] max-w-[1080px] mx-auto">
-        <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
-          ❌ Đơn hàng không tồn tại hoặc đã hết hạn
-        </div>
-      </div>
-    );
-  }
-  // ✅ render theo status
+  const status = currentCheckout?.status;
+
   return (
     <div className="mt-[90px] max-w-[1080px] mx-auto h-screen">
       <div className="w-full  bg-gray-50 h-screen">
 
-        {currentCheckout.status === "pending" && (
-          <BoxShowCheckout
-            currentCheckout={currentCheckout}
-          />
-        )}
-
-        {currentCheckout.status === "paid" && (
-          <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
-            ✅ Thanh toán thành công
-          </div>
-        )}
-
-        {currentCheckout.status === "cancelled" && (
-          <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
-            ❌ Đơn hàng đã bị huỷ
-          </div>
-        )}
+        {
+          status === "pending" ? (
+            <BoxShowCheckout
+              currentCheckout={currentCheckout}
+              time={time}
+              expired={expired}
+              status={status}
+            />
+          ) : (
+            <BoxResult 
+              status={status} 
+            />
+          )
+        }
 
       </div>
     </div>

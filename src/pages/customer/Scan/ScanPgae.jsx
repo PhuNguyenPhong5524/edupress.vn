@@ -44,7 +44,7 @@ const ScanPage = () => {
             }
 
             // cart chỉ là side-effect
-            await updateCartAfterPayment(checkout.user_id);
+            await updateCartAfterPayment(checkout.cart_id);
             setIsStatus("success");
         };
 
