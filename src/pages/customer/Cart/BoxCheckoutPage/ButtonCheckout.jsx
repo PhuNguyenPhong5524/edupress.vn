@@ -65,7 +65,7 @@ const ButtonCheckout = ({ showCart, cart, finalTotal , setCouponInput, appliedCo
         } finally {
             setLoading(false);
         }
-        };
+    };
 
 
     return (

@@ -21,28 +21,35 @@ const BoxShowInfo = ({
 
         if (!user?.id) {
             Modal.confirm({
-                title: "Đăng nhập",
-                content: "Vui lòng đăng nhập để thêm khóa học!",
-                okText: "Đăng nhập",
-                cancelText: "Hủy",
-                onOk: () => nav("/login"),
+            title: "Đăng nhập",
+            content: "Vui lòng đăng nhập để thêm khóa học!",
+            okText: "Đăng nhập",
+            cancelText: "Hủy",
+            onOk: () => nav("/login"),
             });
             return;
         }
 
-        if (!showList?._id) {
-            message.error("Không tìm thấy khóa học");
-            return;
-        }
-
         setAdding(true);
-        const ok = await addToCart(showList._id, user.id);
+
+        const ok = await addToCart(
+            {
+                course_id: showList._id,
+                course_title: showList.course_title,
+                price: showList.price,
+                image_url: showList.image_url,   
+                total_lectures: showList.total_lectures,
+            },
+            user.id
+        );
+
         setAdding(false);
 
         ok
             ? message.success("Đã thêm vào giỏ")
             : message.warning("Khóa học đã có trong giỏ!");
     };
+
 
     return (
         <div className="w-full bg-[#000000] text-white py-10">
