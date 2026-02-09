@@ -4,6 +4,8 @@ import KeyIcon from "../../icons/KeyIcon";
 import BellIcon from "../../icons/BellIcon";
 import LogoutIcon from "../../icons/LogoutIcon";
 import { useCartStore } from "../../../stores/cart.store";
+import BookOpenIcon from "../../icons/BookOpen";
+
 
 const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
     const nav = useNavigate();
@@ -50,7 +52,17 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
                                 <p className="text-[#a4a4a4] text-[14px] font-regular p-0 m-0">{user.email}</p>
                             </div>
                         </div>
-
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] flex
+                                items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                        > 
+                            <BookOpenIcon size={20} />
+                            <Link to="/my-course">{t('header.mycourse')}</Link> 
+                        </li>
                         <li 
                             className=" 
                                 text-black px-3 py-2 border-l-2 border-l-[#ffffff] flex
