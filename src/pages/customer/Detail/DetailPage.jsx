@@ -36,7 +36,7 @@ const DetailPage = () => {
 
     {/* Scroll observer */}
     useStickyObserver(setShowStickyCard);
-    const {user} = useAuth();   
+    const {user, isAuthenticated} = useAuth();   
 
 
   return (
@@ -53,6 +53,7 @@ const DetailPage = () => {
                 adding={adding}
                 setAdding={setAdding}
                 user={user}
+                isAuthenticated={isAuthenticated}
             />
         {/* Nội dung chính */}
             <div

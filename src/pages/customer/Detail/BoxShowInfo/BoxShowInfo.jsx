@@ -10,16 +10,15 @@ const BoxShowInfo = ({
     showList, 
     loading,
     addToCart,
-    cart,
     adding,
     setAdding,
     user,
 }) => {
-
-    const handleAddToCart = async () => {
+    const nav = useNavigate();
+      const handleAddToCart = async () => {
         if (adding) return;
 
-        if (!user?.id) {
+        if (!user?._id) {
             Modal.confirm({
             title: "Đăng nhập",
             content: "Vui lòng đăng nhập để thêm khóa học!",
@@ -40,7 +39,7 @@ const BoxShowInfo = ({
                 image_url: showList.image_url,   
                 total_lectures: showList.total_lectures,
             },
-            user.id
+            user._id
         );
 
         setAdding(false);
@@ -146,8 +145,7 @@ const BoxShowInfo = ({
                         <div
                             className="
                                 lg:absolute lg:top-0
-                                w-full
-                                transition-all duration-300
+                                w-full transition-all duration-300
                             "
                         >
                             <BoxCourseInfoCard 

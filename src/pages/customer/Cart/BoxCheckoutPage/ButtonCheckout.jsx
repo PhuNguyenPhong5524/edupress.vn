@@ -16,7 +16,7 @@ const ButtonCheckout = ({ showCart, cart, finalTotal , setCouponInput, appliedCo
             return;
         }
 
-        if (!user?.id) {
+        if (!user?._id) {
             message.error("Vui lòng đăng nhập");
             return;
         }
@@ -24,7 +24,7 @@ const ButtonCheckout = ({ showCart, cart, finalTotal , setCouponInput, appliedCo
         const token = `ach${Date.now()}JLK${Math.floor(Math.random() * 1000)}`;
 
         const payload = {
-            user_id: user.id,
+            user_id: user?._id,
             cart_id: cart?._id,
             courses: showCart.map(item => ({
                 course_id: item.course_id,

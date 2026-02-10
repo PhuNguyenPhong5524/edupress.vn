@@ -36,7 +36,7 @@ const BoxCourse = ({item}) => {
     const handleAddToCart = async () => {
         if (adding) return;
 
-        if (!user?.id) {
+        if (!user?._id) {
             Modal.confirm({
             title: "Đăng nhập",
             content: "Vui lòng đăng nhập để thêm khóa học!",
@@ -57,7 +57,7 @@ const BoxCourse = ({item}) => {
                 image_url: item.image_url,   
                 total_lectures: item.total_lectures,
             },
-            user.id
+            user._id
         );
 
         setAdding(false);

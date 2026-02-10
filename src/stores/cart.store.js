@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 
 const API =
   "https://mindx-mockup-server.vercel.app/api/resources/cart?apiKey=6957348a9dda81df11d0c527";

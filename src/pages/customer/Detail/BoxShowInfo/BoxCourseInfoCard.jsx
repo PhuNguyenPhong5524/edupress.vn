@@ -56,7 +56,7 @@ const BoxCourseInfoCard = ({showList, loading, adding, handleAddToCart}) => {
                                 {/* Overlay play */}
                                 <div
                                     className="
-                                        absolute inset-0
+                                        absolute inset-0 
                                         flex flex-col items-center justify-center gap-2
                                         bg-black/30 opacity-100
                                         transition-opacity duration-300
@@ -86,7 +86,7 @@ const BoxCourseInfoCard = ({showList, loading, adding, handleAddToCart}) => {
                             </div>
 
                         {/* BUTTONS */}
-                            <div className="flex flex-col sm:flex-row gap-3 mt-3">
+                            <div className="flex flex-col sm:flex-row gap-3 mt-3 z-100">
                                 <button
                                     onClick={handleAddToCart}
                                     disabled={adding}

@@ -29,10 +29,10 @@ const CartPage = () => {
     // const isReady = course !== null && !isLoading;
 
     useEffect(() => {
-        if (user?.id) {
-            fetchCart(user.id);
+        if (user?._id) {
+            fetchCart(user._id);
         }
-    }, [user?.id]);
+    }, [user?._id]);
     
     
     const showCart = useMemo(() => {

@@ -61,9 +61,7 @@ createRoot(document.getElementById('root')).render(
           <Route 
             path='scan' 
             element={
-              <PrivateRoute>
-                <ScanPage />
-              </PrivateRoute>
+               <ScanPage />
             } 
           />
           <Route path='login' element={<Login />} />

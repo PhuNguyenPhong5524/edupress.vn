@@ -7,17 +7,16 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    useEffect(() => {
-        try {
-            const storedUser = localStorage.getItem("user");
-            if (storedUser) {
-                setUser(JSON.parse(storedUser));
-            }
-        } catch (error) {
-            console.error("Invalid user in localStorage");
-            setUser(null);
-        } 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => { 
+        const storedUser = localStorage.getItem("user"); 
+        if (storedUser) { 
+        setUser(JSON.parse(storedUser)); 
+        }
+        setLoading(false);
     }, []);
+
 
 
     const login = (userData) =>{
@@ -63,7 +62,8 @@ const AuthProvider = ({ children }) => {
                 isAuthenticated: !!user,
                 hasRole,
                 hasAnyRoles,
-                getAvatarLetter 
+                getAvatarLetter ,
+                loading
             }}
         >
             {children}
