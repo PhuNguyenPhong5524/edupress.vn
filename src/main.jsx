@@ -13,7 +13,7 @@ import "./i18n.js"
 import AuthProvider from './context/AuthContext.jsx'
 import CartPage from './pages/customer/Cart/CartPage.jsx'
 import CheckoutPage from './pages/customer/Checkout/CheckoutPage.jsx'
-import ScanPage from './pages/customer/Scan/ScanPgae.jsx'
+import ScanPage from './pages/Scan/ScanPgae.jsx'
 import CheckoutHistoryPage from './pages/customer/CheckoutHistory/CheckoutHistoryPage.jsx'
 import MyCoursePage from './pages/customer/MyCourse/MyCoursePage.jsx'
 
@@ -28,13 +28,13 @@ createRoot(document.getElementById('root')).render(
             <Route path='cart' element={<CartPage /> } />
             <Route path='checkout' element={<CheckoutPage />} />
             <Route path='checkout-history' element={<CheckoutHistoryPage />} />
-            <Route path='scan' element={<ScanPage />} />
             <Route path='my-course' element={<MyCoursePage />} />
           </Route>
           <Route path='/admin'  element={<AdminLayout />} >
             <Route path='employee' element={<ManagementUsers />} />
             <Route path='products' element={<div>Products</div>} />
           </Route>
+          <Route path='scan' element={<ScanPage />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
         </Routes>

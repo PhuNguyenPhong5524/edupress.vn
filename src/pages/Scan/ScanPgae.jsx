@@ -2,8 +2,8 @@
 import BoxResult from "./BoxResult/BoxResult";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useCartStore } from "../../../stores/cart.store";
-import { useCheckoutStore } from "../../../stores/checkout.store";
+import { useCartStore } from "../../stores/cart.store";
+import { useCheckoutStore } from "../../stores/checkout.store";
 
 
 const ScanPage = () => {
