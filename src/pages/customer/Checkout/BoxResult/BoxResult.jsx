@@ -11,12 +11,12 @@ const BoxResult = ({ status }) => {
     paid: {
       antdStatus: "success",
       title: "Thanh toán thành công!",
-      subTitle: "Cảm ơn bạn đã mua khóa học.",
+      subTitle: "Cảm ơn bạn đã mua khóa học!",
     },
     cancelled: {
       antdStatus: "error",
       title: "Huỷ đơn hàng!",
-      subTitle: "Đơn hàng đã bị huỷ. Nếu cần, bạn có thể tạo đơn mới.",
+      subTitle: "Đơn hàng đã bị huỷ. Vui lòng tạo đơn mới!",
     },
   };
 
@@ -35,7 +35,11 @@ const BoxResult = ({ status }) => {
           className="flex justify-center flex-col items-center"
         >
           <Link
-            to="/checkout-history"
+            to={
+              status === "paid"
+                ? "/checkout-history"
+                : "/cart"
+            }
             className="
               text-[12px] md:text-[14px] lg:text-[16px] font-semibold
               flex justify-center items-center
@@ -48,9 +52,12 @@ const BoxResult = ({ status }) => {
           >
             <ArrowRightIcon size={20} />
                 {
-                    status === "paid"
-                    ? "Xem lịch sử thanh toán"
-                    : "Thực hiện lại đơn hàng"
+                    status === "paid" && status !== "pending"
+                    && "Xem lịch sử giao dịch"
+                }
+                 {
+                    status === "cancelled" && status !== "pending"
+                    && "Thực hiện mua lại khóa học"
                 }
           </Link>
         </div>,

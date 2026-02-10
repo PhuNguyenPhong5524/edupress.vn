@@ -18,6 +18,7 @@
       "login": "Login",
       "register": "Register",
       "logout": "Logout",
+      "chechkoutHistory": "Checkout History",
       "changepassword": "Change Password",
       "notification": "Notification"
   },

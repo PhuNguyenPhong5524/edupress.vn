@@ -3,7 +3,7 @@ import ClockIcon from "../../../../components/icons/ClockIcon"
 import GraduationIcon from "../../../../components/icons/GraduationIcon"
 import SignalIcon from "../../../../components/icons/SignalIcon";
 import BoxCourseInfoCard from "./BoxCourseInfoCard";
-import { message, Modal } from "antd";
+import { message, Modal, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 const BoxShowInfo = ({
     showStickyCard,
@@ -13,7 +13,9 @@ const BoxShowInfo = ({
     adding,
     setAdding,
     user,
+    isPurchased
 }) => {
+
     const nav = useNavigate();
       const handleAddToCart = async () => {
         if (adding) return;
@@ -153,6 +155,7 @@ const BoxShowInfo = ({
                                 loading={loading} 
                                 adding={adding} 
                                 handleAddToCart={handleAddToCart}
+                                isPurchased={isPurchased}
                             />
                         </div>
                     )}
@@ -163,6 +166,7 @@ const BoxShowInfo = ({
                         loading={loading} 
                         adding={adding} 
                         handleAddToCart={handleAddToCart}
+                        isPurchased={isPurchased}
                     />
                 </div>
             </div>

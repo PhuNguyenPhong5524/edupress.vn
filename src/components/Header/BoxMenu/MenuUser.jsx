@@ -5,6 +5,7 @@ import BellIcon from "../../icons/BellIcon";
 import LogoutIcon from "../../icons/LogoutIcon";
 import { useCartStore } from "../../../stores/cart.store";
 import BookOpenIcon from "../../icons/BookOpen";
+import HistoryIcon from "../../icons/HistoryIcon";
 
 
 const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
@@ -87,6 +88,17 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter}) => {
                                 <Link to="/notification">{t('header.notification')}</Link> 
                                 <span className="bg-red-500 w-[20px] h-[20px] rounded-full flex items-center justify-center text-white text-[12px]">0</span>
                             </div>
+                        </li>
+                        <li 
+                            className=" 
+                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] flex
+                                items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out 
+                                hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
+                                hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
+                            " 
+                        > 
+                            <HistoryIcon size={20} />
+                            <Link to="/checkout-history">{t('header.chechkoutHistory')}</Link> 
                         </li>
                         <div className=" border-b border-b-[#EAEAEA]">
                             

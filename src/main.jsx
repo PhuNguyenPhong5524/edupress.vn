@@ -32,9 +32,9 @@ createRoot(document.getElementById('root')).render(
             <Route 
               path='checkout' 
               element={
-                <PrivateRoute>
+               
                   <CheckoutPage />
-                </PrivateRoute>
+           
               } 
             />
             <Route path='checkout-history' element={<CheckoutHistoryPage />} />

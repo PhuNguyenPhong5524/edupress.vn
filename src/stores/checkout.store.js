@@ -19,28 +19,39 @@ export const useCheckoutStore = create((set, get) => ({
   // FETCH CHECKOUT
   // ======================
   fetchCheckoutByToken: async (token) => {
-    if (!token) return;
+  if (!token) return null;
 
-    set({ loading: true, error: null });
+  set({ loading: true, error: null });
 
-    try {
-      const res = await axios.get(`${CHECKOUT_API}&_t=${Date.now()}`);
-      const list = res.data?.data?.data || [];
+  try {
+    const res = await axios.get(`${CHECKOUT_API}&_t=${Date.now()}`);
+    const list = res.data?.data?.data || [];
 
-      const checkout = list.find(c => c.token === token) || null;
+    const checkout = list.find(c => c.token === token);
 
+    if (!checkout) {
       set({
-        checkoutList: list,
-        currentCheckout: checkout,
+        currentCheckout: null,
         loading: false,
+        error: "CHECKOUT_NOT_FOUND",
       });
-
-      return checkout;
-    } catch (e) {
-      set({ loading: false, error: "FETCH_CHECKOUT_FAILED" });
       return null;
     }
-  },
+
+    set({
+      currentCheckout: checkout,
+      loading: false,
+    });
+
+    return checkout;
+  } catch (e) {
+    set({
+      loading: false,
+      error: "FETCH_CHECKOUT_FAILED",
+    });
+    return null;
+  }
+},
 
   // ======================
   // UPDATE CHECKOUT

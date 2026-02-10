@@ -5,8 +5,8 @@ import GraduationIcon from "../components/icons/GraduationIcon"
 import { useCartStore } from "../stores/cart.store";
 import { message, Modal, Spin } from "antd";
 import useAuth from "../hooks/useAuth";
-import { useState } from "react";
-
+import { useMemo, useState } from "react";
+import useFetchData from "../api/useFetchData";
 const BoxCourse = ({item}) => {
 
     const {cart, addToCart} = useCartStore();
@@ -67,6 +67,17 @@ const BoxCourse = ({item}) => {
             : message.warning("Khóa học đã có trong giỏ!");
     };
 
+    // Kiểm tra sản phẩm đã mua chưa
+    const { data : checkoutList } = useFetchData("checkout");
+    const isPurchased = useMemo(() => {
+        if (!checkoutList || !user) return false;
+
+        return checkoutList.some(order =>
+            order.user_id === user._id &&
+            order.status === "paid" &&
+            order.courses.some(course => course.course_id === item._id)
+        );
+    }, [checkoutList, user, item._id]);
 
 
     return (
@@ -106,20 +117,33 @@ const BoxCourse = ({item}) => {
                             duration-300 ease-in-out group-hover:bg-black/50 group-hover:opacity-100
                         "
                     >
-                        <button
+                       <button
                             onClick={handleAddToCart}
-                            disabled={adding}
+                            disabled={adding || isPurchased}
                             className={`
-                                ${adding
+                                absolute top-[85%] right-1/2 translate-x-1/2
+                                w-[50px] h-[50px] rounded-full flex justify-center items-center
+                                z-[30] transition-all duration-300 ease-in-out
+
+                                ${isPurchased
+                                ? "bg-green-500 cursor-not-allowed opacity-100 group-hover:-translate-y-[150%]"
+                                : adding
                                     ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-[#FF782D] hover:opacity-80 hover:scale-95 text-white"}
-                                    absolute top-[85%] right-1/2 translate-x-1/2 w-[50px] h-[50px]  opacity-0 rounded-full flex 
-                                    justify-center items-center text-[#ffffff] transform transition-transform duration-400 ease-in-out 
-                                    group-hover:opacity-100 group-hover:translate-y-[-150%] z-[30] cursor-pointer hover:scale-110 hover:bg-[#FF782D]
+                                    : "bg-[#FF782D] hover:scale-110 hover:opacity-90 cursor-pointer"
+                                }
+
+                                ${!isPurchased && "opacity-0 group-hover:opacity-100 group-hover:-translate-y-[150%]"}
                             `}
-                        >
-                            {adding ? <Spin size="large" /> : <BagShoppingIcon size={26}/>}
+                            >
+                                {isPurchased ? (
+                                    <span className="text-[10px] font-semibold text-white ">Đã mua</span>
+                                ) : adding ? (
+                                    <Spin size="small" />
+                                ) : (
+                                    <BagShoppingIcon size={26} className="text-white" />
+                                )}
                         </button>
+
 
                     </div>
                 </div>

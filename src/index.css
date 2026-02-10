@@ -174,3 +174,33 @@
 }
 
 
+/* Tab Check course history */
+
+.custom-tabs .ant-tabs-nav::before {
+  border-bottom: none;
+}
+
+.ant-tabs-nav {
+  border-bottom: 2px solid #e7e7e7 !important;
+}
+
+.custom-tabs .ant-tabs-tab {
+  padding: 8px 16px;
+  font-weight: 500;
+  color: #000000 !important;
+}
+
+.custom-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #FF782D !important;
+
+}
+
+.custom-tabs .ant-tabs-tab:hover {
+  color: #FF782D !important;
+}
+
+.custom-tabs .ant-tabs-ink-bar {
+  background-color: #FF782D;
+  height: 3px;
+  border-radius: 999px;
+}

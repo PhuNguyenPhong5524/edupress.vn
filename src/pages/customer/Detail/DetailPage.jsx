@@ -11,11 +11,16 @@ import { useCartStore } from "../../../stores/cart.store";
 import useAuth from "../../../hooks/useAuth";
 
 // Sticky Card
-const StickyCard = memo(({ show, showList }) => {
+const StickyCard = memo(({ show, showList, handleAddToCart, adding, isPurchased }) => {
   if (!show) return null;
   return (
     <div className="lg:sticky lg:top-[100px] transform transition-all esease-in-out duration-300">
-      <BoxCourseInfoCard  showList={showList}   />
+        <BoxCourseInfoCard  
+            showList={showList} 
+            handleAddToCart={handleAddToCart} 
+            adding={adding}
+            isPurchased={isPurchased}
+        />
     </div>
   );
 });
@@ -23,7 +28,6 @@ const StickyCard = memo(({ show, showList }) => {
 
 const DetailPage = () => {
     const [showStickyCard, setShowStickyCard] = useState(false);
-
     const { _id } = useParams();
     const { data: course = [], loading } = useFetchData("courses");
     const { data: providers = [] } = useFetchData("providers");
@@ -37,6 +41,16 @@ const DetailPage = () => {
     {/* Scroll observer */}
     useStickyObserver(setShowStickyCard);
     const {user, isAuthenticated} = useAuth();   
+    const { data : checkoutList } = useFetchData("checkout");
+    const isPurchased = useMemo(() => {
+        if (!checkoutList || !user || !showList) return null;
+
+        return checkoutList.some(order =>
+            order.user_id === user._id &&
+            order.status === "paid" &&
+            order.courses.some(c => c.course_id === showList._id)
+        );
+    }, [checkoutList, user, showList]);
 
 
   return (
@@ -54,6 +68,7 @@ const DetailPage = () => {
                 setAdding={setAdding}
                 user={user}
                 isAuthenticated={isAuthenticated}
+                isPurchased={isPurchased}
             />
         {/* Nội dung chính */}
             <div
@@ -70,7 +85,14 @@ const DetailPage = () => {
 
                 {/* RIGHT */}
                     <div className="hidden lg:block min-w-0">
-                        <StickyCard show={showStickyCard} showList={showList} />
+                        <StickyCard
+                            show={showStickyCard}
+                            showList={showList}
+                            handleAddToCart={addToCart}
+                            adding={adding}
+                            isPurchased={isPurchased}
+                        />
+
                     </div>
             </div>
     </div>

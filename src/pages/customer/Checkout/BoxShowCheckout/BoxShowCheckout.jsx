@@ -1,6 +1,8 @@
 
+import { Link } from "react-router-dom";
 import BoxCheckoutInfo from "../BoxCheckoutInfo/BoxCheckoutInfo";
 import BoxQR from "../BoxQR/BoxQR";
+import ButtonCanceled from "./ButtonCanceled";
 
 const BoxShowCheckout = ({currentCheckout, status, expired , time}) => {
 
@@ -64,20 +66,14 @@ const BoxShowCheckout = ({currentCheckout, status, expired , time}) => {
 
           <div className="w-full flex justify-center" >
               {status === "pending" && !expired && (
-                <button
-                  className="
-                    text-[12px] md:text-[14px] lg:text-[16px]
-                    font-semibold flex justify-center items-center
-                    border border-red-500 border-dashed cursor-pointer
-                    text-red-500 rounded-[5px] w-[120px] h-[40px] transition-all duration-300
-                    hover:bg-red-500 hover:text-white hover:scale-95
-                  "
-                >
-                  Hủy đơn
-                </button>
+                <ButtonCanceled 
+                  currentCheckout={currentCheckout} 
+                />
               )}
+
               { expired && (
-                <button
+                <Link
+                  to="/cart"
                   className="
                     text-[12px] md:text-[14px] lg:text-[16px]
                     font-semibold flex justify-center items-center
@@ -87,7 +83,7 @@ const BoxShowCheckout = ({currentCheckout, status, expired , time}) => {
                   "
                 >
                   Mua lại
-                </button>
+                </Link>
               )}
           </div>
 

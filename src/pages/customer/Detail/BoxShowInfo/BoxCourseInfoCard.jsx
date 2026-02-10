@@ -2,9 +2,18 @@
 import { Spin } from "antd";
 import CircleCheckIcon from "../../../../components/icons/CircleCheckIcon";
 import BoxModalVideo from "./BoxModalVideo";
-import BagShoppingIcon from "../../../../components/icons/BagShoppingIcon";
+import useAuth from "../../../../hooks/useAuth";
+import useFetchData from "../../../../api/useFetchData";
+import { useMemo } from "react";
+import { Link } from "react-router";
 
-const BoxCourseInfoCard = ({showList, loading, adding, handleAddToCart}) => {
+const BoxCourseInfoCard = ({
+    showList, 
+    loading, 
+    adding, 
+    handleAddToCart,
+    isPurchased
+}) => {
     if(!loading && !showList) {
         return(
             <div
@@ -30,7 +39,6 @@ const BoxCourseInfoCard = ({showList, loading, adding, handleAddToCart}) => {
         )
     }
 
-    
     return (
         <div
             className={
@@ -89,35 +97,58 @@ const BoxCourseInfoCard = ({showList, loading, adding, handleAddToCart}) => {
                             <div className="flex flex-col sm:flex-row gap-3 mt-3 z-100">
                                 <button
                                     onClick={handleAddToCart}
-                                    disabled={adding}
+                                    disabled={adding || isPurchased}
                                     className={`
-                                        ${adding
-                                            ? "bg-gray-400 cursor-not-allowed"
-                                            : "bg-[#FF782D] hover:opacity-80 hover:scale-95 text-white"
-                                        }
-                                        w-full bg-[#FF782D] text-white py-2 rounded-md
-                                        transition-all duration-300 cursor-pointer
-                                        hover:opacity-80 hover:scale-[0.97]    
-                                    `}
-                                >
-                                    {adding ? <Spin size="small" /> : "Thêm vào giỏ hàng"}
-                                </button>
-              
+                                        w-full py-2 rounded-md font-semibold
+                                        transition-all duration-300
 
-                                <button
-                                className="
-                                    w-full border border-[#FF782D] text-[#FF782D] py-2 rounded-md
-                                    transition-all duration-300
-                                    hover:bg-[#FF782D] hover:text-white
-                                "
-                                >
-                                Đăng ký khóa học
+                                        ${isPurchased
+                                        ? "bg-green-500 cursor-not-allowed text-white"
+                                        : adding
+                                            ? "bg-gray-400 cursor-not-allowed text-white"
+                                            : "bg-[#FF782D] text-white hover:opacity-80 hover:scale-[0.97] cursor-pointer"
+                                        }
+                                    `}
+                                    >
+                                    {isPurchased
+                                        ? "Đã mua"
+                                        : adding
+                                        ? <Spin size="small" />
+                                        : "Thêm vào giỏ hàng"
+                                    }
                                 </button>
+                                {
+                                    isPurchased && (
+                                        <Link
+                                            to={`/learning/${showList._id}`}
+                                            className="
+                                                w-full border border-[#FF782D] text-[#FF782D] py-2 rounded-md font-semibold
+                                                transition-all duration-300 text-center text-[10px] md:text-[12px] lg:text-[14px] 
+                                                hover:bg-[#FF782D] hover:text-white
+                                            "
+                                        >
+                                            Đi đến khóa học
+                                        </Link>
+                                    )
+                                }
+                                {
+                                    !isPurchased && (
+                                        <button
+                                            className="
+                                                w-full border border-[#FF782D] text-[#FF782D] py-2 rounded-md
+                                                transition-all duration-300
+                                                hover:bg-[#FF782D] hover:text-white
+                                            "
+                                        >
+                                            Đăng ký khóa học
+                                        </button>
+                                    )
+                                }
                             </div>
 
                         {/* FOOTER */}
                             <p className="mt-3 flex items-center gap-1 text-[12px] text-gray-400">
-                                <CircleCheckIcon size={16} className="text-[#FF782D]" />
+                                <CircleCheckIcon size={16} className="text-gray-400" />
                                 <span>Truy cập trọn đời · Chứng nhận</span>
                             </p>
                     </div>

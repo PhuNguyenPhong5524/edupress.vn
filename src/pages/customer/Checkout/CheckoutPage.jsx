@@ -57,7 +57,7 @@ const CheckoutPage = () => {
 
     const interval = setInterval(() => {
       fetchCheckoutByToken(token);
-    }, 20000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [token, currentCheckout?.status, expired]);
