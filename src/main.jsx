@@ -16,6 +16,9 @@ import CheckoutPage from './pages/customer/Checkout/CheckoutPage.jsx'
 import ScanPage from './pages/Scan/ScanPgae.jsx'
 import CheckoutHistoryPage from './pages/customer/CheckoutHistory/CheckoutHistoryPage.jsx'
 import MyCoursePage from './pages/customer/MyCourse/MyCoursePage.jsx'
+import PrivateRoute from './components/routes/PrivateRoute.jsx'
+
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -26,15 +29,43 @@ createRoot(document.getElementById('root')).render(
             <Route index element={<HomePage />} />
             <Route path='detail/:_id' element={<Detail />} />
             <Route path='cart' element={<CartPage /> } />
-            <Route path='checkout' element={<CheckoutPage />} />
+            <Route 
+              path='checkout' 
+              element={
+                <PrivateRoute>
+                  <CheckoutPage />
+                </PrivateRoute>
+              } 
+            />
             <Route path='checkout-history' element={<CheckoutHistoryPage />} />
-            <Route path='my-course' element={<MyCoursePage />} />
+            <Route 
+              path='my-course' 
+              element={
+                <PrivateRoute>
+                  <MyCoursePage />
+                </PrivateRoute>
+              } 
+            />
           </Route>
-          <Route path='/admin'  element={<AdminLayout />} >
+          <Route 
+            path='/admin'  
+            element={
+              <PrivateRoute>
+                <AdminLayout />
+              </PrivateRoute>
+            } 
+          >
             <Route path='employee' element={<ManagementUsers />} />
             <Route path='products' element={<div>Products</div>} />
           </Route>
-          <Route path='scan' element={<ScanPage />} />
+          <Route 
+            path='scan' 
+            element={
+              <PrivateRoute>
+                <ScanPage />
+              </PrivateRoute>
+            } 
+          />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
         </Routes>

@@ -40,7 +40,7 @@ const BoxModalVideo = ({videoLink}) => {
             >
                 <div className='flex flex-col items-center justify-center'>
                     <h1 className='text-center text-[14px] md:text-[16px] lg:text-[18px] text-[#000000] font-bold'>Xem trước khóa học</h1>
-                        <iframe className="w-[550px] h-[315px] rounded-md"
+                        <iframe className="w-full h-[315px] rounded-md"
                             src={`${videoLink}&autoplay=1&mute=1`}
                             title="YouTube video"
                             allow="autoplay; encrypted-media"
