@@ -10,7 +10,9 @@ const BoxCheckoutItem = ({ item }) => {
                 <p className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold ">
                    <strong>#Mã đơn:</strong> <span className="font-mono">{item._id}</span>
                 </p>
-                <hr className="border-[#000000] border-[1px] w-full mb-2" />
+
+                <hr className="border-[#555555] border-dashed  lg:border-[1px] w-full mb-2" />
+
                 <p>
                     <span className="font-medium text-gray-800 text-[10px] md:text-[12px] lg:text-[14px]">Học viên:</span>{" "}
                     Nguyễn Văn A
@@ -20,18 +22,20 @@ const BoxCheckoutItem = ({ item }) => {
                 </p>
             </div>
 
-            <span
-            className={`
-                 sm:self-auto text-[10px] md:text-[12px] lg:text-[14px] px-3 py-1 rounded-[5px] font-medium 
-                ${item.status === "paid" && "bg-[#29da0e] text-white"}
-                ${item.status === "pending" && "bg-yellow-400 text-white"}
-                ${item.status === "cancelled" && "bg-red-500 text-white"}
-            `}
-            >
-                { item.status === "paid" && "Đã thanh toán" }
-                { item.status === "pending" && "Chưa thanh toán" }
-                { item.status === "cancelled" && "Đã hủy" }
-            </span>
+            <div className="flex items-center gap-2">
+                <span
+                    className={`
+                        text-[10px] md:text-[12px] lg:text-[14px] px-3 py-1 rounded-[5px] font-medium 
+                        ${item.status === "paid" && "bg-[#29da0e] text-white"}
+                        ${item.status === "pending" && "bg-yellow-400 text-white"}
+                        ${item.status === "cancelled" && "bg-red-500 text-white"}
+                    `}
+                >
+                    { item.status === "paid" && "Đã thanh toán" }
+                    { item.status === "pending" && "Chưa thanh toán" }
+                    { item.status === "cancelled" && "Đã hủy" }
+                </span>
+            </div>
         </div>
 
         {/* ===== Courses ===== */}

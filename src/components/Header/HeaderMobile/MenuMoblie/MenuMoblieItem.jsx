@@ -8,6 +8,7 @@ import {
 import { Menu, message, Modal, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../../../../stores/cart.store";
+import BookOpenIcon from "../../../icons/BookOpen";
 
 const MenuMobileItem = ({ onClose, logout}) => {
   const navigate = useNavigate();
@@ -17,9 +18,18 @@ const MenuMobileItem = ({ onClose, logout}) => {
   const routeMap = {
     changepassword: "/change-password",
     notification: "/notification",
+    mycourse: "/my-course",
+    checkoutHistory: "/checkout-history"
+
   };
 
   const items = [
+    {
+      key: "mycourse",
+      label: "Khóa học của tôi",
+      icon: <BookOpenIcon size={18} />,
+      url: "/mycourse",
+    },
     {
       key: "changepassword",
       label: "Đổi mật khẩu",
@@ -29,6 +39,11 @@ const MenuMobileItem = ({ onClose, logout}) => {
       key: "notification",
       label: "Thông báo",
       icon: <BellOutlined />
+    },
+    {
+      key: "checkoutHistory",
+      label: "Lịch sử giao dịch",
+      icon: <LogoutOutlined />
     },
     {
         type: 'divider',
