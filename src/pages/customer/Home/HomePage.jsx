@@ -53,7 +53,7 @@ const HomePage = () => {
                         <BoxShowCourseCategory
                             courses={courses}
                             loading={loadingCourse}
-                            category={1}
+                            category={'69573760d58c9265fe052c10'}
                             categories={categories}
                             btnsw={'courCate1'}
                         />
@@ -61,7 +61,7 @@ const HomePage = () => {
                         <BoxShowCourseCategory
                             courses={courses}
                             loading={loadingCourse}
-                            category={2}
+                            category={'69573792d58c9265fe052c24'}
                             categories={categories}
                             btnsw={'courCate2'}
                         />
