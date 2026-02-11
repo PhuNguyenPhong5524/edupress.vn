@@ -12,8 +12,7 @@ import MenuMoblieItem from './MenuMoblieItem';
 const UserMenuMoblie = ({
   user,
   logout, 
-  getAvatarLetter,
-  onCloseMenu
+  getAvatarLetter
 }) => {
 
   const [open, setOpen] = useState(false);
@@ -23,7 +22,6 @@ const UserMenuMoblie = ({
   };
   const onClose = () => {
     setOpen(false);
-    onCloseMenu();
   };
 
   return (

@@ -57,15 +57,6 @@ const MenuMoblie = ({
         size={300}
       >
         <div >
-          <button 
-            className="
-              absolute top-2 right-0 will-change-transform translate-x-[40px] cursor-pointer transform transition-all duration-300 ease-in-out hover:text-[#ffffff] 
-              bg-[#ffffff] hover:bg-[#FF782D] hover:scale-90 rounded-full p-[5px]
-            " 
-            onClick={onCloseMenu}
-          >
-            <CloseIcon size={22} />
-          </button>
           {
             isAuthenticated ?
               <MenuUserMobile 
@@ -74,7 +65,6 @@ const MenuMoblie = ({
                 logout={logout}
                 isAuthenticated={isAuthenticated}
                 getAvatarLetter={getAvatarLetter}
-                onCloseMenu={onCloseMenu}
               />
             :(
               <div className="flex flex-col gap-1 py-[10px] px-[15px]">
