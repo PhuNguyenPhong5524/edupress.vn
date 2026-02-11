@@ -1,5 +1,5 @@
 
-const BoxCheckoutItem = ({ item }) => {
+const BoxCheckoutItem = ({ item, user }) => {
 
   return (
     <div className="rounded-xl border border-[#cccccc] bg-white p-4 space-y-4">
@@ -15,7 +15,7 @@ const BoxCheckoutItem = ({ item }) => {
 
                 <p>
                     <span className="font-medium text-gray-800 text-[10px] md:text-[12px] lg:text-[14px]">Học viên:</span>{" "}
-                    Nguyễn Văn A
+                    {item.user_id === user?._id && user?.username}
                 </p>
                 <p className="text-[10px] md:text-[12px] lg:text-[14px] font-medium">
                     Ngày mua: <span className="font-normal">{new Date(item.created_at).toLocaleDateString("vi-VN")}</span>

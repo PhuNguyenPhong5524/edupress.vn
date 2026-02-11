@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import BoxInstructions from "../customer/Detail/BoxShowTabsCourse/BoxInstructions/BoxInstructions";
 
 const LearningPage = () => {
+
     const { _id } = useParams();
     const { data: course = [], loading } = useFetchData("courses");
     const showList = useMemo(() => {
@@ -29,9 +30,30 @@ const LearningPage = () => {
         
             {/* ===== Header ===== */}
             <div className="bg-black text-white px-4 lg:px-5 py-4 flex items-center justify-between">
-                <h1 className="text-lg font-semibold">
-                    NodeJS Pro - Tự Học từ số 0 (MVC, REST APIs, SQL/MongoDB)
-                </h1>
+                <div className="flex flex-col lg:flex-row items-center gap-2 w-full">
+                    {/* <!-- Logo --> */}
+                        <Link 
+                            to="/" 
+                            className="
+                                md:leading-[20px] w-full flex md:w-auto md:flex-col justify-center items-center 
+                                lg:border-r-2 border-[#ffffff] pr-2
+                            "
+                        >
+                            <div className="flex items-center gap-1 ">
+                                <img src="/images/logo.png" alt="EduPress Logo" className="w-[30px] h-[20px] md:w-[40px] md:h-[30px]" />
+                                <p 
+                                    className=" 
+                                        font-bold md:text-[24px] lg:text-[28px]
+                                    "
+                                >   
+                                    EduPress
+                                </p>
+                            </div>
+                        </Link>
+                    <h1 className="text-[12px] md:text-[14px] lg:text-[16px] font-semibold">
+                        {showList?.course_title}
+                    </h1>
+                </div>
                 <Link 
                     to="/my-course"
                     className="
@@ -53,51 +75,17 @@ const LearningPage = () => {
                 {/* ===== Left Content ===== */}
                 <div className="flex-1 lg:pr-[400px]">
                 
-                {/* Video */}
-                <div className="bg-black w-full aspect-video flex items-center justify-center">
-                    {currentVideo && (
-                        <iframe
-                            className="w-full h-[500px] rounded-md"
-                            src={`${currentVideo}&autoplay=1&mute=1`}
-                            title="YouTube video"
-                            allow="autoplay; encrypted-media"
-                        />
-                    )}
-                </div>
-
-                {/* Tabs */}
-                <div className="border-b px-4 lg:px-10 py-4 flex gap-6 text-gray-600 text-sm font-medium">
-                    <span className="border-b-2 border-black pb-2 text-black">
-                    Tổng quan
-                    </span>
-                    <span>Ghi chú</span>
-                    <span>Thông báo</span>
-                    <span>Đánh giá</span>
-                    <span>Công cụ học tập</span>
-                </div>
-
-                {/* Content */}
-                <div className="px-4 lg:px-10 py-8">
-                    <h2 className="text-2xl font-semibold mb-4">
-                    Hướng dẫn chính thức về cách lập kế hoạch, sản xuất và xuất bản
-                    khóa học online chất lượng cao
-                    </h2>
-
-                    <div className="flex flex-wrap gap-6 text-sm text-gray-600">
-                    <div>
-                        <span className="font-semibold text-orange-500">4.8 ★</span>
-                        <p>74 xếp hạng</p>
+                    {/* Video */}
+                    <div className="bg-black w-full aspect-video flex items-center justify-center">
+                        {currentVideo && (
+                            <iframe
+                                className="w-full h-[500px] rounded-md"
+                                src={`${currentVideo}&autoplay=1&mute=1`}
+                                title="YouTube video"
+                                allow="autoplay; encrypted-media"
+                            />
+                        )}
                     </div>
-                    <div>
-                        <span className="font-semibold">2.396</span>
-                        <p>Học viên</p>
-                    </div>
-                    <div>
-                        <span className="font-semibold">1,5 giờ</span>
-                        <p>Tổng thời lượng</p>
-                    </div>
-                    </div>
-                </div>
                 </div>
 
                 {/* ===== Right Sidebar ===== */}

@@ -24,6 +24,8 @@ import BoxShowCart from "./BoxShowCart/BoxShowCart";
 
 
 const Header = () => {
+
+    
     const { t } = useTranslation();
     const {data: categories, loading} = useFetchData('categories');
     const {data: courses, loading: loadingCourse } = useFetchData('courses');
@@ -192,20 +194,6 @@ const Header = () => {
                                         results={results}
                                     />
                                 </div>
-                                {/* Bell */}
-                                    <li
-                                        className="
-                                            hidden lg:flex items-center justify-center
-                                            h-[64px] w-[48px]
-                                            text-[#000] text-[18px]
-                                            cursor-pointer
-                                            transition-colors duration-200
-                                            hover:text-[#FF782D] hover:bg-[#F5F5F5]
-                                            rounded-md
-                                        "
-                                    >
-                                        <BellIcon size={24} />
-                                    </li>
 
                                 {/* Cart */}
                                     <li className="relative group">

@@ -42,9 +42,7 @@ createRoot(document.getElementById('root')).render(
             <Route 
               path='my-course' 
               element={
-                <PrivateRoute>
-                  <MyCoursePage />
-                </PrivateRoute>
+                <MyCoursePage />
               } 
             />
           </Route>
@@ -68,9 +66,9 @@ createRoot(document.getElementById('root')).render(
           <Route 
             path='learning/:_id' 
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
                 <LearningPage />
-              // </PrivateRoute>
+              </PrivateRoute>
             } 
           />
           <Route path='login' element={<Login />} />

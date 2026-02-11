@@ -1,6 +1,7 @@
 import BoxShowCourseCard from "./CourseCard/BoxShowCourseCard";
 import useFetchData from "../../../api/useFetchData";
 import { useMemo } from "react";
+import useAuth from "../../../hooks/useAuth";
 
 const MyCoursePage = () => {
     const { data: checkout = [], loading } = useFetchData("checkout");
@@ -8,6 +9,11 @@ const MyCoursePage = () => {
         () => checkout?.filter((item) => item.status !== "pending" && item.status !== "cancelled"),
         [checkout]
     );
+     const { user } = useAuth();
+
+    const myCoursesList = useMemo(() => {
+        return showListCourses.filter(order => order.user_id === user?._id);
+    }, [showListCourses, user]);
 
     return (
         <div className="mt-[50px]">
@@ -21,7 +27,7 @@ const MyCoursePage = () => {
             </div>
             <div className="max-w-[1080px] mx-auto mt-5 px-[15px] lg:px-0">
                 <BoxShowCourseCard
-                    showList={showListCourses}
+                    showList={myCoursesList}
                     loading={loading}
                 />
             </div>

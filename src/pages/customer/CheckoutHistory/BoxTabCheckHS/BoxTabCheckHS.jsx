@@ -5,7 +5,7 @@ import React, { useMemo } from "react";
 import { Tabs } from "antd";
 import BoxCheckoutItem from "../BoxCheckoutItem/BoxCheckoutItem";
 
-const BoxTabCheckHS = ({ data = [] }) => {
+const BoxTabCheckHS = ({ data = [], user }) => {
   const allItems  = useMemo(
     () => data.filter((item) => item.status !== "pending"),
     [data]
@@ -27,7 +27,7 @@ const BoxTabCheckHS = ({ data = [] }) => {
         </div>
       ) : (
         items.map((order) => (
-          <BoxCheckoutItem key={order._id} item={order} />
+          <BoxCheckoutItem key={order._id} item={order} user={user} />
         ))
       )}
     </div>
