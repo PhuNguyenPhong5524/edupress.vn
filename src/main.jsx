@@ -51,9 +51,9 @@ createRoot(document.getElementById('root')).render(
           <Route 
             path='/admin'  
             element={
-              <PrivateRoute>
+              // <PrivateRoute>
                 <AdminLayout />
-              </PrivateRoute>
+              // </PrivateRoute>
             } 
           >
             <Route path='employee' element={<ManagementUsers />} />

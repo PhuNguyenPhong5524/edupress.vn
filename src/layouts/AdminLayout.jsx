@@ -18,8 +18,8 @@ const AdminLayout = () => {
 
   const nav = useNavigate();
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Layout style={{ minHeight: '100vh', background: '#ffffff !important' }}>
+      <Sider trigger={null} collapsible collapsed={collapsed} >
         <h1 className='text-[#ffffff] text-center py-[10px] text-[20px] font-bold' >Admin</h1>
         <Menu
           theme="dark"
@@ -30,7 +30,7 @@ const AdminLayout = () => {
             {
               key: '1',
               icon: <UserOutlined />,
-              label: 'Quản lý nhân viên',
+              label: 'Quản lý tài khoản',
               onClick: () => {
                 nav('employee');
               }
@@ -52,7 +52,7 @@ const AdminLayout = () => {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header style={{ padding: 0, background: '#ffffff' }}>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
