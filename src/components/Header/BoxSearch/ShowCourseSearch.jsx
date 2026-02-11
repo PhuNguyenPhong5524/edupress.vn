@@ -17,7 +17,7 @@ const ShowCourseSearch = ({keyword, setKeyword, results, loading, onclose}) => {
 
         const timer = setTimeout(() => {
             setSearchLoading(false);
-        }, 300); // giả lập loading search
+        }, 300); 
 
         return () => clearTimeout(timer);
     }, [keyword]);
@@ -27,19 +27,7 @@ const ShowCourseSearch = ({keyword, setKeyword, results, loading, onclose}) => {
             className="
                 flex flex-col items-center justify-center lg:p-2 relative
             "
-            >
-            <button 
-                className="
-                    absolute top-[-15px] right-3  translate-x-[30px] 
-                    text-[#FF782D] font-semibold w-[30px] h-[30px] rounded-full flex justify-center items-center 
-                    transition-all duration-300 ease-in-out hover:text-[#ffffff] hover:bg-[#FF782D]
-                " 
-                onClick={onclose}
-            >
-                <CloseIcon 
-                    size={24}  
-                />
-            </button>
+        >
             <h1 className="text-[16px] md:text-[18px] lg:hidden font-semibold mb-2">Tìm kiếm khóa học</h1>
             <div
                 className="
@@ -72,7 +60,7 @@ const ShowCourseSearch = ({keyword, setKeyword, results, loading, onclose}) => {
                             {results.map(item => (
                                 <div
                                     key={item._id}
-                                    className="flex gap-3 p-3 rounded-xl hover:bg-[#e6e6e6] cursor-pointer transition relative"
+                                    className="flex gap-3 p-3 rounded-xl hover:bg-[#e6e6e6] transition relative"
                                 >
                                     <img
                                         src={item.image_url}
@@ -80,16 +68,25 @@ const ShowCourseSearch = ({keyword, setKeyword, results, loading, onclose}) => {
                                         className="w-full h-auto max-w-[100px] sm:w-14 sm:h-14 rounded-lg object-cover"
                                     />
 
-                                    <span className="absolute top-[5px] left-[5px] bg-[#fff1d9] text-[#ff0000] text-[12px] font-bold rounded-full">
-                                        ⭐
-                                    </span>
+                                    {
+                                        item.feature === true && (
+                                            <span className="absolute top-[5px] left-[5px] bg-[#fff1d9] text-[#ff0000] text-[12px] font-bold rounded-full">
+                                                ⭐
+                                            </span>
+                                        )
+                                    }
 
                                     <div className="flex-1">
                                         <Link 
                                             to={`/detail/${item._id}`}
                                             onClick={onclose}
                                         >
-                                            <h4 className="text-[10px] md:text-[12px] lg:text-[14px] font-bold lg:font-semibold text-[#000000] line-clamp-2">
+                                            <h4 
+                                                className="
+                                                    text-[10px] md:text-[12px] lg:text-[14px] font-bold lg:font-semibold text-[#000000] 
+                                                    line-clamp-2 cursor-pointer transform transition duration-300 esease-in-out hover:text-[#FF782D]
+                                                "
+                                            >
                                                 {item.course_title}
                                             </h4>
                                         </Link>
