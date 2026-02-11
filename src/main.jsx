@@ -17,6 +17,7 @@ import ScanPage from './pages/Scan/ScanPgae.jsx'
 import CheckoutHistoryPage from './pages/customer/CheckoutHistory/CheckoutHistoryPage.jsx'
 import MyCoursePage from './pages/customer/MyCourse/MyCoursePage.jsx'
 import PrivateRoute from './components/routes/PrivateRoute.jsx'
+import LearningPage from './pages/Learning/LearningPage.jsx'
 
 
 
@@ -32,9 +33,9 @@ createRoot(document.getElementById('root')).render(
             <Route 
               path='checkout' 
               element={
-               
-                  <CheckoutPage />
-           
+                  <PrivateRoute>
+                    <CheckoutPage />
+                  </PrivateRoute>
               } 
             />
             <Route path='checkout-history' element={<CheckoutHistoryPage />} />
@@ -62,6 +63,14 @@ createRoot(document.getElementById('root')).render(
             path='scan' 
             element={
                <ScanPage />
+            } 
+          />
+          <Route 
+            path='learning/:_id' 
+            element={
+              // <PrivateRoute>
+                <LearningPage />
+              // </PrivateRoute>
             } 
           />
           <Route path='login' element={<Login />} />

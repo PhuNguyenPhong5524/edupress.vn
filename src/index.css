@@ -204,3 +204,9 @@
   height: 3px;
   border-radius: 999px;
 }
+
+/* dropdown sessions */
+
+.ant-collapse-body{
+  padding: 0 !important;
+}
