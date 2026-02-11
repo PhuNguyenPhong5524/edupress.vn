@@ -2,7 +2,7 @@
 import ChevronRightIcon  from "../components/icons/ChevronRightIcon";
 
 
-const Breadcrumb = ({nameCate, showList}) => {
+const Breadcrumb = ({nameCate, showList, showNameCategory}) => {
     return (
         <div className="bg-[#F5F5F5] w-full h-auto">
             <div className="max-w-[1080px] mx-auto py-[5px] md:py-[10px] lg:py-[15px] relative px-[15px] lg:px-0">
@@ -24,12 +24,12 @@ const Breadcrumb = ({nameCate, showList}) => {
                         <li aria-current="page">
                             <div className="flex items-center space-x-1.5">
                                 <ChevronRightIcon size={16} className="md:size-[18px] lg:size-[20px]" />
-                                {showList && (
+                                {showList &&  (
                                     <span className="
                                         font-medium
                                         text-[8px] md:text-[12px] lg:text-[14px]
                                     ">
-                                        {showList.course_title}
+                                        {showList.course_title || showNameCategory}
                                     </span>
                                 )}
                             </div>

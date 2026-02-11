@@ -18,6 +18,7 @@ import CheckoutHistoryPage from './pages/customer/CheckoutHistory/CheckoutHistor
 import MyCoursePage from './pages/customer/MyCourse/MyCoursePage.jsx'
 import PrivateRoute from './components/routes/PrivateRoute.jsx'
 import LearningPage from './pages/Learning/LearningPage.jsx'
+import CourseCategoryPage from './pages/customer/CourseCategoryPage/CourseCategoryPage.jsx'
 
 
 
@@ -29,6 +30,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/' element={<CustomerLayout />} >
             <Route index element={<HomePage />} />
             <Route path='detail/:_id' element={<Detail />} />
+            <Route path='course-category/:_id' element={<CourseCategoryPage />} />
             <Route path='cart' element={<CartPage /> } />
             <Route 
               path='checkout' 
