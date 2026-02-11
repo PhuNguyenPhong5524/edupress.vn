@@ -59,7 +59,7 @@ const CourseCategoryPage = () => {
                                         <BoxShowCourseFilter
                                             showAll={showAll}
                                             loading={loading}
-                                            loadingCategory={searchKeyword}
+                                            loadingCategory={loadingCategory}
                                             searchKeyword={searchKeyword}
                                             sortType={sortType}
                                             priceFilter={priceFilter}                     
