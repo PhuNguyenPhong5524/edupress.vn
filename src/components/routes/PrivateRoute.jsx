@@ -22,7 +22,7 @@ const PrivateRoute = ({ children }) => {
   // nếu là admin
   if (user.role === "admin") {
     // nếu đang ở admin rồi thì cho hiển thị
-    if (location.pathname.startsWith("/admin/employee")) {
+    if (location.pathname.startsWith("/admin")) {
       return children;
     }
 

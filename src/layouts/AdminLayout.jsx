@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import {
+  BellOutlined,
+  CheckOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  OrderedListOutlined,
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Avatar, Button, Layout, Menu, theme } from 'antd';
 const { Header, Sider, Content } = Layout;
 import { Outlet, useNavigate } from 'react-router';
-
+import useAuth from '../hooks/useAuth';
+import MenuUser from '../components/Header/BoxMenu/MenuUser';
+import UserIcon from '../components/icons/UserIcon';
+import { useTranslation } from 'react-i18next';
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -17,6 +23,15 @@ const AdminLayout = () => {
   } = theme.useToken();
 
   const nav = useNavigate();
+  const { isAuthenticated, user, logout, getAvatarLetter } = useAuth();
+  const { t } = useTranslation();
+
+   const handleChangePassword = () => {
+    nav("change-password");
+  };
+  const handleNotification = () => {
+    nav("notification");
+  }
   return (
     <Layout style={{ minHeight: '100vh', background: '#ffffff !important' }}>
       <Sider trigger={null} collapsible collapsed={collapsed} >
@@ -25,11 +40,13 @@ const AdminLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-
+          className='
+            admin-menu 
+          '
           items={[
             {
               key: '1',
-              icon: <UserOutlined />,
+              icon: <UserOutlined style={{ fontSize: '20px' }} />,
               label: 'Quản lý tài khoản',
               onClick: () => {
                 nav('employee');
@@ -37,22 +54,27 @@ const AdminLayout = () => {
             },
             {
               key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'Quản lý sản phẩm',
+              icon: <BellOutlined style={{ fontSize: '20px' }} />,
+              label: 'Quản lý thông báo',
               onClick: () => {
-                nav('products');
+                nav('notification');
               }
             },
             {
               key: '3',
-              icon: <UploadOutlined />,
-              label: 'Quản lý đơn hàng',
+              icon: <OrderedListOutlined style={{ fontSize: '20px' }} />,
+              label: 'Quản lý giao dịch',
             },
           ]}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: '#ffffff' }}>
+        <div
+          className='
+           bg-[#ffffff] flex justify-between items-center 
+           pr-[20px] shadow-md
+          '
+        > 
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -63,7 +85,47 @@ const AdminLayout = () => {
               height: 64,
             }}
           />
-        </Header>
+          <div>
+            {/* User */}
+              <div className="relative group hidden lg:block">
+           
+                  <div
+                      className="
+                          flex items-center gap-2 p-2
+                      "
+                  >
+                      {
+                          isAuthenticated ?
+                              <div className="flex items-center gap-2">
+                                <Avatar 
+                                    className='avatar_header' 
+                                >
+                                    <span className="text-[#000000] font-semibold">{getAvatarLetter(user.username)}</span>
+                                </Avatar>
+                                <div className="leading-[20px]">
+                                      <p className="text-[#2c2c2c] font-semibold p-0 m-0">{user.username}</p>
+                                      <p className="text-[#a4a4a4] text-[14px] font-regular p-0 m-0">{user.email}</p>
+                                  </div>
+                              </div>
+                          :
+                          <UserIcon size={24} />
+                      }
+                  </div>
+                  {/* Spacer */}
+                  <div className="absolute top-full right-0 h-3 w-full"></div>
+                  {/* Menu User */}
+                      <MenuUser 
+                          t={t}
+                          user={user}
+                          logout={logout}
+                          isAuthenticated={isAuthenticated}
+                          getAvatarLetter={getAvatarLetter}
+                          handleChangePassword={handleChangePassword}
+                          handleNotification={handleNotification}
+                      />
+              </div>
+          </div>
+        </div>
         <Content
           style={{
             margin: '24px 16px',

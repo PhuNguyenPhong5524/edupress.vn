@@ -19,6 +19,7 @@ import MyCoursePage from './pages/customer/MyCourse/MyCoursePage.jsx'
 import PrivateRoute from './components/routes/PrivateRoute.jsx'
 import LearningPage from './pages/Learning/LearningPage.jsx'
 import CourseCategoryPage from './pages/customer/CourseCategoryPage/CourseCategoryPage.jsx'
+import ManagementNotification from './pages/admin/ManagementNotification/ManagementNotification.jsx'
 
 
 
@@ -62,7 +63,7 @@ createRoot(document.getElementById('root')).render(
             } 
           >
             <Route path='employee' element={<ManagementUsers />} />
-            <Route path='products' element={<div>Products</div>} />
+            <Route path='notification' element={<ManagementNotification />} />
           </Route>
           <Route 
             path='scan' 

@@ -210,3 +210,15 @@
 .ant-collapse-body{
   padding: 0 !important;
 }
+
+/* Admin menu */
+
+.admin-menu .ant-menu-item-selected {
+  background-color: #FF782D !important;
+  color: #ffffff !important;
+  border-radius: 10px !important;
+}
+
+.admin-menu .ant-menu-item-selected .anticon {
+  color: #ffffff !important;
+}
