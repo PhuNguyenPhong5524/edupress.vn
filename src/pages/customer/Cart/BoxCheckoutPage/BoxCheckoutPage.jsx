@@ -81,7 +81,10 @@ const BoxCheckoutPage = ({ showCart, cart }) => {
         <h3 className="font-bold text-[14px] md:text-[16px] lg:text-[18px]">
           Khuyến mãi
         </h3>
-
+        <div className="text-[10px] md:text-[12px] lg:text-[14px] text-gray-600 border-[1px] border-dashed p-2 rounded-2xl border-[#25c916]">
+          <p>Nhân dịp năm mới EduExpress giảm giá <strong>20%</strong> tất cả khóa học!</p>
+          <span className="font-semibold">Mã khuyến mãi:  <strong className="text-[#25c916] text-[18px] font-sans"> GIAM20</strong></span>
+        </div>
         <div className="mt-3 flex gap-2">
           <input
             value={couponInput}

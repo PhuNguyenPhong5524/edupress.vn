@@ -15,8 +15,8 @@ const BoxShowCategory = ({categories, loading}) => {
                             title={t('home.title_Home.title_1.title')} 
                             description={t('home.title_Home.title_1.description')} 
                         />
-                    {/* <!-- Button --> */}
-                        <ButtonViewAll nameLink={"/categories"} />
+                    {/* <!-- Button -->
+                        <ButtonViewAll nameLink={"/categories"} /> */}
                 </div>
             {/* <!-- Box Category --> */}
                 <SwiperCategory categories={categories} loading={loading} />

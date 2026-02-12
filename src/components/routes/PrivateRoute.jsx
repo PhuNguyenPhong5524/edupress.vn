@@ -4,7 +4,6 @@ import useAuth from "../../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  const location = useLocation();
 
   if (loading) {
     return (
@@ -15,19 +14,8 @@ const PrivateRoute = ({ children }) => {
   }
 
   // chưa login
-  if (!user || user.role !== "admin") {
+  if (!user) {
     return <Navigate to="/login" replace />;
-  }
-
-  // nếu là admin
-  if (user.role === "admin") {
-    // nếu đang ở admin rồi thì cho hiển thị
-    if (location.pathname.startsWith("/admin")) {
-      return children;
-    }
-
-    // nếu không thì chuyển về admin
-    return <Navigate to="/admin/employee" replace />;
   }
 
   return children;

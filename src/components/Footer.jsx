@@ -68,22 +68,22 @@ const Footer = () => {
                     </h3>
                     <ul className="leading-[25px] md:leading-[30px] lg:leading-[40px]">
                         <li>
-                        <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
+                        <Link to={`/course-category/69573760d58c9265fe052c10`} className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
                             {t('footer.programs.web')}
                         </Link>
                         </li>
                         <li>
-                        <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
+                        <Link to="/" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
                             {t('footer.programs.data')}
                         </Link>
                         </li>
                         <li>
-                        <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
+                        <Link to="/" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
                             {t('footer.programs.mobile')}
                         </Link>
                         </li>
                         <li>
-                        <Link to="#" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
+                        <Link to="/" className="footer-link text-[10px] md:text-[12px] lg:text-[16px]">
                             {t('footer.programs.all')}
                         </Link>
                         </li>

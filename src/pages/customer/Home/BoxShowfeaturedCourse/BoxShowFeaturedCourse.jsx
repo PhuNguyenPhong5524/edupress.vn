@@ -15,7 +15,7 @@ const BoxShowFeaturedCourse = ({courses, loading, btnsw}) => {
                     description={t('home.title_Home.title_2.description')} 
                 />
             {/* <!-- Button --> */}
-                <ButtonViewAll nameLink={"/course"} />
+                {/* <ButtonViewAll nameLink={"/course"} /> */}
         </div>
         {/* Box show slider course featured */}
             <SwiperShowCourse courses={showCourseFeature} loading={loading} btnsw={btnsw} />

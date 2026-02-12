@@ -140,15 +140,20 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter, handleChan
                     </div>
                 ) : (
                     <>
-                        <li 
-                            className=" 
-                                text-black px-3 py-2 border-l-2 border-l-[#ffffff] 
+                        <li
+                            className="
+                                px-3 py-2 border-l-2 border-l-[#ffffff]
                                 cursor-pointer transition-all duration-300 ease-in-out 
-                                hover:border-[#FFAC2D] hover:bg-[#FF782D] hover:text-[#FF782D] 
-                                hover:pl-6 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
-                            " 
-                        > 
-                            <Link style={{color:'black'}} to="/login">{t('header.login')}</Link> 
+                                hover:border-[#FFAC2D] hover:bg-white 
+                                hover:pl-6 text-[16px] font-semibold whitespace-nowrap overflow-hidden
+                            "
+                            >
+                            <Link 
+                                to="/login"
+                                className="text-black transition-all duration-300 ease-in-out hover:text-[#FF782D]"
+                            >
+                                {t('header.login')}
+                            </Link>
                         </li>
                         <li 
                             className=" 

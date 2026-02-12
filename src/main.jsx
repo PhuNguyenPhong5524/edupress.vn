@@ -20,6 +20,7 @@ import PrivateRoute from './components/routes/PrivateRoute.jsx'
 import LearningPage from './pages/Learning/LearningPage.jsx'
 import CourseCategoryPage from './pages/customer/CourseCategoryPage/CourseCategoryPage.jsx'
 import ManagementNotification from './pages/admin/ManagementNotification/ManagementNotification.jsx'
+import PrivateRouteAdmin from './components/routes/PrivateRouteAdmin.jsx'
 
 
 
@@ -57,13 +58,26 @@ createRoot(document.getElementById('root')).render(
           <Route 
             path='/admin'  
             element={
-              <PrivateRoute>
+              <PrivateRouteAdmin>
                 <AdminLayout />
-              </PrivateRoute>
+              </PrivateRouteAdmin>
             } 
           >
-            <Route path='employee' element={<ManagementUsers />} />
-            <Route path='notification' element={<ManagementNotification />} />
+            <Route 
+              path='employee' 
+              element={
+                <PrivateRouteAdmin>
+                  <ManagementUsers />
+                </PrivateRouteAdmin>
+              } 
+            />
+            <Route 
+              path='notification' 
+              element={
+                <PrivateRouteAdmin>
+                  <ManagementNotification />
+                </PrivateRouteAdmin>
+              } />
           </Route>
           <Route 
             path='scan' 

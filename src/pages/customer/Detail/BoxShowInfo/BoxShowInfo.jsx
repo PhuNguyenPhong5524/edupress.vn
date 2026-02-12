@@ -123,7 +123,7 @@ const BoxShowInfo = ({
                                 : (
                                     <div className="flex items-center">
                                         <BookIcon size={18} className="text-[#FF782D]" />
-                                        <span className="ml-2">{showList?.lectures}</span>
+                                        <span className="ml-2">{showList?.total_lectures}</span>
                                     </div>
                                 )
                         }
