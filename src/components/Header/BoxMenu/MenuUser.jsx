@@ -26,7 +26,7 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter, handleChan
             }
         });
     };
-
+    
     return(
         <ul
             className={`
@@ -108,19 +108,16 @@ const MenuUser = ({t, user, logout, isAuthenticated, getAvatarLetter, handleChan
                         ):(
                             <>  
                                 <li 
-                                    onClick={handleNotification}
+                                    onClick={handleChangePassword}
                                     className=" 
-                                        text-[#000000] px-3 py-2 border-l-2 border-l-[#ffffff] flex 
+                                        text-[#000000] px-3 py-2 border-l-2 border-l-[#ffffff] flex
                                         items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out 
                                         hover:border-[#FFAC2D] hover:bg-white hover:text-[#FF782D] 
                                         hover:pl-5 text-[16px] font-semibold whitespace-nowrap overflow-hidden 
                                     " 
                                 > 
-                                    <div className="flex items-center justify-between gap-2">
-                                        <BellIcon size={20} />
-                                        {t('header.notification')}
-                                        <span className="bg-red-500 w-[20px] h-[20px] rounded-full flex items-center justify-center text-white text-[12px]">0</span>
-                                    </div>
+                                    <KeyIcon size={16} />
+                                    {t('header.changepassword')} 
                                 </li>
                             </>
                         )
