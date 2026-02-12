@@ -50,7 +50,7 @@ const CheckoutPage = () => {
     return () => clearInterval(istime);
   }, [currentCheckout?.status]);
 
- // fetch checkout trong 10s neu checkout chua thanh toan -> mã hết hạn 
+ // sau 10s fetch lại  
   useEffect(() => {
     if (!token || expired) return;
     if (currentCheckout?.status !== "pending") return;
