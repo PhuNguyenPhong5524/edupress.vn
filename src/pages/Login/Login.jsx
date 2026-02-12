@@ -32,7 +32,7 @@ export default function Login() {
       message.success("Đăng nhập thành công!");
       setLoading(false);
 
-      nav(user.role === "admin" ? "/admin" : "/");
+      nav(user.role === "admin" ? "/admin/employee" : "/");
     }, 600);
   };
 

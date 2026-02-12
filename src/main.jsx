@@ -27,7 +27,12 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <BrowserRouter> 
         <Routes>
-          <Route path='/' element={<CustomerLayout />} >
+          <Route 
+            path='/' 
+            element={
+                <CustomerLayout />
+            }
+          >
             <Route index element={<HomePage />} />
             <Route path='detail/:_id' element={<Detail />} />
             <Route path='course-category/:_id' element={<CourseCategoryPage />} />
@@ -51,9 +56,9 @@ createRoot(document.getElementById('root')).render(
           <Route 
             path='/admin'  
             element={
-              // <PrivateRoute>
+              <PrivateRoute>
                 <AdminLayout />
-              // </PrivateRoute>
+              </PrivateRoute>
             } 
           >
             <Route path='employee' element={<ManagementUsers />} />
