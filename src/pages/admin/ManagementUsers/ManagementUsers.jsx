@@ -1,9 +1,10 @@
-import React, { useMemo } from "react";
-import { Table, Button, Space, Tag, Popconfirm, message } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useMemo } from "react";
+import { Table, Space, Tag, Popconfirm, message } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import useFetchData from "../../../api/useFetchData";
 import BoxAddUser from "./BoxAddUser/BoxAddUser";
+import BoxEditUser from "./BoxEditUser/BoxEditUser";
 
 const ManagementUsers = () => {
 
@@ -26,10 +27,10 @@ const ManagementUsers = () => {
     }
   };
 
-  const handleEdit = (record) => {
-    console.log("Edit user:", record);
-    message.info("Chức năng sửa đang phát triển");
-  };
+  // const handleEdit = (record) => {
+  //   console.log("Edit user:", record);
+  //   message.info("Chức năng sửa đang phát triển");
+  // };
 
   const columns = [
     {
@@ -53,26 +54,17 @@ const ManagementUsers = () => {
       title: "Hành động",
       render: (_, record) => (
         <Space>
-          <button
-            className="
-              bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer
-                transform transition duration-300 ese-in-out hover:scale-95 hover:opacity-65
-            "
-            onClick={() => handleEdit(record)}
-          >
-            <EditOutlined />{" "}
-            Sửa
-          </button>
-
+          <BoxEditUser record={record} refetch={refetch} />
           <Popconfirm
             title="Bạn chắc chắn muốn xóa?"
             onConfirm={() => handleDelete(record._id)} // 👈 dùng id từ DB
           >
             <button 
-              className="
-                bg-red-500 text-white px-4 py-2 rounded-md cursor-pointer
-                transform transition duration-300 ese-in-out hover:scale-95 hover:opacity-65
-              "
+              disabled={record.role === "admin"} // Vô hiệu hóa nút xóa nếu là admin
+              className={`
+                ${record.role === "admin" ? "border border-[#c8c8c8] border-dashed text-gray-300 cursor-not-allowed bg-[#ffffff]" : "bg-red-500 text-white hover:scale-95 hover:opacity-65"}
+                 px-4 py-2 rounded-md transition duration-300 ease-in-out
+              `}
             >
               <DeleteOutlined />{" "}
               Xóa
