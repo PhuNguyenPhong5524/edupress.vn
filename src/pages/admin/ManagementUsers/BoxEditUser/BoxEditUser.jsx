@@ -12,6 +12,7 @@ const BoxEditUser = ({ record, refetch }) => {
   const [loading, setLoading] = useState(false);
 
   const showModal = () => {
+    setMessage({ type: "", content: "" });
     setOpen(true);
   };
 
@@ -49,7 +50,7 @@ const BoxEditUser = ({ record, refetch }) => {
         setOpen(false); // đóng modal
         form.resetFields();
       }, 800);
-
+    
     } catch (error) {
       setMessage({
         type: "error",
