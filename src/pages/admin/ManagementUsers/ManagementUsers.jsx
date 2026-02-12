@@ -3,6 +3,7 @@ import { Table, Button, Space, Tag, Popconfirm, message } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import useFetchData from "../../../api/useFetchData";
+import BoxAddUser from "./BoxAddUser/BoxAddUser";
 
 const ManagementUsers = () => {
 
@@ -15,9 +16,9 @@ const ManagementUsers = () => {
   }, [users]);
 
   // 🗑 Xóa user
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     try {
-      await axios.delete(`https://mindx-mockup-server.vercel.app/api/resources/users/${id}?apiKey=6957348a9dda81df11d0c527`);
+      await axios.delete(`https://mindx-mockup-server.vercel.app/api/resources/users/${_id}?apiKey=6957348a9dda81df11d0c527`);
       message.success("Xóa thành công");
       refetch(); // Reload data
     } catch (error) {
@@ -65,7 +66,7 @@ const ManagementUsers = () => {
 
           <Popconfirm
             title="Bạn chắc chắn muốn xóa?"
-            onConfirm={() => handleDelete(record.id)} // 👈 dùng id từ DB
+            onConfirm={() => handleDelete(record._id)} // 👈 dùng id từ DB
           >
             <button 
               className="
@@ -86,6 +87,7 @@ const ManagementUsers = () => {
     <div >
       <div className="flex justify-between items-center"> 
           <h1 className="text-[18px] font-semibold">Quản lý tài khoản</h1>
+          <BoxAddUser refetch={refetch}/>
       </div>
       <Table
         rowKey="_id" // 👈 QUAN TRỌNG nếu dùng Mongo thì đổi thành _id

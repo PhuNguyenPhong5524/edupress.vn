@@ -2,6 +2,7 @@ import React, { use, useState } from 'react';
 import {
   BellOutlined,
   CheckOutlined,
+  DownOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   OrderedListOutlined,
@@ -96,16 +97,19 @@ const AdminLayout = () => {
                   >
                       {
                           isAuthenticated ?
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-2 group ">
                                 <Avatar 
                                     className='avatar_header' 
                                 >
                                     <span className="text-[#000000] font-semibold">{getAvatarLetter(user.username)}</span>
                                 </Avatar>
                                 <div className="leading-[20px]">
-                                      <p className="text-[#2c2c2c] font-semibold p-0 m-0">{user.username}</p>
-                                      <p className="text-[#a4a4a4] text-[14px] font-regular p-0 m-0">{user.email}</p>
-                                  </div>
+                                  <p className="text-[#2c2c2c] font-semibold p-0 m-0">{user.username}</p>
+                                  <p className="text-[#a4a4a4] text-[14px] font-regular p-0 m-0">{user.email}</p>
+                                </div>
+                                <div className='transition-transform duration-300 group-hover:rotate-180'>
+                                  <DownOutlined />
+                                </div>
                               </div>
                           :
                           <UserIcon size={24} />
